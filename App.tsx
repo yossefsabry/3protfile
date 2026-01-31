@@ -179,6 +179,276 @@ const LoadingScreen = ({ theme }: { theme: 'light' | 'dark' }) => {
   );
 };
 
+const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const ringRef = useRef<HTMLDivElement | null>(null);
+  const trailRef = useRef<HTMLCanvasElement | null>(null);
+  const trailColorRef = useRef('rgba(15, 17, 21, 0.35)');
+  const drawRef = useRef<HTMLCanvasElement | null>(null);
+  const drawColorRef = useRef('rgba(15, 17, 21, 0.55)');
+
+  useEffect(() => {
+    trailColorRef.current = theme === 'dark'
+      ? 'rgba(255, 255, 255, 0.45)'
+      : 'rgba(15, 17, 21, 0.45)';
+    drawColorRef.current = theme === 'dark'
+      ? 'rgba(255, 255, 255, 0.7)'
+      : 'rgba(15, 17, 21, 0.6)';
+  }, [theme]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!finePointer) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const dot = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const ring = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const trailPoints: Array<{ x: number; y: number }> = [];
+    const trailCanvas = trailRef.current;
+    const trailCtx = trailCanvas ? trailCanvas.getContext('2d') : null;
+    const drawCanvas = drawRef.current;
+    const drawCtx = drawCanvas ? drawCanvas.getContext('2d') : null;
+    const dpr = window.devicePixelRatio || 1;
+    let drawing = false;
+    let lastDraw = { x: target.x, y: target.y };
+    let fadeRaf = 0;
+    let fadeTimeout = 0;
+    let isFading = false;
+    let lastTapTime = 0;
+    let lastTapPos = { x: 0, y: 0 };
+    const doubleTapDelay = 320;
+    const doubleTapDistance = 24;
+    let rafId = 0;
+
+    const setVisible = (value: number) => {
+      if (dotRef.current) dotRef.current.style.opacity = String(value);
+      if (ringRef.current) ringRef.current.style.opacity = String(value);
+      if (trailRef.current) trailRef.current.style.opacity = String(value);
+    };
+
+    const resizeCanvas = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      if (trailCanvas) {
+        trailCanvas.width = width * dpr;
+        trailCanvas.height = height * dpr;
+        trailCanvas.style.width = `${width}px`;
+        trailCanvas.style.height = `${height}px`;
+        if (trailCtx) trailCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      if (drawCanvas) {
+        drawCanvas.width = width * dpr;
+        drawCanvas.height = height * dpr;
+        drawCanvas.style.width = `${width}px`;
+        drawCanvas.style.height = `${height}px`;
+        if (drawCtx) drawCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+    };
+
+    resizeCanvas();
+
+    const update = () => {
+      if (!dotRef.current || !ringRef.current) return;
+      const dotEase = prefersReducedMotion ? 1 : 0.35;
+      const ringEase = prefersReducedMotion ? 1 : 0.15;
+      dot.x += (target.x - dot.x) * dotEase;
+      dot.y += (target.y - dot.y) * dotEase;
+      ring.x += (target.x - ring.x) * ringEase;
+      ring.y += (target.y - ring.y) * ringEase;
+
+      dotRef.current.style.left = `${dot.x}px`;
+      dotRef.current.style.top = `${dot.y}px`;
+      ringRef.current.style.left = `${ring.x}px`;
+      ringRef.current.style.top = `${ring.y}px`;
+
+      if (!prefersReducedMotion && trailCtx) {
+        const last = trailPoints[trailPoints.length - 1];
+        const dx = last ? ring.x - last.x : 999;
+        const dy = last ? ring.y - last.y : 999;
+        if (!last || Math.hypot(dx, dy) > 2) {
+          trailPoints.push({ x: ring.x, y: ring.y });
+        }
+        if (trailPoints.length > 14) {
+          trailPoints.shift();
+        }
+        trailCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        if (trailPoints.length > 1) {
+          for (let i = 1; i < trailPoints.length; i += 1) {
+            const alpha = i / trailPoints.length;
+            trailCtx.strokeStyle = trailColorRef.current.replace('0.45', (0.2 + alpha * 0.55).toFixed(2));
+            trailCtx.lineWidth = 1.3;
+            trailCtx.lineCap = 'round';
+            trailCtx.lineJoin = 'round';
+            trailCtx.beginPath();
+            trailCtx.moveTo(trailPoints[i - 1].x, trailPoints[i - 1].y);
+            trailCtx.lineTo(trailPoints[i].x, trailPoints[i].y);
+            trailCtx.stroke();
+          }
+        }
+      }
+
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    const handleMove = (event: PointerEvent) => {
+      target.x = event.clientX;
+      target.y = event.clientY;
+      setVisible(1);
+      if (drawing && drawCtx) {
+        drawCtx.strokeStyle = drawColorRef.current;
+        drawCtx.lineWidth = 1.6;
+        drawCtx.lineCap = 'round';
+        drawCtx.lineJoin = 'round';
+        drawCtx.beginPath();
+        drawCtx.moveTo(lastDraw.x, lastDraw.y);
+        drawCtx.lineTo(target.x, target.y);
+        drawCtx.stroke();
+        lastDraw = { x: target.x, y: target.y };
+      }
+    };
+
+    const handleLeave = () => setVisible(0);
+    const handleEnter = () => setVisible(1);
+
+    const setHover = (isHover: boolean) => {
+      if (!ringRef.current) return;
+      ringRef.current.style.setProperty('--cursor-ring-scale', isHover ? '1.6' : '1');
+    };
+
+    const isInteractive = (targetEl: EventTarget | null) => {
+      if (!(targetEl instanceof Element)) return false;
+      return Boolean(targetEl.closest('a, button, [role="button"], input, textarea, select, label'));
+    };
+
+    const handlePointerOver = (event: PointerEvent) => setHover(isInteractive(event.target));
+    const handlePointerOut = () => setHover(false);
+
+    const fadeOutDrawing = () => {
+      if (!drawCtx || isFading) return;
+      isFading = true;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      let step = 0;
+      const maxSteps = 24;
+
+      const fade = () => {
+        if (!drawCtx) return;
+        drawCtx.save();
+        drawCtx.globalCompositeOperation = 'destination-out';
+        drawCtx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+        drawCtx.fillRect(0, 0, width, height);
+        drawCtx.restore();
+        step += 1;
+        if (step < maxSteps) {
+          fadeRaf = window.requestAnimationFrame(fade);
+        } else {
+          drawCtx.clearRect(0, 0, width, height);
+          isFading = false;
+        }
+      };
+
+      fade();
+    };
+
+    const scheduleFadeOut = (delayMs: number) => {
+      if (fadeTimeout) window.clearTimeout(fadeTimeout);
+      fadeTimeout = window.setTimeout(() => fadeOutDrawing(), delayMs);
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') {
+        const now = Date.now();
+        const dist = Math.hypot(event.clientX - lastTapPos.x, event.clientY - lastTapPos.y);
+        if (now - lastTapTime < doubleTapDelay && dist < doubleTapDistance) {
+          if (fadeRaf) window.cancelAnimationFrame(fadeRaf);
+          if (fadeTimeout) window.clearTimeout(fadeTimeout);
+          isFading = false;
+          drawing = true;
+          lastDraw = { x: event.clientX, y: event.clientY };
+          event.preventDefault();
+        }
+        lastTapTime = now;
+        lastTapPos = { x: event.clientX, y: event.clientY };
+        return;
+      }
+
+      if (event.button === 2) {
+        if (fadeRaf) window.cancelAnimationFrame(fadeRaf);
+        if (fadeTimeout) window.clearTimeout(fadeTimeout);
+        isFading = false;
+        drawing = true;
+        lastDraw = { x: event.clientX, y: event.clientY };
+        event.preventDefault();
+      }
+      if (event.button === 0) {
+        fadeOutDrawing();
+      }
+    };
+
+    const handlePointerUp = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') {
+        if (drawing) {
+          drawing = false;
+          scheduleFadeOut(2000);
+        }
+        return;
+      }
+      if (event.button === 2) drawing = false;
+    };
+
+    const handlePointerCancel = () => {
+      if (drawing) {
+        drawing = false;
+        scheduleFadeOut(2000);
+      }
+    };
+
+    const handleContextMenu = (event: MouseEvent) => {
+      event.preventDefault();
+    };
+
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerleave', handleLeave);
+    window.addEventListener('pointerenter', handleEnter);
+    window.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', handlePointerCancel);
+    window.addEventListener('contextmenu', handleContextMenu);
+    window.addEventListener('resize', resizeCanvas);
+    document.addEventListener('pointerover', handlePointerOver);
+    document.addEventListener('pointerout', handlePointerOut);
+    setVisible(1);
+    rafId = window.requestAnimationFrame(update);
+
+    return () => {
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerleave', handleLeave);
+      window.removeEventListener('pointerenter', handleEnter);
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerCancel);
+      window.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('pointerover', handlePointerOver);
+      document.removeEventListener('pointerout', handlePointerOut);
+      window.cancelAnimationFrame(rafId);
+      if (fadeRaf) window.cancelAnimationFrame(fadeRaf);
+      if (fadeTimeout) window.clearTimeout(fadeTimeout);
+    };
+  }, []);
+
+  return (
+    <div className="custom-cursor" aria-hidden="true">
+      <canvas ref={trailRef} className="cursor-trail" />
+      <canvas ref={drawRef} className="cursor-draw" />
+      <div ref={ringRef} className="cursor-ring" />
+      <div ref={dotRef} className="cursor-dot" />
+    </div>
+  );
+};
+
 class SceneErrorBoundary extends React.Component<React.PropsWithChildren<{ fallback: React.ReactNode }>, { hasError: boolean }> {
   constructor(props: React.PropsWithChildren<{ fallback: React.ReactNode }>) {
     super(props);
@@ -424,6 +694,8 @@ const App: React.FC = () => {
 
       <audio ref={audioRef} src={mossGrottoTrack} preload="auto" />
       <audio ref={sfxRef} src={themeSwitchTrack} preload="auto" />
+
+      <CustomCursor theme={theme} />
 
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 dark:bg-nobel-dark/80 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-6'}`}>
