@@ -1,16 +1,16 @@
 
 :root {
   --star-base: #f9f8f4;
-  --star-1: rgba(15, 17, 21, 0.22);
-  --star-2: rgba(15, 17, 21, 0.16);
-  --star-3: rgba(15, 17, 21, 0.12);
+  --star-1: rgba(15, 17, 21, 0.16);
+  --star-2: rgba(15, 17, 21, 0.12);
+  --star-3: rgba(15, 17, 21, 0.08);
 }
 
 .dark {
   --star-base: #0f1115;
-  --star-1: rgba(255, 255, 255, 0.65);
-  --star-2: rgba(255, 255, 255, 0.45);
-  --star-3: rgba(255, 255, 255, 0.3);
+  --star-1: rgba(255, 255, 255, 0.5);
+  --star-2: rgba(255, 255, 255, 0.35);
+  --star-3: rgba(255, 255, 255, 0.22);
 }
 
 .starfield {
@@ -20,11 +20,11 @@
   pointer-events: none;
   background-color: var(--star-base);
   background-image:
-    radial-gradient(1px 1px at 22px 18px, var(--star-1) 0, var(--star-1) 1px, transparent 1.2px),
-    radial-gradient(1px 1px at 68px 54px, var(--star-2) 0, var(--star-2) 1px, transparent 1.4px),
-    radial-gradient(1px 1px at 120px 36px, var(--star-3) 0, var(--star-3) 1px, transparent 1.6px);
-  background-size: 180px 180px, 260px 260px, 360px 360px;
-  background-position: 0 0, 0 0, 0 0;
+    radial-gradient(1px 1px at 18px 24px, var(--star-1) 0, var(--star-1) 1px, transparent 1.2px),
+    radial-gradient(1px 1px at 92px 64px, var(--star-2) 0, var(--star-2) 1px, transparent 1.3px),
+    radial-gradient(1.4px 1.4px at 44px 140px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.7px);
+  background-size: 320px 260px, 520px 420px, 760px 620px;
+  background-position: 0 0, 140px 60px, 240px 160px;
   animation: starDrift 90s linear infinite;
   will-change: background-position;
 }
