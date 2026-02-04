@@ -83,10 +83,10 @@ const STACK = [
 ];
 
 export const SurfaceCodeDiagram = memo(() => (
-  <div className="flex flex-col p-8 bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 transition-colors my-8">
+  <div className="flex flex-col p-6 sm:p-8 bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 transition-colors my-6 sm:my-8">
     <div className="flex items-center justify-between mb-6">
       <div>
-        <h3 className="font-serif text-2xl text-stone-900 dark:text-stone-100">Selected Projects</h3>
+        <h3 className="font-serif text-xl sm:text-2xl text-stone-900 dark:text-stone-100">Selected Projects</h3>
         <p className="text-sm text-stone-500 dark:text-stone-400">Hard builds across AI, systems, and graphics.</p>
       </div>
       <div className="text-[10px] uppercase tracking-[0.4em] text-nobel-gold font-bold">YON3</div>
@@ -128,10 +128,10 @@ export const SurfaceCodeDiagram = memo(() => (
 ));
 
 export const TransformerDecoderDiagram = memo(() => (
-  <div className="p-10 bg-stone-950/80 border border-stone-800 rounded-2xl shadow-2xl">
+  <div className="p-6 sm:p-8 lg:p-10 bg-stone-950/80 border border-stone-800 rounded-2xl shadow-2xl">
     <div className="flex items-center justify-between mb-8">
       <div>
-        <h3 className="font-serif text-2xl text-white">Focus Areas</h3>
+        <h3 className="font-serif text-xl sm:text-2xl text-white">Focus Areas</h3>
         <p className="text-sm text-stone-400">Where I push for depth and polish.</p>
       </div>
       <div className="px-3 py-1 text-[10px] uppercase tracking-[0.4em] text-nobel-gold border border-stone-700 rounded-full">
@@ -142,7 +142,7 @@ export const TransformerDecoderDiagram = memo(() => (
       {FOCUS_AREAS.map((focus, index) => (
         <motion.div
           key={focus.title}
-          className="rounded-xl border border-stone-800 bg-stone-900/60 p-6"
+          className="rounded-xl border border-stone-800 bg-stone-900/60 p-5 sm:p-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.05 }}
@@ -158,16 +158,16 @@ export const TransformerDecoderDiagram = memo(() => (
 ));
 
 export const PerformanceMetricDiagram = memo(() => (
-  <div className="flex flex-col gap-8 items-center p-8 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 rounded-xl my-8 border border-stone-200 dark:border-stone-800 shadow-lg transition-colors">
+  <div className="flex flex-col gap-6 sm:gap-8 items-center p-6 sm:p-8 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 rounded-xl my-6 sm:my-8 border border-stone-200 dark:border-stone-800 shadow-lg transition-colors">
     <div className="text-center">
-      <h3 className="font-serif text-2xl mb-2 text-stone-900 dark:text-stone-100">Stack & Tools</h3>
+      <h3 className="font-serif text-xl sm:text-2xl mb-2 text-stone-900 dark:text-stone-100">Stack & Tools</h3>
       <p className="text-stone-500 dark:text-stone-400 text-sm">Built for speed, clarity, and flexibility.</p>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full">
       {STACK.map((group, index) => (
         <motion.div
           key={group.title}
-          className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950/40 p-6"
+          className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950/40 p-5 sm:p-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.05 }}

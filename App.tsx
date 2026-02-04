@@ -5,22 +5,16 @@
 */
 
 import React, { useState, useEffect, useLayoutEffect, Suspense, memo, useRef, useId } from 'react';
-import { SurfaceCodeDiagram, TransformerDecoderDiagram, PerformanceMetricDiagram } from './components/Diagrams';
+import { SurfaceCodeDiagram, TransformerDecoderDiagram } from './components/Diagrams';
 import { ArrowDown, Menu, X, BookOpen, Sun, Moon, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 // Lazy load heavy 3D scenes
 const HeroScene = React.lazy(() => import('./components/QuantumScene').then(m => ({ default: m.HeroScene })));
-const QuantumComputerScene = React.lazy(() => import('./components/QuantumScene').then(m => ({ default: m.QuantumComputerScene })));
 
 const mossGrottoTrack = new URL('./music/Christopher Larkin - Moss Grotto.mp3', import.meta.url).href;
 const themeSwitchTrack = new URL('./music/gay.mp3', import.meta.url).href;
 
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center w-full h-full">
-    <div className="w-8 h-8 border-2 border-nobel-gold border-t-transparent rounded-full animate-spin"></div>
-  </div>
-);
 
 const InfoCard = memo(({ title, detail, href, delay }: { title: string, detail: string, href?: string, delay: string }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -484,6 +478,10 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [canRender3d, setCanRender3d] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const sceneWrapperRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLElement | null>(null);
+  const scrollStateRef = useRef({ progress: 0, velocity: 0, direction: 1, fade: 1 });
   const themeTimeoutRef = useRef<number | null>(null);
   const loadingTimeoutRef = useRef<number | null>(null);
   const loadingMaxTimeoutRef = useRef<number | null>(null);
@@ -614,6 +612,62 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    let rafId = 0;
+    let lastScrollY = window.scrollY;
+
+    const update = () => {
+      rafId = 0;
+      const footerEl = footerRef.current;
+      if (!footerEl) return;
+
+      const scrollY = window.scrollY;
+      const deltaY = scrollY - lastScrollY;
+      const direction = deltaY >= 0 ? 1 : -1;
+      const velocity = Math.min(Math.abs(deltaY) / 120, 1);
+
+      const footerTop = footerEl.getBoundingClientRect().top + window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const maxScroll = Math.max(1, footerTop - viewportHeight);
+      const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+
+      const fadeRange = Math.max(200, viewportHeight * 0.5);
+      const footerDistance = footerTop - (scrollY + viewportHeight);
+      const fade = Math.min(Math.max(footerDistance / fadeRange, 0), 1);
+
+      scrollStateRef.current.progress = progress;
+      scrollStateRef.current.velocity = velocity;
+      scrollStateRef.current.direction = direction;
+      scrollStateRef.current.fade = fade;
+
+      if (sceneWrapperRef.current) {
+        sceneWrapperRef.current.style.opacity = fade.toFixed(3);
+      }
+
+      lastScrollY = scrollY;
+    };
+
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    const onResize = () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      update();
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    update();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   useLayoutEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -681,7 +735,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-nobel-cream dark:bg-nobel-dark text-stone-800 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-white overflow-x-hidden">
+    <div className="min-h-screen text-stone-800 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-white overflow-x-hidden">
 
       <AnimatePresence>
         {isLoading && <LoadingScreen theme={theme} />}
@@ -697,9 +751,23 @@ const App: React.FC = () => {
 
       <CustomCursor theme={theme} />
 
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 dark:bg-nobel-dark/80 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-6'}`}>
-        <div className="container mx-auto px-6 flex justify-between items-center">
+      <div className="relative">
+        <div className="starfield" aria-hidden="true" />
+        <div ref={sceneWrapperRef} className="site-3d" aria-hidden="true">
+          {canRender3d ? (
+            <Suspense fallback={<div className="absolute inset-0 bg-nobel-cream dark:bg-nobel-dark transition-colors duration-500" />}>
+              <SceneErrorBoundary fallback={<SceneFallback theme={theme} />}>
+                <HeroScene theme={theme} scrollState={scrollStateRef} reducedMotion={prefersReducedMotion} />
+              </SceneErrorBoundary>
+            </Suspense>
+          ) : (
+            <SceneFallback theme={theme} />
+          )}
+        </div>
+        <div className="relative z-10">
+          {/* Navigation */}
+          <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 dark:bg-nobel-dark/80 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-6'}`}>
+            <div className="container mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-4 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="w-10 h-10 bg-nobel-gold rounded-xl flex items-center justify-center text-white font-serif font-bold text-2xl shadow-lg transition-transform group-hover:scale-110 pb-1">Y</div>
             <span className={`font-serif font-bold text-xl tracking-wider transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0 dark:text-white'}`}>
@@ -792,24 +860,12 @@ const App: React.FC = () => {
 
       {/* Hero Section */}
       <header className="relative h-screen flex items-center justify-center overflow-hidden">
-        {canRender3d ? (
-          <Suspense fallback={<div className="absolute inset-0 bg-nobel-cream dark:bg-nobel-dark transition-colors duration-500" />}>
-            <SceneErrorBoundary fallback={<SceneFallback theme={theme} />}>
-              <HeroScene theme={theme} />
-            </SceneErrorBoundary>
-          </Suspense>
-        ) : (
-          <SceneFallback theme={theme} />
-        )}
-        
-        <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(249,248,244,0.7)_0%,rgba(249,248,244,0.2)_60%,rgba(249,248,244,0)_100%)] dark:bg-[radial-gradient(circle_at_center,rgba(15,17,21,0.6)_0%,rgba(15,17,21,0.2)_60%,rgba(15,17,21,0)_100%)]" />
-
         <div className="relative z-10 container mx-auto px-6 text-center">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="inline-block mb-6 px-4 py-1.5 border-2 border-nobel-gold text-nobel-gold text-xs tracking-[0.3em] uppercase font-black rounded-full backdrop-blur-md bg-white/60 dark:bg-black/40 drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
+            className="inline-block mb-5 sm:mb-6 px-3 sm:px-4 py-1.5 border-2 border-nobel-gold text-nobel-gold text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase font-black rounded-full backdrop-blur-md bg-white/60 dark:bg-black/40 drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
           >
             TECH GEEK • EGYPT
           </motion.div>
@@ -818,19 +874,23 @@ const App: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="font-serif text-6xl md:text-8xl lg:text-9xl font-bold leading-none mb-8 text-stone-950 dark:text-white tracking-tight drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]"
+            className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold leading-none mb-8 text-stone-950 dark:text-white tracking-tight drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]"
           >
-            YON3
-            <span className="hero-scan-text italic font-light text-2xl md:text-4xl lg:text-5xl block mt-6 tracking-normal drop-shadow-[0_3px_10px_rgba(0,0,0,0.25)]">TECH GEEK</span>
+            Yossef Sabry
+            <span className="hero-scan-text italic font-light text-xl sm:text-2xl md:text-3xl lg:text-5xl block w-fit mx-auto mt-5 sm:mt-6 tracking-normal drop-shadow-[0_3px_10px_rgba(0,0,0,0.25)] px-4 sm:px-5 py-2 rounded-full border border-white/60 dark:border-white/10 bg-white/70 dark:bg-black/40 backdrop-blur-md">Software Engineer | AI Engineer</span>
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="hero-scan-text max-w-3xl mx-auto text-xl md:text-2xl font-light leading-relaxed mb-16 drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)]"
+            className="max-w-xl sm:max-w-2xl mx-auto text-base sm:text-lg md:text-xl lg:text-2xl font-normal leading-relaxed text-stone-900 dark:text-stone-100 mb-16 drop-shadow-[0_2px_10px_rgba(0,0,0,0.25)] space-y-2 bg-white/[0.02] dark:bg-black/[0.02] backdrop-blur-md border border-white/30 dark:border-white/10 rounded-3xl px-6 sm:px-8 py-5 sm:py-6"
           >
-            Building ambitious software across AI, systems, and expressive UI with a focus on performance and clarity.
+            <span className="block">Software engineer focused on AI applications</span>
+            <span className="block">and the systems that scale them.</span>
+            <span className="block">I build data pipelines, model-serving stacks,</span>
+            <span className="block">and product-grade ML experiences.</span>
+            <span className="block font-medium">Interested in AI architecture or real-world ML? Let’s talk.</span>
           </motion.p>
           
           <motion.div 
@@ -850,40 +910,40 @@ const App: React.FC = () => {
       </header>
 
       <main>
-        <section id="about" className="py-32 bg-white dark:bg-[#121418] transition-colors duration-500">
+        <section id="about" className="py-24 md:py-32 bg-white/70 dark:bg-black/40 transition-colors duration-500">
           <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
             <div className="md:col-span-5">
               <div className="inline-block mb-4 text-xs font-black tracking-[0.2em] text-nobel-gold uppercase">ABOUT</div>
-              <h2 className="font-serif text-5xl lg:text-6xl mb-8 leading-tight text-stone-900 dark:text-white">Building hard things with taste</h2>
+              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl mb-8 leading-tight text-stone-900 dark:text-white">Building hard things with taste</h2>
               <div className="w-24 h-1.5 bg-nobel-gold rounded-full mb-8"></div>
               <p className="text-stone-500 dark:text-stone-400 italic font-serif text-xl">
                 "try be smarter"
               </p>
             </div>
-            <div className="md:col-span-7 text-xl text-stone-600 dark:text-stone-400 leading-relaxed space-y-8 font-light">
+            <div className="md:col-span-7 text-lg sm:text-xl text-stone-600 dark:text-stone-400 leading-relaxed space-y-6 md:space-y-8 font-light">
               <p>
-                <span className="text-7xl float-left mr-4 mt-[-4px] font-serif text-nobel-gold font-bold">I</span> am Yossef (YON3), a TECH GEEK from Egypt. I build ambitious software across AI, systems, and expressive UI with a focus on clean execution.
+                <span className="text-5xl sm:text-6xl md:text-7xl float-left mr-4 mt-[-4px] font-serif text-nobel-gold font-bold">I</span> am Yossef from Egypt. I build ambitious software across AI, systems, complex backends, and graphics.
               </p>
               <p>
                 I like projects that feel hard: interpreters, AI tooling, graphics systems, and backend services that hold up under pressure.
               </p>
               <div className="p-8 bg-stone-50 dark:bg-stone-900/40 rounded-3xl border border-stone-100 dark:border-stone-800">
                 <p className="text-stone-900 dark:text-stone-100 font-medium mb-2">Current focus:</p>
-                <p className="text-lg">AI-powered tools, system-level experiments, and elegant UI that feels effortless but performs hard.</p>
+                <p className="text-lg">AI-powered tools, system-level experiments.</p>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="projects" className="py-32 bg-stone-50 dark:bg-nobel-dark transition-colors duration-500">
+        <section id="projects" className="py-24 md:py-32 bg-white/60 dark:bg-black/35 transition-colors duration-500">
             <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
                     <div>
                         <div className="inline-flex items-center gap-3 px-4 py-2 bg-white dark:bg-stone-800 text-nobel-gold text-xs font-black tracking-widest uppercase rounded-2xl mb-8 border border-stone-100 dark:border-stone-700 shadow-sm">
                             <BookOpen size={16}/> SELECTED PROJECTS
                         </div>
-                        <h2 className="font-serif text-5xl md:text-6xl mb-8 text-stone-900 dark:text-white">Complex builds, clean execution</h2>
-                        <p className="text-xl text-stone-600 dark:text-stone-400 mb-8 leading-relaxed font-light">
+                        <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl mb-8 text-stone-900 dark:text-white">Complex builds, clean execution</h2>
+                        <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 mb-8 leading-relaxed font-light">
                            These are the projects that pushed me into deeper systems, AI workflows, and performance-focused tooling.
                         </p>
                         <ul className="space-y-4 text-stone-700 dark:text-stone-300">
@@ -905,21 +965,21 @@ const App: React.FC = () => {
             </div>
         </section>
 
-        <section id="focus" className="py-32 bg-stone-900 dark:bg-black text-white overflow-hidden relative">
+        <section id="focus" className="py-24 md:py-32 bg-stone-900/70 dark:bg-black/70 text-white overflow-hidden relative">
             <div className="container mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-                     <div className="order-2 lg:order-1 scale-110">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center">
+                     <div className="order-2 lg:order-1 lg:scale-110">
                         <TransformerDecoderDiagram />
-                     </div>
-                     <div className="order-1 lg:order-2">
+                      </div>
+                      <div className="order-1 lg:order-2">
                         <div className="inline-flex items-center gap-3 px-4 py-2 bg-stone-800 text-nobel-gold text-xs font-black tracking-widest uppercase rounded-2xl mb-8 border border-stone-700 shadow-xl">
                             FOCUS
                         </div>
-                        <h2 className="font-serif text-5xl md:text-6xl mb-8 leading-tight">Precision, speed,<br/>and clean systems</h2>
-                        <p className="text-xl text-stone-400 leading-relaxed font-light mb-8">
+                        <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl mb-8 leading-tight">Precision, speed,<br/>and clean systems</h2>
+                        <p className="text-lg md:text-xl text-stone-400 leading-relaxed font-light mb-8">
                             I like systems that feel deliberate: tight UI, strong architecture, and experiments that actually ship.
                         </p>
-                        <div className="grid grid-cols-2 gap-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                             <div className="border-l-2 border-nobel-gold pl-6">
                                 <div className="text-3xl font-serif mb-1">70+</div>
                                 <div className="text-xs text-stone-500 uppercase font-bold tracking-widest">Public Repos</div>
@@ -934,77 +994,25 @@ const App: React.FC = () => {
             </div>
         </section>
 
-        <section id="stack" className="py-32 bg-white dark:bg-nobel-dark">
-            <div className="container mx-auto px-6">
-                <div className="max-w-4xl mx-auto text-center mb-20">
-                    <h2 className="font-serif text-5xl md:text-6xl mb-8 text-stone-900 dark:text-white">Stack & Tools</h2>
-                    <p className="text-xl text-stone-600 dark:text-stone-400 font-light">
-                        A balanced toolkit for fast frontend, reliable backend, and experimental AI workflows.
-                    </p>
-                </div>
-                <div className="max-w-4xl mx-auto">
-                    <PerformanceMetricDiagram />
-                </div>
-            </div>
-        </section>
-
-        <section id="now" className="py-32 bg-stone-50 dark:bg-[#121418] border-y border-stone-200 dark:border-stone-800">
-              <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-20">
-                 <div className="md:col-span-6 relative">
-                    <div className="aspect-[4/3] bg-white dark:bg-stone-900 rounded-[2rem] overflow-hidden relative border border-stone-200 dark:border-stone-800 shadow-2xl">
-                        {canRender3d ? (
-                          <Suspense fallback={<LoadingSpinner />}>
-                            <SceneErrorBoundary fallback={<SceneFallback theme={theme} />}>
-                              <QuantumComputerScene theme={theme} />
-                            </SceneErrorBoundary>
-                          </Suspense>
-                        ) : (
-                          <SceneFallback theme={theme} />
-                        )}
-                        <div className="absolute top-6 right-6 px-4 py-2 bg-stone-900/80 backdrop-blur-md rounded-full text-[10px] font-bold text-white uppercase tracking-widest">
-                            Live Scene
-                        </div>
-                    </div>
-                </div>
-                 <div className="md:col-span-6 flex flex-col justify-center">
-                    <div className="inline-block mb-4 text-xs font-black tracking-[0.2em] text-stone-500 uppercase">NOW BUILDING</div>
-                    <h2 className="font-serif text-5xl mb-8 text-stone-900 dark:text-white">Systems that feel effortless</h2>
-                    <p className="text-xl text-stone-600 dark:text-stone-400 mb-10 leading-relaxed font-light">
-                        I am focused on AI-powered tools, system experiments, and interfaces that move fast without losing precision.
-                    </p>
-                    <div className="p-10 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-xl relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-nobel-gold/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150"></div>
-                        <p className="font-serif italic text-2xl text-stone-800 dark:text-stone-200 mb-6 leading-snug">
-                            "Building hard things should still feel clean and calm."
-                        </p>
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-nobel-gold rounded-xl flex items-center justify-center text-white font-bold">Y</div>
-                            <div>
-                                <span className="text-sm font-black text-stone-900 dark:text-white tracking-wider block uppercase">YON3</span>
-                                <span className="text-xs text-stone-400 uppercase tracking-widest">TECH GEEK, EGYPT</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             </div>
-        </section>
-
-        <section id="contact" className="py-32 bg-white dark:bg-nobel-dark">
+        <section id="contact" className="py-24 md:py-32 bg-white/70 dark:bg-black/40">
            <div className="container mx-auto px-6">
-                <div className="text-center mb-20">
-                    <h2 className="font-serif text-5xl mb-6 text-stone-900 dark:text-white">Contact & Links</h2>
+                <div className="text-center mb-12 md:mb-20">
+                    <h2 className="font-serif text-4xl sm:text-5xl mb-6 text-stone-900 dark:text-white">Contact & Links</h2>
                     <p className="text-stone-500 dark:text-stone-400 text-lg">Find me and my work across the web.</p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-10 justify-center items-stretch flex-wrap">
                     <InfoCard title="GitHub" detail="github.com/yossefsabry" href="https://github.com/yossefsabry" delay="0s" />
                     <InfoCard title="Website" detail="yossefsabry.me" href="https://yossefsabry.me" delay="0.1s" />
                     <InfoCard title="Email" detail="yossefsabry66@gmail.com" href="https://mail.google.com/mail/?view=cm&to=yossefsabry66@gmail.com" delay="0.2s" />
+                    <InfoCard title="Notes & Blog" detail="0xyon3.netlify.app" href="https://0xyon3.netlify.app" delay="0.3s" />
                 </div>
            </div>
         </section>
       </main>
+        </div>
+      </div>
 
-      <footer className="bg-stone-900 dark:bg-black text-stone-500 py-24 border-t border-stone-800">
+      <footer ref={footerRef} className="relative z-10 bg-stone-900 dark:bg-black text-stone-500 py-24 border-t border-stone-800">
         <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16">
             <div className="md:col-span-2">
                 <div className="text-white font-serif font-bold text-3xl mb-6">YON3</div>

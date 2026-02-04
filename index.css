@@ -1,7 +1,55 @@
 
+:root {
+  --star-base: #f9f8f4;
+  --star-1: rgba(15, 17, 21, 0.22);
+  --star-2: rgba(15, 17, 21, 0.16);
+  --star-3: rgba(15, 17, 21, 0.12);
+}
+
+.dark {
+  --star-base: #0f1115;
+  --star-1: rgba(255, 255, 255, 0.65);
+  --star-2: rgba(255, 255, 255, 0.45);
+  --star-3: rgba(255, 255, 255, 0.3);
+}
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--star-base);
+  background-image:
+    radial-gradient(1px 1px at 22px 18px, var(--star-1) 0, var(--star-1) 1px, transparent 1.2px),
+    radial-gradient(1px 1px at 68px 54px, var(--star-2) 0, var(--star-2) 1px, transparent 1.4px),
+    radial-gradient(1px 1px at 120px 36px, var(--star-3) 0, var(--star-3) 1px, transparent 1.6px);
+  background-size: 180px 180px, 260px 260px, 360px 360px;
+  background-position: 0 0, 0 0, 0 0;
+  animation: starDrift 90s linear infinite;
+  will-change: background-position;
+}
+
+.site-3d {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+@keyframes starDrift {
+  from {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: -1800px 0, -2600px 0, -3600px 0;
+  }
+}
+
 .hero-scan-text {
   display: inline-block;
-  background-image: linear-gradient(90deg, #0f1115 0%, #ffffff 45%, #ffffff 55%, #0f1115 100%);
+  background-image: linear-gradient(90deg, #1a1e25 0%, #101319 40%, #2c313a 50%, #101319 60%, #1a1e25 100%);
   background-size: 300% 100%;
   background-position: 0% 50%;
   color: transparent;
@@ -9,6 +57,10 @@
   -webkit-background-clip: text;
   background-clip: text;
   animation: heroScan 3.4s ease-in-out infinite;
+}
+
+.dark .hero-scan-text {
+  background-image: linear-gradient(90deg, #0f1115 0%, #ffffff 45%, #ffffff 55%, #0f1115 100%);
 }
 
 @keyframes heroScan {
@@ -27,6 +79,10 @@
   .hero-scan-text {
     animation: none;
     background-position: 50% 50%;
+  }
+
+  .starfield {
+    animation: none;
   }
 }
 
