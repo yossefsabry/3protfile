@@ -11,7 +11,13 @@
   --nebula-3: rgba(70, 120, 210, 0.14);
   --nebula-3b: rgba(70, 180, 200, 0.09);
   --nebula-opacity: 0.24;
-  --aurora-opacity: 0.65;
+  --aurora-1: rgba(255, 190, 210, 0.6);
+  --aurora-2: rgba(255, 200, 130, 0.5);
+  --aurora-3: rgba(180, 220, 255, 0.55);
+  --aurora-4: rgba(255, 210, 150, 0.4);
+  --aurora-5: rgba(255, 150, 200, 0.45);
+  --aurora-6: rgba(140, 210, 255, 0.35);
+  --aurora-opacity: 0.6;
   --meteor-tail: rgba(237, 184, 114, 0.5);
   --meteor-core: rgba(237, 184, 114, 0.95);
   --meteor-glow: rgba(237, 184, 114, 0.55);
@@ -29,6 +35,12 @@
   --nebula-3: rgba(180, 120, 70, 0.16);
   --nebula-3b: rgba(220, 150, 90, 0.1);
   --nebula-opacity: 0.28;
+  --aurora-1: rgba(255, 170, 80, 0.85);
+  --aurora-2: rgba(255, 60, 160, 0.75);
+  --aurora-3: rgba(255, 110, 190, 0.65);
+  --aurora-4: rgba(255, 180, 90, 0.35);
+  --aurora-5: rgba(255, 80, 140, 0.5);
+  --aurora-6: rgba(80, 170, 255, 0.2);
   --aurora-opacity: 0.35;
   --meteor-tail: rgba(120, 190, 255, 0.6);
   --meteor-core: rgba(210, 240, 255, 0.95);
@@ -51,6 +63,39 @@
   will-change: background-position;
 }
 
+.starfield-far {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image:
+    radial-gradient(1px 1px at 30px 40px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
+    radial-gradient(1.2px 1.2px at 110px 80px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
+    radial-gradient(1.4px 1.4px at 180px 140px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
+  background-size: 520px 480px, 760px 640px, 980px 820px;
+  background-position: 0 0, 120px 120px, 220px 200px;
+  animation: starDriftFast 60s linear infinite;
+  will-change: background-position;
+}
+
+.starfield-near {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(2.4px 2.4px at 60px 70px, var(--star-1) 0, var(--star-1) 2.4px, transparent 3px),
+    radial-gradient(2.8px 2.8px at 160px 120px, var(--star-2) 0, var(--star-2) 2.8px, transparent 3.4px),
+    radial-gradient(3.2px 3.2px at 260px 200px, var(--star-3) 0, var(--star-3) 3.2px, transparent 3.8px);
+  background-size: 820px 700px, 1080px 920px, 1400px 1200px;
+  background-position: 0 0, 220px 180px, 360px 280px;
+  animation: starDriftSlow 140s linear infinite;
+  will-change: background-position;
+}
+
+
 .meteor-field {
   position: fixed;
   inset: 0;
@@ -67,13 +112,13 @@
   pointer-events: none;
   opacity: var(--aurora-opacity);
   background-image:
-    radial-gradient(70% 70% at 15% 80%, rgba(255, 170, 80, 0.85) 0%, transparent 60%),
-    radial-gradient(70% 70% at 85% 25%, rgba(255, 60, 160, 0.75) 0%, transparent 58%),
-    radial-gradient(65% 65% at 50% 45%, rgba(255, 110, 190, 0.65) 0%, transparent 60%),
-    linear-gradient(120deg, rgba(255, 80, 140, 0.5) 0%, rgba(255, 180, 90, 0.35) 40%, rgba(80, 170, 255, 0.2) 100%);
+    radial-gradient(70% 70% at 15% 80%, var(--aurora-1) 0%, transparent 60%),
+    radial-gradient(70% 70% at 85% 25%, var(--aurora-2) 0%, transparent 58%),
+    radial-gradient(65% 65% at 50% 45%, var(--aurora-3) 0%, transparent 60%),
+    linear-gradient(120deg, var(--aurora-5) 0%, var(--aurora-4) 40%, var(--aurora-6) 100%);
   background-size: 130% 130%, 140% 140%, 120% 120%, 200% 200%;
   background-position: 0% 100%, 100% 0%, 50% 50%, 0% 0%;
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
   filter: saturate(1.15);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 18%, rgba(0, 0, 0, 0.85) 82%, rgba(0, 0, 0, 0) 100%);
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 18%, rgba(0, 0, 0, 0.85) 82%, rgba(0, 0, 0, 0) 100%);
@@ -108,6 +153,10 @@
 
 .dark .vignette {
   background: radial-gradient(circle at center, rgba(15, 17, 21, 0) 50%, rgba(15, 17, 21, 0.35) 75%, rgba(15, 17, 21, 0.7) 100%);
+  mix-blend-mode: screen;
+}
+
+.dark .section-aurora {
   mix-blend-mode: screen;
 }
 
@@ -231,6 +280,25 @@
   }
 }
 
+@keyframes starDriftFast {
+  from {
+    background-position: 0 0, 120px 120px, 220px 200px;
+  }
+  to {
+    background-position: -2400px 80px, -3200px 120px, -4200px 160px;
+  }
+}
+
+@keyframes starDriftSlow {
+  from {
+    background-position: 0 0, 220px 180px, 360px 280px;
+  }
+  to {
+    background-position: -1400px -40px, -2000px -60px, -2600px -80px;
+  }
+}
+
+
 .dark .starfield {
   background-image:
     radial-gradient(1px 1px at 42px 56px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
@@ -238,6 +306,24 @@
     radial-gradient(1.4px 1.4px at 210px 160px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
   background-size: 560px 460px, 820px 700px, 1080px 920px;
   background-position: 0 0, 220px 140px, 380px 260px;
+}
+
+.dark .starfield-far {
+  background-image:
+    radial-gradient(1px 1px at 30px 40px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
+    radial-gradient(1.2px 1.2px at 110px 80px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
+    radial-gradient(1.4px 1.4px at 180px 140px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
+  background-size: 760px 640px, 980px 820px, 1200px 1000px;
+  background-position: 0 0, 200px 160px, 360px 300px;
+}
+
+.dark .starfield-near {
+  background-image:
+    radial-gradient(2.4px 2.4px at 60px 70px, var(--star-1) 0, var(--star-1) 2.4px, transparent 3px),
+    radial-gradient(2.8px 2.8px at 160px 120px, var(--star-2) 0, var(--star-2) 2.8px, transparent 3.4px),
+    radial-gradient(3.2px 3.2px at 260px 200px, var(--star-3) 0, var(--star-3) 3.2px, transparent 3.8px);
+  background-size: 1080px 920px, 1400px 1200px, 1700px 1500px;
+  background-position: 0 0, 260px 220px, 420px 340px;
 }
 
 @keyframes starDrift {
@@ -286,6 +372,12 @@
   .starfield {
     animation: none;
   }
+
+  .starfield-far,
+  .starfield-near {
+    animation: none;
+  }
+
 
   .meteor {
     animation: none;
