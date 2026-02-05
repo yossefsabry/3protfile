@@ -1,12 +1,12 @@
 
 :root {
   --star-base: #f9f8f4;
-  --star-1: rgba(152, 111, 41, 0.22);
-  --star-2: rgba(152, 111, 41, 0.16);
-  --star-3: rgba(152, 111, 41, 0.12);
-  --meteor-tail: rgba(86, 166, 255, 0.45);
-  --meteor-core: rgba(190, 225, 255, 0.95);
-  --meteor-glow: rgba(86, 166, 255, 0.55);
+  --star-1: rgba(10, 12, 14, 0.6);
+  --star-2: rgba(10, 12, 14, 0.45);
+  --star-3: rgba(10, 12, 14, 0.32);
+  --meteor-tail: rgba(237, 184, 114, 0.5);
+  --meteor-core: rgba(237, 184, 114, 0.95);
+  --meteor-glow: rgba(237, 184, 114, 0.55);
 }
 
 .dark {
@@ -26,11 +26,11 @@
   pointer-events: none;
   background-color: var(--star-base);
   background-image:
-    radial-gradient(1px 1px at 42px 56px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
-    radial-gradient(1.2px 1.2px at 120px 88px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
-    radial-gradient(1.4px 1.4px at 210px 160px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
-  background-size: 560px 460px, 820px 700px, 1080px 920px;
-  background-position: 0 0, 220px 140px, 380px 260px;
+    radial-gradient(1.6px 1.6px at 42px 56px, var(--star-1) 0, var(--star-1) 1.6px, transparent 2px),
+    radial-gradient(1.8px 1.8px at 120px 88px, var(--star-2) 0, var(--star-2) 1.8px, transparent 2.2px),
+    radial-gradient(2.2px 2.2px at 210px 160px, var(--star-3) 0, var(--star-3) 2.2px, transparent 2.6px);
+  background-size: 300px 260px, 420px 360px, 600px 520px;
+  background-position: 0 0, 140px 100px, 220px 180px;
   animation: starDrift 90s linear infinite;
   will-change: background-position;
 }
@@ -138,6 +138,15 @@
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.35s ease;
+}
+
+.dark .starfield {
+  background-image:
+    radial-gradient(1px 1px at 42px 56px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
+    radial-gradient(1.2px 1.2px at 120px 88px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
+    radial-gradient(1.4px 1.4px at 210px 160px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
+  background-size: 560px 460px, 820px 700px, 1080px 920px;
+  background-position: 0 0, 220px 140px, 380px 260px;
 }
 
 @keyframes starDrift {
