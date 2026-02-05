@@ -12,6 +12,10 @@
   --nebula-3b: rgba(70, 180, 200, 0.09);
   --nebula-opacity: 0.24;
   --grain-opacity: 0.045;
+  --glow-warm: rgba(237, 184, 114, 0.18);
+  --glow-soft: rgba(255, 230, 200, 0.08);
+  --glow-cool: rgba(140, 210, 255, 0.12);
+  --glow-opacity: 0.45;
   --aurora-1: rgba(255, 190, 210, 0.6);
   --aurora-2: rgba(255, 200, 130, 0.5);
   --aurora-3: rgba(180, 220, 255, 0.55);
@@ -37,6 +41,10 @@
   --nebula-3b: rgba(220, 150, 90, 0.1);
   --nebula-opacity: 0.28;
   --grain-opacity: 0.055;
+  --glow-warm: rgba(237, 184, 114, 0.28);
+  --glow-soft: rgba(255, 215, 170, 0.12);
+  --glow-cool: rgba(120, 170, 255, 0.18);
+  --glow-opacity: 0.6;
   --aurora-1: rgba(255, 170, 80, 0.85);
   --aurora-2: rgba(255, 60, 160, 0.75);
   --aurora-3: rgba(255, 110, 190, 0.65);
@@ -101,7 +109,7 @@
 .meteor-field {
   position: fixed;
   inset: 0;
-  z-index: 4;
+  z-index: 5;
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.35s ease;
@@ -156,6 +164,18 @@
   mix-blend-mode: soft-light;
 }
 
+.hero-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: var(--glow-opacity);
+  background-image:
+    radial-gradient(65% 55% at 50% 42%, var(--glow-warm) 0%, var(--glow-soft) 45%, transparent 70%),
+    radial-gradient(55% 50% at 60% 52%, var(--glow-cool) 0%, transparent 65%);
+  mix-blend-mode: normal;
+}
+
 .vignette {
   position: fixed;
   inset: 0;
@@ -167,6 +187,10 @@
 
 .dark .vignette {
   background: radial-gradient(circle at center, rgba(15, 17, 21, 0) 50%, rgba(15, 17, 21, 0.35) 75%, rgba(15, 17, 21, 0.7) 100%);
+  mix-blend-mode: screen;
+}
+
+.dark .hero-glow {
   mix-blend-mode: screen;
 }
 
@@ -264,7 +288,7 @@
 .site-3d {
   position: fixed;
   inset: 0;
-  z-index: 5;
+  z-index: 6;
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.35s ease;
