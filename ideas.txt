@@ -1,0 +1,7 @@
+# Ideas
+- Subtle vignette: darken edges to pull focus to center.
+- Soft “nebula” gradient layer: slow drifting blobs in warm amber + cool blue.
+- Star twinkle: tiny subset with slow opacity pulse (very subtle).
+- Parallax star layers: different drift speeds for depth.
+- Light film grain: 3–5% noise to add texture and reduce banding.
+- Faint radial glow behind the main 3D object to blend scene and stars.

@@ -757,6 +757,7 @@ const App: React.FC = () => {
 
       <div className="relative">
         <div className="starfield" aria-hidden="true" />
+        <div className="vignette" aria-hidden="true" />
         <div ref={meteorWrapperRef} className="meteor-field" aria-hidden="true">
           <span className="meteor meteor-1" />
           <span className="meteor meteor-2" />

@@ -44,6 +44,20 @@
   transition: opacity 0.35s ease;
 }
 
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(15, 17, 21, 0) 55%, rgba(15, 17, 21, 0.18) 75%, rgba(15, 17, 21, 0.35) 100%);
+  mix-blend-mode: multiply;
+}
+
+.dark .vignette {
+  background: radial-gradient(circle at center, rgba(15, 17, 21, 0) 50%, rgba(15, 17, 21, 0.35) 75%, rgba(15, 17, 21, 0.7) 100%);
+  mix-blend-mode: screen;
+}
+
 .meteor {
   position: absolute;
   top: 0;
