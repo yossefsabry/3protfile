@@ -978,6 +978,7 @@ const App: React.FC = () => {
         </section>
 
         <section id="focus" className="py-24 md:py-32 bg-stone-900/70 dark:bg-black/70 text-white overflow-hidden relative">
+            <div className="section-aurora" aria-hidden="true" />
             <div className="container mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center">
                      <div className="order-2 lg:order-1 lg:scale-110">
