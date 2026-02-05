@@ -12,7 +12,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 // Lazy load heavy 3D scenes
 const HeroScene = React.lazy(() => import('./components/QuantumScene').then(m => ({ default: m.HeroScene })));
 
-const mossGrottoTrack = new URL('./music/Christopher Larkin - Moss Grotto.mp3', import.meta.url).href;
+const mossGrottoTrack = new URL('./music/Christopher Larkin - Bilewater.mp3', import.meta.url).href;
 const themeSwitchTrack = new URL('./music/gay.mp3', import.meta.url).href;
 
 
