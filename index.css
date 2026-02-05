@@ -11,6 +11,7 @@
   --nebula-3: rgba(70, 120, 210, 0.14);
   --nebula-3b: rgba(70, 180, 200, 0.09);
   --nebula-opacity: 0.24;
+  --grain-opacity: 0.045;
   --aurora-1: rgba(255, 190, 210, 0.6);
   --aurora-2: rgba(255, 200, 130, 0.5);
   --aurora-3: rgba(180, 220, 255, 0.55);
@@ -35,6 +36,7 @@
   --nebula-3: rgba(180, 120, 70, 0.16);
   --nebula-3b: rgba(220, 150, 90, 0.1);
   --nebula-opacity: 0.28;
+  --grain-opacity: 0.055;
   --aurora-1: rgba(255, 170, 80, 0.85);
   --aurora-2: rgba(255, 60, 160, 0.75);
   --aurora-3: rgba(255, 110, 190, 0.65);
@@ -99,7 +101,7 @@
 .meteor-field {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.35s ease;
@@ -142,10 +144,22 @@
   will-change: background-position;
 }
 
-.vignette {
+.film-grain {
   position: fixed;
   inset: 0;
   z-index: 2;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjQiLz48L3N2Zz4=");
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  mix-blend-mode: soft-light;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
   pointer-events: none;
   background: radial-gradient(circle at center, rgba(15, 17, 21, 0) 55%, rgba(15, 17, 21, 0.18) 75%, rgba(15, 17, 21, 0.35) 100%);
   mix-blend-mode: multiply;
@@ -250,7 +264,7 @@
 .site-3d {
   position: fixed;
   inset: 0;
-  z-index: 4;
+  z-index: 5;
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.35s ease;
