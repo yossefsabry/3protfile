@@ -480,6 +480,7 @@ const App: React.FC = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const sceneWrapperRef = useRef<HTMLDivElement | null>(null);
+  const meteorWrapperRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLElement | null>(null);
   const scrollStateRef = useRef({ progress: 0, velocity: 0, direction: 1, fade: 1 });
   const themeTimeoutRef = useRef<number | null>(null);
@@ -643,6 +644,9 @@ const App: React.FC = () => {
       if (sceneWrapperRef.current) {
         sceneWrapperRef.current.style.opacity = fade.toFixed(3);
       }
+      if (meteorWrapperRef.current) {
+        meteorWrapperRef.current.style.opacity = fade.toFixed(3);
+      }
 
       lastScrollY = scrollY;
     };
@@ -753,6 +757,12 @@ const App: React.FC = () => {
 
       <div className="relative">
         <div className="starfield" aria-hidden="true" />
+        <div ref={meteorWrapperRef} className="meteor-field" aria-hidden="true">
+          <span className="meteor meteor-1" />
+          <span className="meteor meteor-2" />
+          <span className="meteor meteor-3" />
+          <span className="meteor meteor-4 meteor-hero" />
+        </div>
         <div ref={sceneWrapperRef} className="site-3d" aria-hidden="true">
           {canRender3d ? (
             <Suspense fallback={<div className="absolute inset-0 bg-nobel-cream dark:bg-nobel-dark transition-colors duration-500" />}>
@@ -994,7 +1004,7 @@ const App: React.FC = () => {
             </div>
         </section>
 
-        <section id="contact" className="py-24 md:py-32 bg-white/70 dark:bg-black/40">
+        <section id="contact" className="py-24 md:py-32 bg-white/50 dark:bg-black/20">
            <div className="container mx-auto px-6">
                 <div className="text-center mb-12 md:mb-20">
                     <h2 className="font-serif text-4xl sm:text-5xl mb-6 text-stone-900 dark:text-white">Contact & Links</h2>

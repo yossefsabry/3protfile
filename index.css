@@ -1,16 +1,22 @@
 
 :root {
   --star-base: #f9f8f4;
-  --star-1: rgba(15, 17, 21, 0.16);
-  --star-2: rgba(15, 17, 21, 0.12);
-  --star-3: rgba(15, 17, 21, 0.08);
+  --star-1: rgba(152, 111, 41, 0.22);
+  --star-2: rgba(152, 111, 41, 0.16);
+  --star-3: rgba(152, 111, 41, 0.12);
+  --meteor-tail: rgba(86, 166, 255, 0.45);
+  --meteor-core: rgba(190, 225, 255, 0.95);
+  --meteor-glow: rgba(86, 166, 255, 0.55);
 }
 
 .dark {
   --star-base: #0f1115;
-  --star-1: rgba(255, 255, 255, 0.5);
-  --star-2: rgba(255, 255, 255, 0.35);
-  --star-3: rgba(255, 255, 255, 0.22);
+  --star-1: rgba(252, 199, 122, 0.52);
+  --star-2: rgba(252, 199, 122, 0.34);
+  --star-3: rgba(252, 199, 122, 0.22);
+  --meteor-tail: rgba(120, 190, 255, 0.6);
+  --meteor-core: rgba(210, 240, 255, 0.95);
+  --meteor-glow: rgba(120, 190, 255, 0.7);
 }
 
 .starfield {
@@ -20,19 +26,115 @@
   pointer-events: none;
   background-color: var(--star-base);
   background-image:
-    radial-gradient(1px 1px at 18px 24px, var(--star-1) 0, var(--star-1) 1px, transparent 1.2px),
-    radial-gradient(1px 1px at 92px 64px, var(--star-2) 0, var(--star-2) 1px, transparent 1.3px),
-    radial-gradient(1.4px 1.4px at 44px 140px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.7px);
-  background-size: 320px 260px, 520px 420px, 760px 620px;
-  background-position: 0 0, 140px 60px, 240px 160px;
+    radial-gradient(1px 1px at 42px 56px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
+    radial-gradient(1.2px 1.2px at 120px 88px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
+    radial-gradient(1.4px 1.4px at 210px 160px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
+  background-size: 560px 460px, 820px 700px, 1080px 920px;
+  background-position: 0 0, 220px 140px, 380px 260px;
   animation: starDrift 90s linear infinite;
   will-change: background-position;
+}
+
+.meteor-field {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.meteor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--meteor-width, 180px);
+  height: var(--meteor-height, 2px);
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--meteor-tail), var(--meteor-core));
+  filter: drop-shadow(0 0 8px var(--meteor-glow));
+  transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(0.9);
+  opacity: 0;
+  animation: meteorFly var(--meteor-duration, 6s) cubic-bezier(0.3, 0, 0.2, 1) infinite;
+  animation-delay: var(--meteor-delay, 0s);
+  will-change: transform, opacity;
+}
+
+.meteor-hero {
+  height: 3px;
+  width: 240px;
+  filter: drop-shadow(0 0 10px rgba(255, 220, 170, 0.65));
+}
+
+.meteor-1 {
+  --meteor-width: 170px;
+  --meteor-height: 2px;
+  --start-x: -20vw;
+  --start-y: 18vh;
+  --end-x: 120vw;
+  --end-y: -30vh;
+  --angle: -18deg;
+  --meteor-duration: 12s;
+  --meteor-delay: -3s;
+}
+
+.meteor-2 {
+  --meteor-width: 150px;
+  --meteor-height: 2px;
+  --start-x: 10vw;
+  --start-y: 82vh;
+  --end-x: 120vw;
+  --end-y: 5vh;
+  --angle: -28deg;
+  --meteor-duration: 10.5s;
+  --meteor-delay: -6s;
+}
+
+.meteor-3 {
+  --meteor-width: 180px;
+  --meteor-height: 2px;
+  --start-x: 120vw;
+  --start-y: 65vh;
+  --end-x: -40vw;
+  --end-y: 15vh;
+  --angle: 150deg;
+  --meteor-duration: 14s;
+  --meteor-delay: -9s;
+}
+
+.meteor-4 {
+  --meteor-width: 240px;
+  --meteor-height: 3px;
+  --start-x: -30vw;
+  --start-y: 52vh;
+  --end-x: 120vw;
+  --end-y: -5vh;
+  --angle: -12deg;
+  --meteor-duration: 16s;
+  --meteor-delay: -12s;
+}
+
+@keyframes meteorFly {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(0.85);
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--end-x), var(--end-y), 0) rotate(var(--angle)) scale(1.05);
+  }
 }
 
 .site-3d {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.35s ease;
@@ -83,6 +185,11 @@
 
   .starfield {
     animation: none;
+  }
+
+  .meteor {
+    animation: none;
+    opacity: 0;
   }
 }
 
