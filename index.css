@@ -57,6 +57,12 @@
   --meteor-glow: rgba(120, 190, 255, 0.7);
 }
 
+.low-power {
+  --nebula-opacity: 0.18;
+  --grain-opacity: 0.03;
+  --glow-opacity: 0.3;
+}
+
 .starfield {
   position: fixed;
   inset: 0;
@@ -103,6 +109,11 @@
   background-position: 0 0, 220px 180px, 360px 280px;
   animation: starDriftSlow 140s linear infinite;
   will-change: background-position;
+}
+
+.low-power .starfield-far,
+.low-power .starfield-near {
+  display: none;
 }
 
 
@@ -212,6 +223,16 @@
   animation: meteorFly var(--meteor-duration, 6s) cubic-bezier(0.3, 0, 0.2, 1) infinite;
   animation-delay: var(--meteor-delay, 0s);
   will-change: transform, opacity;
+}
+
+.low-power .meteor {
+  filter: none;
+}
+
+.low-power .meteor-2,
+.low-power .meteor-3,
+.low-power .meteor-4 {
+  display: none;
 }
 
 .meteor-hero {

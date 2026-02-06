@@ -1,0 +1,5 @@
+If you want to keep improving performance, the next highest-impact steps are:
+1) Add a low‑power mode for mobile (lower dpr, fewer background layers, no meteor drop‑shadows).
+2) Switch the 3D canvas to demand rendering when the page is idle.
+3) Run a Lighthouse + Performance trace on npm run preview to quantify LCP/INP/CLS before/after.
+

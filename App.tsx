@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useEffect, useLayoutEffect, Suspense, memo, useRef, useId } from 'react';
+import React, { useState, useEffect, useLayoutEffect, Suspense, memo, useRef, useId, useCallback } from 'react';
 import { SurfaceCodeDiagram, TransformerDecoderDiagram } from './components/Diagrams';
 import { ArrowDown, Menu, X, BookOpen, Sun, Moon, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
@@ -60,9 +60,6 @@ const InfoCard = memo(({ title, detail, href, delay }: { title: string, detail: 
     </motion.div>
   );
 });
-
-const LOADER_MIN_DURATION = 1000;
-const LOADER_MAX_DURATION = 2500;
 
 const ThemeWaterTransition = ({ toTheme }: { toTheme: 'light' | 'dark' }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -173,7 +170,8 @@ const LoadingScreen = ({ theme }: { theme: 'light' | 'dark' }) => {
   );
 };
 
-const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
+const CustomCursor = ({ theme, disabled = false }: { theme: 'light' | 'dark'; disabled?: boolean }) => {
+  if (disabled) return null;
   const dotRef = useRef<HTMLDivElement | null>(null);
   const ringRef = useRef<HTMLDivElement | null>(null);
   const trailRef = useRef<HTMLCanvasElement | null>(null);
@@ -215,6 +213,9 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
     const doubleTapDelay = 320;
     const doubleTapDistance = 24;
     let rafId = 0;
+    let idleTimeout = 0;
+    let isRunning = false;
+    let isHidden = document.hidden;
 
     const setVisible = (value: number) => {
       if (dotRef.current) dotRef.current.style.opacity = String(value);
@@ -244,6 +245,7 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
     resizeCanvas();
 
     const update = () => {
+      if (!isRunning || isHidden) return;
       if (!dotRef.current || !ringRef.current) return;
       const dotEase = prefersReducedMotion ? 1 : 0.35;
       const ringEase = prefersReducedMotion ? 1 : 0.15;
@@ -286,10 +288,32 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
       rafId = window.requestAnimationFrame(update);
     };
 
+    const startLoop = () => {
+      if (isRunning || isHidden) return;
+      isRunning = true;
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    const stopLoop = () => {
+      if (!isRunning) return;
+      isRunning = false;
+      if (rafId) window.cancelAnimationFrame(rafId);
+      rafId = 0;
+    };
+
+    const scheduleIdleStop = () => {
+      if (idleTimeout) window.clearTimeout(idleTimeout);
+      idleTimeout = window.setTimeout(() => {
+        if (!drawing) stopLoop();
+      }, 900);
+    };
+
     const handleMove = (event: PointerEvent) => {
       target.x = event.clientX;
       target.y = event.clientY;
       setVisible(1);
+      startLoop();
+      scheduleIdleStop();
       if (drawing && drawCtx) {
         drawCtx.strokeStyle = drawColorRef.current;
         drawCtx.lineWidth = 1.6;
@@ -303,8 +327,15 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
       }
     };
 
-    const handleLeave = () => setVisible(0);
-    const handleEnter = () => setVisible(1);
+    const handleLeave = () => {
+      setVisible(0);
+      stopLoop();
+    };
+    const handleEnter = () => {
+      setVisible(1);
+      startLoop();
+      scheduleIdleStop();
+    };
 
     const setHover = (isHover: boolean) => {
       if (!ringRef.current) return;
@@ -352,6 +383,7 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
     };
 
     const handlePointerDown = (event: PointerEvent) => {
+      startLoop();
       if (event.pointerType === 'touch') {
         const now = Date.now();
         const dist = Math.hypot(event.clientX - lastTapPos.x, event.clientY - lastTapPos.y);
@@ -390,12 +422,25 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
         return;
       }
       if (event.button === 2) drawing = false;
+      scheduleIdleStop();
     };
 
     const handlePointerCancel = () => {
       if (drawing) {
         drawing = false;
         scheduleFadeOut(2000);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      isHidden = document.hidden;
+      if (isHidden) {
+        stopLoop();
+        setVisible(0);
+      } else {
+        setVisible(1);
+        startLoop();
+        scheduleIdleStop();
       }
     };
 
@@ -411,10 +456,11 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
     window.addEventListener('pointercancel', handlePointerCancel);
     window.addEventListener('contextmenu', handleContextMenu);
     window.addEventListener('resize', resizeCanvas);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     document.addEventListener('pointerover', handlePointerOver);
     document.addEventListener('pointerout', handlePointerOut);
     setVisible(1);
-    rafId = window.requestAnimationFrame(update);
+    scheduleIdleStop();
 
     return () => {
       window.removeEventListener('pointermove', handleMove);
@@ -425,11 +471,13 @@ const CustomCursor = ({ theme }: { theme: 'light' | 'dark' }) => {
       window.removeEventListener('pointercancel', handlePointerCancel);
       window.removeEventListener('contextmenu', handleContextMenu);
       window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       document.removeEventListener('pointerover', handlePointerOver);
       document.removeEventListener('pointerout', handlePointerOut);
-      window.cancelAnimationFrame(rafId);
+      stopLoop();
       if (fadeRaf) window.cancelAnimationFrame(fadeRaf);
       if (fadeTimeout) window.clearTimeout(fadeTimeout);
+      if (idleTimeout) window.clearTimeout(idleTimeout);
     };
   }, []);
 
@@ -459,16 +507,26 @@ class SceneErrorBoundary extends React.Component<React.PropsWithChildren<{ fallb
   }
 }
 
-const SceneFallback = ({ theme }: { theme: 'light' | 'dark' }) => (
-  <div
-    className="absolute inset-0 pointer-events-none"
-    style={{
-      background: theme === 'dark'
-        ? 'radial-gradient(circle at 50% 45%, rgba(197,160,89,0.15) 0%, rgba(15,17,21,0.95) 65%)'
-        : 'radial-gradient(circle at 50% 45%, rgba(197,160,89,0.2) 0%, rgba(249,248,244,1) 65%)'
-    }}
-  />
-);
+const SceneFallback = ({ theme, onReady }: { theme: 'light' | 'dark'; onReady?: () => void }) => {
+  const calledRef = useRef(false);
+
+  useEffect(() => {
+    if (calledRef.current) return;
+    calledRef.current = true;
+    onReady?.();
+  }, [onReady]);
+
+  return (
+    <div
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        background: theme === 'dark'
+          ? 'radial-gradient(circle at 50% 45%, rgba(197,160,89,0.15) 0%, rgba(15,17,21,0.95) 65%)'
+          : 'radial-gradient(circle at 50% 45%, rgba(197,160,89,0.2) 0%, rgba(249,248,244,1) 65%)'
+      }}
+    />
+  );
+};
 
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -476,6 +534,10 @@ const App: React.FC = () => {
   const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
   const [transitionTheme, setTransitionTheme] = useState<'light' | 'dark' | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageReady, setPageReady] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
+  const [isLowPower, setIsLowPower] = useState(false);
+  const [isSceneActive, setIsSceneActive] = useState(true);
   const [canRender3d, setCanRender3d] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -484,8 +546,9 @@ const App: React.FC = () => {
   const footerRef = useRef<HTMLElement | null>(null);
   const scrollStateRef = useRef({ progress: 0, velocity: 0, direction: 1, fade: 1 });
   const themeTimeoutRef = useRef<number | null>(null);
-  const loadingTimeoutRef = useRef<number | null>(null);
-  const loadingMaxTimeoutRef = useRef<number | null>(null);
+  const sceneInvalidateRef = useRef<(() => void) | null>(null);
+  const sceneActiveRef = useRef(true);
+  const sceneIdleTimeoutRef = useRef<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const sfxRef = useRef<HTMLAudioElement | null>(null);
   const audioAutoplayRef = useRef(false);
@@ -511,6 +574,80 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    type NavigatorWithMemory = Navigator & { deviceMemory?: number };
+
+    const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    const reducedMotion = prefersReducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const deviceMemory = (navigator as NavigatorWithMemory).deviceMemory;
+    const hardwareConcurrency = navigator.hardwareConcurrency;
+
+    const lowPower = Boolean(
+      reducedMotion ||
+      coarsePointer ||
+      (typeof deviceMemory === 'number' && deviceMemory <= 4) ||
+      (typeof hardwareConcurrency === 'number' && hardwareConcurrency <= 4)
+    );
+
+    setIsLowPower(lowPower);
+    document.documentElement.classList.toggle('low-power', lowPower);
+
+    return () => {
+      document.documentElement.classList.remove('low-power');
+    };
+  }, [prefersReducedMotion]);
+
+  const setSceneInvalidate = useCallback((invalidate: (() => void) | null) => {
+    sceneInvalidateRef.current = invalidate;
+  }, []);
+
+  const markSceneActive = useCallback(() => {
+    if (!sceneActiveRef.current) {
+      sceneActiveRef.current = true;
+      setIsSceneActive(true);
+    }
+
+    if (sceneIdleTimeoutRef.current) window.clearTimeout(sceneIdleTimeoutRef.current);
+    sceneIdleTimeoutRef.current = window.setTimeout(() => {
+      sceneActiveRef.current = false;
+      setIsSceneActive(false);
+      sceneInvalidateRef.current?.();
+    }, 1000);
+
+    sceneInvalidateRef.current?.();
+  }, []);
+
+  const attemptAudioPlay = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const playPromise = audio.play();
+    if (playPromise) {
+      playPromise.catch(() => setIsAudioPlaying(false));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    markSceneActive();
+
+    const handleActivity = () => markSceneActive();
+    window.addEventListener('pointermove', handleActivity, { passive: true });
+    window.addEventListener('pointerdown', handleActivity, { passive: true });
+    window.addEventListener('resize', handleActivity);
+
+    return () => {
+      window.removeEventListener('pointermove', handleActivity);
+      window.removeEventListener('pointerdown', handleActivity);
+      window.removeEventListener('resize', handleActivity);
+      if (sceneIdleTimeoutRef.current) window.clearTimeout(sceneIdleTimeoutRef.current);
+    };
+  }, [markSceneActive]);
+
+  useEffect(() => {
+    sceneInvalidateRef.current?.();
+  }, [theme, isLowPower, prefersReducedMotion]);
+
+  useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = 0.12;
@@ -521,20 +658,13 @@ const App: React.FC = () => {
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
 
-    const tryPlay = () => {
-      const playPromise = audio.play();
-      if (playPromise) {
-        playPromise.catch(() => setIsAudioPlaying(false));
-      }
-    };
-
-    tryPlay();
+    attemptAudioPlay();
 
     return () => {
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
     };
-  }, []);
+  }, [attemptAudioPlay]);
 
   useEffect(() => {
     const sfx = sfxRef.current;
@@ -559,40 +689,46 @@ const App: React.FC = () => {
     const handleFirstInteraction = () => {
       if (audioAutoplayRef.current) return;
       audioAutoplayRef.current = true;
-      const audio = audioRef.current;
-      if (!audio) return;
-      const playPromise = audio.play();
-      if (playPromise) {
-        playPromise.catch(() => setIsAudioPlaying(false));
-      }
+      attemptAudioPlay();
     };
 
     window.addEventListener('pointerdown', handleFirstInteraction, { once: true });
     return () => window.removeEventListener('pointerdown', handleFirstInteraction);
-  }, []);
+  }, [attemptAudioPlay]);
+
+  useEffect(() => {
+    const handlePageShow = () => {
+      attemptAudioPlay();
+    };
+
+    window.addEventListener('pageshow', handlePageShow);
+    return () => window.removeEventListener('pageshow', handlePageShow);
+  }, [attemptAudioPlay]);
 
   useEffect(() => {
     let isMounted = true;
-    const startTime = Date.now();
+    if (typeof window === 'undefined') return undefined;
+
     const fontsReady = typeof document !== 'undefined' && 'fonts' in document
       ? document.fonts.ready
       : Promise.resolve();
 
-    loadingMaxTimeoutRef.current = window.setTimeout(() => {
-      if (isMounted) setIsLoading(false);
-    }, LOADER_MAX_DURATION);
-
-    Promise.resolve(fontsReady).then(() => {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, LOADER_MIN_DURATION - elapsed);
-      loadingTimeoutRef.current = window.setTimeout(() => {
-        if (isMounted) setIsLoading(false);
-      }, remaining);
-      if (loadingMaxTimeoutRef.current) {
-        window.clearTimeout(loadingMaxTimeoutRef.current);
-        loadingMaxTimeoutRef.current = null;
+    const loadPromise = new Promise<void>((resolve) => {
+      if (document.readyState === 'complete') {
+        resolve();
+        return;
       }
+      window.addEventListener('load', () => resolve(), { once: true });
     });
+
+    const nextFrame = () => new Promise<void>((resolve) => window.requestAnimationFrame(() => resolve()));
+
+    Promise.all([fontsReady, loadPromise])
+      .then(() => nextFrame())
+      .then(() => nextFrame())
+      .then(() => {
+        if (isMounted) setPageReady(true);
+      });
 
     return () => {
       isMounted = false;
@@ -600,10 +736,16 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!canRender3d) setSceneReady(true);
+  }, [canRender3d]);
+
+  useEffect(() => {
+    if (pageReady && sceneReady) setIsLoading(false);
+  }, [pageReady, sceneReady]);
+
+  useEffect(() => {
     return () => {
       if (themeTimeoutRef.current) window.clearTimeout(themeTimeoutRef.current);
-      if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
-      if (loadingMaxTimeoutRef.current) window.clearTimeout(loadingMaxTimeoutRef.current);
     };
   }, []);
 
@@ -649,6 +791,7 @@ const App: React.FC = () => {
       }
 
       lastScrollY = scrollY;
+      markSceneActive();
     };
 
     const onScroll = () => {
@@ -705,6 +848,7 @@ const App: React.FC = () => {
       }
     }
     setTheme(nextTheme);
+    markSceneActive();
     themeTimeoutRef.current = window.setTimeout(() => {
       setIsThemeTransitioning(false);
       setTransitionTheme(null);
@@ -750,10 +894,10 @@ const App: React.FC = () => {
         {transitionTheme && <ThemeWaterTransition toTheme={transitionTheme} />}
       </AnimatePresence>
 
-      <audio ref={audioRef} src={mossGrottoTrack} preload="auto" />
+       <audio ref={audioRef} src={mossGrottoTrack} preload="auto" autoPlay />
       <audio ref={sfxRef} src={themeSwitchTrack} preload="auto" />
 
-      <CustomCursor theme={theme} />
+       <CustomCursor theme={theme} disabled={isLoading || prefersReducedMotion || isLowPower} />
 
       <div className="relative">
         <div className="starfield-far" aria-hidden="true" />
@@ -770,15 +914,23 @@ const App: React.FC = () => {
           <span className="meteor meteor-4 meteor-hero" />
         </div>
         <div ref={sceneWrapperRef} className="site-3d" aria-hidden="true">
-          {canRender3d ? (
-            <Suspense fallback={<div className="absolute inset-0 bg-nobel-cream dark:bg-nobel-dark transition-colors duration-500" />}>
-              <SceneErrorBoundary fallback={<SceneFallback theme={theme} />}>
-                <HeroScene theme={theme} scrollState={scrollStateRef} reducedMotion={prefersReducedMotion} />
+            {canRender3d ? (
+              <Suspense fallback={<div className="absolute inset-0 bg-nobel-cream dark:bg-nobel-dark transition-colors duration-500" />}>
+              <SceneErrorBoundary fallback={<SceneFallback theme={theme} onReady={() => setSceneReady(true)} />}>
+                <HeroScene
+                  theme={theme}
+                  scrollState={scrollStateRef}
+                  reducedMotion={prefersReducedMotion}
+                  lowPower={isLowPower}
+                  active={isSceneActive && !isLowPower && !prefersReducedMotion}
+                  onReady={() => setSceneReady(true)}
+                  onInvalidateReady={setSceneInvalidate}
+                />
               </SceneErrorBoundary>
-            </Suspense>
-          ) : (
-            <SceneFallback theme={theme} />
-          )}
+              </Suspense>
+            ) : (
+              <SceneFallback theme={theme} onReady={() => setSceneReady(true)} />
+            )}
         </div>
         <div className="relative z-10">
           {/* Navigation */}

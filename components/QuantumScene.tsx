@@ -4,14 +4,46 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useMemo, useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Sphere, Torus, Cylinder, Environment, Box } from '@react-three/drei';
+import React, { useMemo, useRef, Suspense, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Float, MeshDistortMaterial, Sphere, Torus, Cylinder, Environment, Box, useProgress } from '@react-three/drei';
 import * as THREE from 'three';
 
 type ThemeMode = 'light' | 'dark';
 type ScrollState = { progress: number; velocity: number; direction: number; fade: number };
 type ScrollStateRef = React.MutableRefObject<ScrollState>;
+
+const SceneLoadWatcher = ({ onReady }: { onReady?: () => void }) => {
+  const { active, progress } = useProgress();
+  const calledRef = useRef(false);
+  const settledFramesRef = useRef(0);
+
+  useFrame(() => {
+    if (calledRef.current) return;
+    if (active || progress < 100) {
+      settledFramesRef.current = 0;
+      return;
+    }
+
+    settledFramesRef.current += 1;
+    if (settledFramesRef.current < 6) return;
+    calledRef.current = true;
+    onReady?.();
+  });
+
+  return null;
+};
+
+const SceneInvalidateBridge = ({ onInvalidateReady }: { onInvalidateReady?: (invalidate: (() => void) | null) => void }) => {
+  const { invalidate } = useThree();
+
+  useEffect(() => {
+    onInvalidateReady?.(invalidate);
+    return () => onInvalidateReady?.(null);
+  }, [invalidate, onInvalidateReady]);
+
+  return null;
+};
 
 const QuantumParticle = ({ position, color, scale = 1 }: { position: [number, number, number]; color: string; scale?: number }) => {
   const ref = useRef<THREE.Mesh>(null);
@@ -235,25 +267,30 @@ const ScrollRig = ({ scrollState, reducedMotion, isDark }: { scrollState: Scroll
   );
 };
 
-export const HeroScene: React.FC<{ theme: ThemeMode; scrollState: ScrollStateRef; reducedMotion?: boolean }> = ({ theme, scrollState, reducedMotion = false }) => {
+export const HeroScene: React.FC<{ theme: ThemeMode; scrollState: ScrollStateRef; reducedMotion?: boolean; lowPower?: boolean; active?: boolean; onReady?: () => void; onInvalidateReady?: (invalidate: (() => void) | null) => void }> = ({ theme, scrollState, reducedMotion = false, lowPower = false, active = true, onReady, onInvalidateReady }) => {
   const isDark = theme === 'dark';
   
   return (
     <div className="absolute inset-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 7], fov: 40 }}
-        dpr={[1, 1.5]}
-        gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
+        dpr={reducedMotion || lowPower ? 1 : [1, 1.5]}
+        gl={{ antialias: !(reducedMotion || lowPower), powerPreference: 'high-performance', alpha: true }}
+        frameloop={active ? 'always' : 'demand'}
         style={{ background: 'transparent' }}
       >
         <ambientLight intensity={isDark ? 0.2 : 0.6} />
         <pointLight position={[10, 10, 10]} intensity={isDark ? 1.5 : 1} color={isDark ? "#C5A059" : "#fff"} />
 
+        <SceneLoadWatcher onReady={onReady} />
+        <SceneInvalidateBridge onInvalidateReady={onInvalidateReady} />
         <ScrollRig scrollState={scrollState} reducedMotion={reducedMotion} isDark={isDark} />
 
-        <Suspense fallback={null}>
-          <Environment preset={isDark ? "night" : "city"} />
-        </Suspense>
+        {!reducedMotion && !lowPower && (
+          <Suspense fallback={null}>
+            <Environment preset={isDark ? "night" : "city"} />
+          </Suspense>
+        )}
       </Canvas>
     </div>
   );
