@@ -612,7 +612,7 @@ const App: React.FC = () => {
       sceneActiveRef.current = false;
       setIsSceneActive(false);
       sceneInvalidateRef.current?.();
-    }, 1000);
+    }, 1800);
 
     sceneInvalidateRef.current?.();
   }, []);
