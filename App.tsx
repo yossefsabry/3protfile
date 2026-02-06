@@ -546,6 +546,7 @@ const App: React.FC = () => {
   const footerRef = useRef<HTMLElement | null>(null);
   const scrollStateRef = useRef({ progress: 0, velocity: 0, direction: 1, fade: 1 });
   const themeTimeoutRef = useRef<number | null>(null);
+  const loaderTimeoutRef = useRef<number | null>(null);
   const sceneInvalidateRef = useRef<(() => void) | null>(null);
   const sceneActiveRef = useRef(true);
   const sceneIdleTimeoutRef = useRef<number | null>(null);
@@ -744,8 +745,24 @@ const App: React.FC = () => {
   }, [pageReady, sceneReady]);
 
   useEffect(() => {
+    if (!pageReady || sceneReady) {
+      if (loaderTimeoutRef.current) window.clearTimeout(loaderTimeoutRef.current);
+      return undefined;
+    }
+
+    loaderTimeoutRef.current = window.setTimeout(() => {
+      setSceneReady(true);
+    }, 10000);
+
+    return () => {
+      if (loaderTimeoutRef.current) window.clearTimeout(loaderTimeoutRef.current);
+    };
+  }, [pageReady, sceneReady]);
+
+  useEffect(() => {
     return () => {
       if (themeTimeoutRef.current) window.clearTimeout(themeTimeoutRef.current);
+      if (loaderTimeoutRef.current) window.clearTimeout(loaderTimeoutRef.current);
     };
   }, []);
 

@@ -13,14 +13,18 @@ type ThemeMode = 'light' | 'dark';
 type ScrollState = { progress: number; velocity: number; direction: number; fade: number };
 type ScrollStateRef = React.MutableRefObject<ScrollState>;
 
-const SceneLoadWatcher = ({ onReady }: { onReady?: () => void }) => {
-  const { active, progress } = useProgress();
+const SceneLoadWatcher = ({ onReady, reducedMotion, lowPower }: { onReady?: () => void; reducedMotion: boolean; lowPower: boolean }) => {
+  const { active, progress, total } = useProgress();
   const calledRef = useRef(false);
   const settledFramesRef = useRef(0);
 
   useFrame(() => {
     if (calledRef.current) return;
-    if (active || progress < 100) {
+    const assetsLoaded = total === 0 || progress >= 100;
+    const allowEarlyReady = reducedMotion || lowPower || total === 0;
+    const readyToSettle = !active && (assetsLoaded || allowEarlyReady);
+
+    if (!readyToSettle) {
       settledFramesRef.current = 0;
       return;
     }
@@ -282,7 +286,7 @@ export const HeroScene: React.FC<{ theme: ThemeMode; scrollState: ScrollStateRef
         <ambientLight intensity={isDark ? 0.2 : 0.6} />
         <pointLight position={[10, 10, 10]} intensity={isDark ? 1.5 : 1} color={isDark ? "#C5A059" : "#fff"} />
 
-        <SceneLoadWatcher onReady={onReady} />
+        <SceneLoadWatcher onReady={onReady} reducedMotion={reducedMotion} lowPower={lowPower} />
         <SceneInvalidateBridge onInvalidateReady={onInvalidateReady} />
         <ScrollRig scrollState={scrollState} reducedMotion={reducedMotion} isDark={isDark} />
 
