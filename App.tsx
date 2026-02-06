@@ -537,6 +537,10 @@ const App: React.FC = () => {
   const [pageReady, setPageReady] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
   const [isLowPower, setIsLowPower] = useState(false);
+  const [isPhone, setIsPhone] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(pointer: coarse)').matches;
+  });
   const [isSceneActive, setIsSceneActive] = useState(true);
   const [canRender3d, setCanRender3d] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -562,6 +566,7 @@ const App: React.FC = () => {
     }
     return 'dark';
   });
+  const shouldRender3d = canRender3d && !isPhone;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -582,6 +587,8 @@ const App: React.FC = () => {
     const reducedMotion = prefersReducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const deviceMemory = (navigator as NavigatorWithMemory).deviceMemory;
     const hardwareConcurrency = navigator.hardwareConcurrency;
+
+    setIsPhone(coarsePointer);
 
     const lowPower = Boolean(
       reducedMotion ||
@@ -619,16 +626,18 @@ const App: React.FC = () => {
   }, []);
 
   const attemptAudioPlay = useCallback(() => {
+    if (isPhone) return;
     const audio = audioRef.current;
     if (!audio) return;
     const playPromise = audio.play();
     if (playPromise) {
       playPromise.catch(() => setIsAudioPlaying(false));
     }
-  }, []);
+  }, [isPhone]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
+    if (!shouldRender3d) return undefined;
     markSceneActive();
 
     const handleActivity = () => markSceneActive();
@@ -642,7 +651,7 @@ const App: React.FC = () => {
       window.removeEventListener('resize', handleActivity);
       if (sceneIdleTimeoutRef.current) window.clearTimeout(sceneIdleTimeoutRef.current);
     };
-  }, [markSceneActive]);
+  }, [markSceneActive, shouldRender3d]);
 
   useEffect(() => {
     sceneInvalidateRef.current?.();
@@ -737,8 +746,8 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!canRender3d) setSceneReady(true);
-  }, [canRender3d]);
+    if (!shouldRender3d) setSceneReady(true);
+  }, [shouldRender3d]);
 
   useEffect(() => {
     if (pageReady && sceneReady) setIsLoading(false);
@@ -911,8 +920,8 @@ const App: React.FC = () => {
         {transitionTheme && <ThemeWaterTransition toTheme={transitionTheme} />}
       </AnimatePresence>
 
-       <audio ref={audioRef} src={mossGrottoTrack} preload="auto" autoPlay />
-      <audio ref={sfxRef} src={themeSwitchTrack} preload="auto" />
+        <audio ref={audioRef} src={mossGrottoTrack} preload={isPhone ? 'none' : 'auto'} autoPlay={!isPhone} />
+      <audio ref={sfxRef} src={themeSwitchTrack} preload={isPhone ? 'none' : 'auto'} />
 
        <CustomCursor theme={theme} disabled={isLoading || prefersReducedMotion || isLowPower} />
 
@@ -931,7 +940,7 @@ const App: React.FC = () => {
           <span className="meteor meteor-4 meteor-hero" />
         </div>
         <div ref={sceneWrapperRef} className="site-3d" aria-hidden="true">
-            {canRender3d ? (
+            {shouldRender3d ? (
               <Suspense fallback={<div className="absolute inset-0 bg-nobel-cream dark:bg-nobel-dark transition-colors duration-500" />}>
               <SceneErrorBoundary fallback={<SceneFallback theme={theme} onReady={() => setSceneReady(true)} />}>
                 <HeroScene

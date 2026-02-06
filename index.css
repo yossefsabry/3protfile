@@ -63,6 +63,19 @@
   --glow-opacity: 0.3;
 }
 
+.low-power .starfield,
+.low-power .starfield-far,
+.low-power .starfield-near,
+.low-power .nebula,
+.low-power .section-aurora {
+  animation: none;
+}
+
+.low-power .meteor {
+  animation: none;
+  opacity: 0;
+}
+
 .starfield {
   position: fixed;
   inset: 0;
