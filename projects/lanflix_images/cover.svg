@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#150B10" />
+      <stop offset="100%" stop-color="#2B151C" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F87171" />
+      <stop offset="100%" stop-color="#C5A059" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)" />
+  <rect x="90" y="90" width="1020" height="540" rx="34" fill="#1B0F15" stroke="#3A1E27" stroke-width="2" />
+  <rect x="140" y="150" width="420" height="240" rx="22" fill="#24121A" />
+  <rect x="600" y="150" width="460" height="120" rx="20" fill="#2A151E" />
+  <rect x="600" y="300" width="460" height="100" rx="20" fill="#1C0F15" />
+  <rect x="140" y="430" width="920" height="150" rx="26" fill="#12080C" />
+  <rect x="170" y="210" width="220" height="8" rx="6" fill="url(#accent)" />
+  <text x="170" y="195" fill="#F9F8F4" font-family="Playfair Display, serif" font-size="42" font-weight="600">lanflix</text>
+  <text x="170" y="235" fill="#F5B5B5" font-family="Inter, sans-serif" font-size="14" letter-spacing="4">STREAMING / SYSTEMS</text>
+  <text x="170" y="490" fill="#EDE2E7" font-family="Inter, sans-serif" font-size="16">Local-first streaming for LAN libraries</text>
+</svg>

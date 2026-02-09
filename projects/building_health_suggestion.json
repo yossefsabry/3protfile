@@ -1,0 +1,30 @@
+{
+  "slug": "building_health_suggestion",
+  "title": "Building Health Suggestion",
+  "status": "open source",
+  "year": "2024",
+  "category": "AI / Structural",
+  "role": "AI pipeline + reporting",
+  "tagline": "AI-driven building health suggestions and structural insights.",
+  "description": "Pipeline that ingests structural signals, scores anomalies, and generates maintenance-ready recommendations. Designed for rapid inspections and clean handoff to engineering teams.",
+  "highlights": [
+    "Sensor fusion for load, vibration, and moisture",
+    "Anomaly scoring with explainable thresholds",
+    "Auto-generated PDF reports with trend charts"
+  ],
+  "stack": ["Python", "PyTorch", "FastAPI", "PostgreSQL", "Pandas"],
+  "typing": [
+    "signals: vibration + load + moisture",
+    "anomaly_score > 0.78 => alert",
+    "report: pdf + dashboard"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/building_health_suggestion"
+    }
+  ],
+  "imageFolder": "building_health_suggestion_images",
+  "images": ["cover.svg", "detail.svg"],
+  "order": 5
+}

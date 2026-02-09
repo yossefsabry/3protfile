@@ -1,0 +1,30 @@
+{
+  "slug": "lanflix",
+  "title": "lanflix",
+  "status": "open source",
+  "year": "2024",
+  "category": "Streaming / Systems",
+  "role": "Local media platform",
+  "tagline": "Local-first streaming platform for LAN media libraries.",
+  "description": "Self-hosted streaming experience with fast indexing, multi-device playback, and clean UI for local networks. Focused on low-latency browsing and offline-friendly playback.",
+  "highlights": [
+    "Fast metadata indexing and search",
+    "Adaptive streaming over LAN",
+    "Multi-device sessions with watch sync"
+  ],
+  "stack": ["TypeScript", "React", "Node.js", "FFmpeg", "SQLite"],
+  "typing": [
+    "library_scan: 12k files",
+    "stream: hls + local",
+    "latency_p95: 65ms"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/lanflix"
+    }
+  ],
+  "imageFolder": "lanflix_images",
+  "images": ["cover.svg", "detail.svg"],
+  "order": 4
+}

@@ -909,7 +909,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen text-stone-800 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-white overflow-x-hidden">
+    <div className="no-radius min-h-screen text-stone-800 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-white overflow-x-hidden">
 
       <AnimatePresence>
         {isLoading && <LoadingScreen theme={theme} />}
@@ -1053,7 +1053,7 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <header className="relative h-screen flex items-center justify-center overflow-hidden">
+      <header className="relative min-h-screen flex items-start lg:items-center justify-center overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16">
         <div className="relative z-10 container mx-auto px-6 text-center">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -1068,10 +1068,10 @@ const App: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold leading-none mb-8 text-stone-950 dark:text-white tracking-tight drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]"
+            className="font-serif text-[clamp(2.8rem,6vw,8.5rem)] font-bold leading-none mb-8 text-stone-950 dark:text-white tracking-tight drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]"
           >
             Yossef Sabry
-            <span className="hero-scan-text italic font-light text-xl sm:text-2xl md:text-3xl lg:text-5xl block w-fit mx-auto mt-5 sm:mt-6 tracking-normal drop-shadow-[0_3px_10px_rgba(0,0,0,0.25)] px-4 sm:px-5 py-2 rounded-full border border-white/60 dark:border-white/10 bg-white/70 dark:bg-black/40 backdrop-blur-md">Software Engineer | AI Engineer</span>
+            <span className="hero-scan-text italic font-light text-[clamp(1.05rem,2.2vw,3rem)] block w-fit mx-auto mt-5 sm:mt-6 tracking-normal drop-shadow-[0_3px_10px_rgba(0,0,0,0.25)] px-4 sm:px-5 py-2 rounded-full border border-white/60 dark:border-white/10 bg-white/70 dark:bg-black/40 backdrop-blur-md">Software Engineer | AI Engineer</span>
           </motion.h1>
           
           <motion.p 
@@ -1159,7 +1159,7 @@ const App: React.FC = () => {
                             </li>
                         </ul>
                     </div>
-                    <div className="relative w-full max-w-5xl">
+                    <div className="relative w-full max-w-[92rem] text-left">
                         <div className="absolute -inset-4 bg-nobel-gold/5 blur-3xl rounded-full"></div>
                         <SurfaceCodeDiagram />
                     </div>

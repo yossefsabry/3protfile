@@ -1,0 +1,30 @@
+{
+  "slug": "chatbot_torch",
+  "title": "chatbot_torch",
+  "status": "open source",
+  "year": "2023",
+  "category": "AI / NLP",
+  "role": "Chatbot assistant",
+  "tagline": "Full chatbot assistant built with PyTorch workflows.",
+  "description": "Multi-intent conversation agent with data preprocessing, training loops, and low-latency inference. Designed to ship as an API-first assistant with production-ready logging.",
+  "highlights": [
+    "Trainer + evaluation scripts with metrics reports",
+    "Intent classification with fallback routing",
+    "Inference API with streaming-ready responses"
+  ],
+  "stack": ["PyTorch", "Python", "NLP", "FastAPI", "Docker"],
+  "typing": [
+    "intent_confidence: 0.91",
+    "latency_p95: 110ms",
+    "pipeline: tokenize -> encode -> rank"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/chatbot_torch"
+    }
+  ],
+  "imageFolder": "chatbot_torch_images",
+  "images": ["cover.svg", "detail.svg"],
+  "order": 6
+}

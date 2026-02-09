@@ -1,0 +1,30 @@
+{
+  "slug": "inguide",
+  "title": "inguide",
+  "status": "open source",
+  "year": "2024",
+  "category": "Maps / AI",
+  "role": "City guide platform",
+  "tagline": "AI-assisted city guide with map-first exploration.",
+  "description": "Location-aware guide for curated routes, local recommendations, and rapid map rendering. Maplibre powers the geospatial layer for smooth interactions and flexible styling.",
+  "highlights": [
+    "Maplibre-powered vector rendering",
+    "Route planning with POI clustering",
+    "AI summaries for venues and districts"
+  ],
+  "stack": ["TypeScript", "React", "Maplibre", "PostGIS", "AI"],
+  "typing": [
+    "tiles: vector + raster",
+    "poi_count: 3.2k",
+    "routes: multi-stop"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/inguide"
+    }
+  ],
+  "imageFolder": "inguide_images",
+  "images": ["cover.svg", "detail.svg"],
+  "order": 2
+}

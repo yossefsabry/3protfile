@@ -435,10 +435,38 @@
   }
 }
 
+.typing-line {
+  display: block;
+  width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 1px solid currentColor;
+  animation: typingLine 1.8s steps(28, end) forwards;
+  animation-delay: var(--delay, 0s);
+  will-change: width;
+}
+
+.typing-line + .typing-line {
+  margin-top: 4px;
+}
+
+@keyframes typingLine {
+  to {
+    width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-scan-text {
     animation: none;
     background-position: 50% 50%;
+  }
+
+  .typing-line {
+    width: auto;
+    border-right: none;
+    animation: none;
   }
 
   .starfield {
@@ -556,4 +584,10 @@
   body {
     cursor: auto;
   }
+}
+
+.no-radius *,
+.no-radius *::before,
+.no-radius *::after {
+  border-radius: 0 !important;
 }

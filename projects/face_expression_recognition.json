@@ -1,0 +1,30 @@
+{
+  "slug": "face_expression_recognition",
+  "title": "Face Expression Recognition",
+  "status": "open source",
+  "year": "2022",
+  "category": "CV / ML",
+  "role": "Facial expression pipeline",
+  "tagline": "SVM-based facial expression recognition pipeline.",
+  "description": "Feature extraction flow for facial landmarks and texture, trained with SVM classification for fast inference. Built to run on constrained devices with batch evaluation tooling.",
+  "highlights": [
+    "HOG + landmark features for robust signals",
+    "Balanced dataset splits with clear evaluation",
+    "Confusion matrix and per-class metrics"
+  ],
+  "stack": ["Python", "Sklearn", "OpenCV", "NumPy", "Computer Vision"],
+  "typing": [
+    "accuracy: 92.1%",
+    "model: svm-rbf",
+    "frame_time: 16ms"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/face_expression_recognition"
+    }
+  ],
+  "imageFolder": "face_expression_recognition_images",
+  "images": ["cover.svg", "detail.svg"],
+  "order": 3
+}

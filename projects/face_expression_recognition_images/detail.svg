@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1317" />
+      <stop offset="100%" stop-color="#0F1D22" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C5A059" />
+      <stop offset="100%" stop-color="#7BDCB5" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)" />
+  <rect x="120" y="110" width="960" height="500" rx="30" fill="#0F1A1F" stroke="#24343B" stroke-width="2" />
+  <rect x="160" y="160" width="420" height="200" rx="20" fill="#15252B" />
+  <rect x="610" y="160" width="430" height="80" rx="18" fill="#17262D" />
+  <rect x="610" y="260" width="430" height="100" rx="18" fill="#101E24" />
+  <rect x="160" y="390" width="880" height="150" rx="24" fill="#0B171C" />
+  <rect x="190" y="210" width="200" height="8" rx="6" fill="url(#accent)" />
+  <text x="190" y="195" fill="#E5E7EB" font-family="Inter, sans-serif" font-size="14" letter-spacing="3">FEATURES</text>
+  <text x="190" y="450" fill="#C5A059" font-family="Inter, sans-serif" font-size="14" letter-spacing="3">MODEL METRICS</text>
+  <text x="190" y="485" fill="#9CA3AF" font-family="Inter, sans-serif" font-size="14">Precision 0.92 / Recall 0.90</text>
+  <text x="190" y="515" fill="#9CA3AF" font-family="Inter, sans-serif" font-size="14">Confusion matrix with 6 classes</text>
+</svg>

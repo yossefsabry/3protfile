@@ -1,0 +1,30 @@
+{
+  "slug": "feedback-server",
+  "title": "feedback-server",
+  "status": "open source",
+  "year": "2024",
+  "category": "Backend / Systems",
+  "role": "High-throughput API",
+  "tagline": "High-throughput Go backend for product feedback systems.",
+  "description": "Low-latency service for ingesting feedback, scoring sentiment, and streaming analytics. Tuned for queue-backed burst traffic and clean observability.",
+  "highlights": [
+    "Queue-backed ingest with retry safeguards",
+    "Streaming aggregation for dashboards",
+    "Prometheus metrics and tracing hooks"
+  ],
+  "stack": ["Go", "PostgreSQL", "Redis", "gRPC", "Docker"],
+  "typing": [
+    "throughput: 9k req/min",
+    "queue: buffered + retry",
+    "latency_p95: 38ms"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/feedback-server"
+    }
+  ],
+  "imageFolder": "feedback-server_images",
+  "images": ["cover.svg", "detail.svg"],
+  "order": 7
+}

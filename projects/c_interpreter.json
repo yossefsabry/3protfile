@@ -1,0 +1,30 @@
+{
+  "slug": "c_interpreter",
+  "title": "c_interpreter",
+  "status": "open source",
+  "year": "2022",
+  "category": "Systems / Compilers",
+  "role": "Interpreter experiment",
+  "tagline": "C language interpreter experiment and parsing core.",
+  "description": "Parser + interpreter focused on a C subset with expression evaluation, symbol tables, and clean error reporting. Built as a foundation for future compiler work.",
+  "highlights": [
+    "Recursive descent parser with clear tokens",
+    "Runtime environment + scope handling",
+    "Sample program tests and diagnostics"
+  ],
+  "stack": ["C", "Compilers", "Parsing", "Linux", "CLI"],
+  "typing": [
+    "parse: tokens -> ast",
+    "eval: ast -> runtime",
+    "errors: line/col"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/c_interpreter"
+    }
+  ],
+  "imageFolder": "c_interpreter_images",
+  "images": ["cover.svg", "detail.svg"],
+  "order": 8
+}
