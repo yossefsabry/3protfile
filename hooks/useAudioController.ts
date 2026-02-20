@@ -6,8 +6,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { musicTracks, themeSwitchTrack } from '../data/audio';
 
-export const useAudioController = (isPhone: boolean) => {
+export const useAudioController = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [needsAudioUnlock, setNeedsAudioUnlock] = useState(false);
   const [selectedTrackId, setSelectedTrackId] = useState(() => {
     if (typeof window === 'undefined') return musicTracks[0]?.id || '';
     const saved = localStorage.getItem('bg-music-track');
@@ -26,22 +27,32 @@ export const useAudioController = (isPhone: boolean) => {
   const activeTrackUrl = activeTrack?.url || '';
 
   const attemptAudioPlay = useCallback(() => {
-    if (isPhone) return;
     const audio = audioRef.current;
     if (!audio) return;
     const playPromise = audio.play();
     if (playPromise) {
-      playPromise.catch(() => setIsAudioPlaying(false));
+      playPromise
+        .then(() => setNeedsAudioUnlock(false))
+        .catch(() => {
+          setIsAudioPlaying(false);
+          setNeedsAudioUnlock(true);
+        });
     }
-  }, [isPhone]);
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = 0.12;
     audio.loop = true;
+    audio.muted = false;
+    audio.defaultMuted = false;
 
-    const handlePlay = () => setIsAudioPlaying(true);
+    const handlePlay = () => {
+      audioAutoplayRef.current = true;
+      setIsAudioPlaying(true);
+      setNeedsAudioUnlock(false);
+    };
     const handlePause = () => setIsAudioPlaying(false);
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
@@ -63,15 +74,17 @@ export const useAudioController = (isPhone: boolean) => {
     const audio = audioRef.current;
     if (!audio || !activeTrackUrl) return;
     const wasPlaying = !audio.paused;
-    if (!wasPlaying && isPhone) return;
     audio.load();
-    if (wasPlaying && !isPhone) {
+    if (wasPlaying) {
       const playPromise = audio.play();
       if (playPromise) {
-        playPromise.catch(() => setIsAudioPlaying(false));
+        playPromise.catch(() => {
+          setIsAudioPlaying(false);
+          setNeedsAudioUnlock(true);
+        });
       }
     }
-  }, [activeTrackUrl, isPhone]);
+  }, [activeTrackUrl]);
 
   useEffect(() => {
     const sfx = sfxRef.current;
@@ -95,11 +108,10 @@ export const useAudioController = (isPhone: boolean) => {
   useEffect(() => {
     const handleFirstInteraction = () => {
       if (audioAutoplayRef.current) return;
-      audioAutoplayRef.current = true;
       attemptAudioPlay();
     };
 
-    window.addEventListener('pointerdown', handleFirstInteraction, { once: true });
+    window.addEventListener('pointerdown', handleFirstInteraction);
     return () => window.removeEventListener('pointerdown', handleFirstInteraction);
   }, [attemptAudioPlay]);
 
@@ -116,15 +128,12 @@ export const useAudioController = (isPhone: boolean) => {
     const audio = audioRef.current;
     if (!audio) return;
     if (audio.paused) {
-      const playPromise = audio.play();
-      if (playPromise) {
-        playPromise.catch(() => setIsAudioPlaying(false));
-      }
+      attemptAudioPlay();
     } else {
       resumeAfterSfxRef.current = false;
       audio.pause();
     }
-  }, []);
+  }, [attemptAudioPlay]);
 
   const playThemeSwitchSfx = useCallback(() => {
     const bg = audioRef.current;
@@ -145,6 +154,7 @@ export const useAudioController = (isPhone: boolean) => {
     audioRef,
     sfxRef,
     isAudioPlaying,
+    needsAudioUnlock,
     toggleAudio,
     tracks: musicTracks,
     activeTrackId: activeTrack?.id || '',
@@ -152,5 +162,6 @@ export const useAudioController = (isPhone: boolean) => {
     activeTrackUrl,
     sfxUrl: themeSwitchTrack,
     playThemeSwitchSfx,
+    requestAudioStart: attemptAudioPlay,
   };
 };

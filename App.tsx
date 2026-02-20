@@ -34,7 +34,7 @@ const App: React.FC = () => {
   const { isSceneActive, markSceneActive, setSceneInvalidate, invalidateScene } = useSceneActivity(shouldRender3d);
   const { scrollStateRef, sceneWrapperRef, meteorWrapperRef, footerRef } = useSceneScroll(markSceneActive);
   const { isLoading, setSceneReady } = useLoadingSequence(shouldRender3d);
-  const audio = useAudioController(isPhone);
+  const audio = useAudioController();
 
   const { theme, isThemeTransitioning, transitionTheme, toggleTheme } = useThemeTransition({
     isBlocked: isLoading,
@@ -74,8 +74,20 @@ const App: React.FC = () => {
         {transitionTheme && <ThemeWaterTransition toTheme={transitionTheme} />}
       </AnimatePresence>
 
-      <audio ref={audio.audioRef} src={audio.activeTrackUrl} preload={isPhone ? 'none' : 'auto'} autoPlay={!isPhone} />
-      <audio ref={audio.sfxRef} src={audio.sfxUrl} preload={isPhone ? 'none' : 'auto'} />
+      <audio ref={audio.audioRef} src={audio.activeTrackUrl} preload="auto" autoPlay playsInline />
+      <audio ref={audio.sfxRef} src={audio.sfxUrl} preload="auto" playsInline />
+
+      {audio.needsAudioUnlock && (
+        <div className="fixed bottom-6 right-6 z-[60]">
+          <button
+            type="button"
+            onClick={audio.requestAudioStart}
+            className="flex items-center gap-3 rounded-full bg-stone-900/90 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white shadow-2xl transition-transform hover:-translate-y-0.5 dark:bg-white/90 dark:text-stone-900"
+          >
+            Enable Sound
+          </button>
+        </div>
+      )}
 
       <CustomCursor theme={theme} disabled={isLoading || prefersReducedMotion || isLowPower} />
 
