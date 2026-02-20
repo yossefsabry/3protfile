@@ -15,7 +15,7 @@ export const TransformerDecoderDiagram = memo(() => (
         <p className="text-sm text-stone-400">Where I push for depth and polish.</p>
       </div>
       <div className="px-3 py-1 text-[10px] uppercase tracking-[0.4em] text-nobel-gold border border-stone-700 rounded-full">
-        TECH GEEK
+      :D
       </div>
     </div>
     <div className="grid gap-6">

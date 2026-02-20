@@ -15,7 +15,8 @@ export const ContactSection = () => (
       </div>
       <div className="flex flex-col md:flex-row gap-10 justify-center items-stretch flex-wrap">
         <InfoCard title="GitHub" detail="github.com/yossefsabry" href="https://github.com/yossefsabry" delay="0s" />
-        <InfoCard title="Website" detail="yossefsabry.me" href="https://yossefsabry.me" delay="0.1s" />
+        {/* comment for now because i gone use only one website for protfile */} 
+        {/* <InfoCard title="Website" detail="yossefsabry.me" href="https://yossefsabry.me" delay="0.1s" /> */}
         <InfoCard title="Email" detail="yossefsabry66@gmail.com" href="https://mail.google.com/mail/?view=cm&to=yossefsabry66@gmail.com" delay="0.2s" />
         <InfoCard title="Notes & Blog" detail="0xyon3.netlify.app" href="https://0xyon3.netlify.app" delay="0.3s" />
       </div>

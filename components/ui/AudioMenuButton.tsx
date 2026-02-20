@@ -5,7 +5,7 @@
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Volume2, VolumeX } from 'lucide-react';
+import { List, Volume2, VolumeX } from 'lucide-react';
 import type { MusicTrack } from '../../data/audio';
 
 type AudioMenuButtonProps = {
@@ -91,6 +91,11 @@ export const AudioMenuButton = ({
     setMenuOpen(false);
   };
 
+  const handleToggleMenu = () => {
+    if (!tracks.length) return;
+    setMenuOpen((prev) => !prev);
+  };
+
   useEffect(() => {
     return () => {
       clearHoverTimer();
@@ -118,7 +123,7 @@ export const AudioMenuButton = ({
   }, [menuOpen]);
 
   return (
-    <div ref={wrapperRef} className="relative">
+    <div ref={wrapperRef} className="relative flex items-center gap-2">
       <button
         type="button"
         onClick={handleClick}
@@ -129,11 +134,19 @@ export const AudioMenuButton = ({
         onPointerCancel={handlePointerCancel}
         className={buttonClassName}
         aria-label={isAudioPlaying ? 'Pause Music' : 'Play Music'}
+      >
+        {isAudioPlaying ? <Volume2 size={iconSize} /> : <VolumeX size={iconSize} />}
+      </button>
+      <button
+        type="button"
+        onClick={handleToggleMenu}
+        className={buttonClassName}
+        aria-label="Choose Track"
         aria-haspopup="listbox"
         aria-expanded={menuOpen}
         aria-controls={`track-menu-${listId}`}
       >
-        {isAudioPlaying ? <Volume2 size={iconSize} /> : <VolumeX size={iconSize} />}
+        <List size={iconSize} />
       </button>
       <AnimatePresence>
         {menuOpen && (

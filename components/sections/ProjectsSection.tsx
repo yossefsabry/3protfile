@@ -13,11 +13,12 @@ export const ProjectsSection = () => (
       <div className="flex flex-col items-center text-center gap-12 md:gap-16">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-3 px-4 py-2 bg-white dark:bg-stone-800 text-nobel-gold text-xs font-black tracking-widest uppercase rounded-2xl mb-6 border border-stone-100 dark:border-stone-700 shadow-sm">
-            <BookOpen size={16} /> SELECTED PROJECTS
+            <BookOpen size={16} /> PROJECTS
           </div>
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl mb-6 text-stone-900 dark:text-white">Complex builds, clean execution</h2>
+          <h2 className="font-serif text-2xl sm:text-4xl md:text-4xl mb-6 text-stone-900 dark:text-white">
+          These are the projects that pushed me into deeper systems, AI workflows, and performance-focused tooling.
+              </h2>
           <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 mb-8 leading-relaxed font-light">
-            These are the projects that pushed me into deeper systems, AI workflows, and performance-focused tooling.
           </p>
           <ul className="mx-auto max-w-xl space-y-4 text-stone-700 dark:text-stone-300">
             <li className="flex items-start justify-center gap-4 text-center">

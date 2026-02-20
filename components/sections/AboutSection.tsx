@@ -21,7 +21,7 @@ export const AboutSection = () => (
           <span className="text-5xl sm:text-6xl md:text-7xl float-left mr-4 mt-[-4px] font-serif text-nobel-gold font-bold">I</span> am Yossef from Egypt. I build ambitious software across AI, systems, complex backends, and graphics.
         </p>
         <p>
-          I like projects that feel hard: interpreters, AI tooling, graphics systems, and backend services that hold up under pressure.
+          I enjoy building complex systems ;)
         </p>
         <div className="p-8 bg-stone-50 dark:bg-stone-900/40 rounded-3xl border border-stone-100 dark:border-stone-800">
           <p className="text-stone-900 dark:text-stone-100 font-medium mb-2">Current focus:</p>
