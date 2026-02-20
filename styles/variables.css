@@ -1,0 +1,63 @@
+:root {
+  --star-base: #f9f8f4;
+  --star-1: rgba(10, 12, 14, 0.6);
+  --star-2: rgba(10, 12, 14, 0.45);
+  --star-3: rgba(10, 12, 14, 0.32);
+  --nebula-1: rgba(120, 180, 255, 0.18);
+  --nebula-1b: rgba(90, 200, 220, 0.12);
+  --nebula-2: rgba(90, 150, 230, 0.16);
+  --nebula-2b: rgba(120, 220, 255, 0.1);
+  --nebula-3: rgba(70, 120, 210, 0.14);
+  --nebula-3b: rgba(70, 180, 200, 0.09);
+  --nebula-opacity: 0.24;
+  --grain-opacity: 0.045;
+  --glow-warm: rgba(237, 184, 114, 0.18);
+  --glow-soft: rgba(255, 230, 200, 0.08);
+  --glow-cool: rgba(140, 210, 255, 0.12);
+  --glow-opacity: 0.45;
+  --aurora-1: rgba(255, 190, 210, 0.6);
+  --aurora-2: rgba(255, 200, 130, 0.5);
+  --aurora-3: rgba(180, 220, 255, 0.55);
+  --aurora-4: rgba(255, 210, 150, 0.4);
+  --aurora-5: rgba(255, 150, 200, 0.45);
+  --aurora-6: rgba(140, 210, 255, 0.35);
+  --aurora-opacity: 0.6;
+  --meteor-tail: rgba(237, 184, 114, 0.5);
+  --meteor-core: rgba(237, 184, 114, 0.95);
+  --meteor-glow: rgba(237, 184, 114, 0.55);
+}
+
+.dark {
+  --star-base: #0f1115;
+  --star-1: rgba(252, 199, 122, 0.52);
+  --star-2: rgba(252, 199, 122, 0.34);
+  --star-3: rgba(252, 199, 122, 0.22);
+  --nebula-1: rgba(240, 180, 110, 0.22);
+  --nebula-1b: rgba(200, 120, 80, 0.14);
+  --nebula-2: rgba(210, 150, 90, 0.18);
+  --nebula-2b: rgba(255, 200, 120, 0.12);
+  --nebula-3: rgba(180, 120, 70, 0.16);
+  --nebula-3b: rgba(220, 150, 90, 0.1);
+  --nebula-opacity: 0.28;
+  --grain-opacity: 0.055;
+  --glow-warm: rgba(237, 184, 114, 0.28);
+  --glow-soft: rgba(255, 215, 170, 0.12);
+  --glow-cool: rgba(120, 170, 255, 0.18);
+  --glow-opacity: 0.6;
+  --aurora-1: rgba(255, 170, 80, 0.85);
+  --aurora-2: rgba(255, 60, 160, 0.75);
+  --aurora-3: rgba(255, 110, 190, 0.65);
+  --aurora-4: rgba(255, 180, 90, 0.35);
+  --aurora-5: rgba(255, 80, 140, 0.5);
+  --aurora-6: rgba(80, 170, 255, 0.2);
+  --aurora-opacity: 0.35;
+  --meteor-tail: rgba(120, 190, 255, 0.6);
+  --meteor-core: rgba(210, 240, 255, 0.95);
+  --meteor-glow: rgba(120, 190, 255, 0.7);
+}
+
+.low-power {
+  --nebula-opacity: 0.18;
+  --grain-opacity: 0.03;
+  --glow-opacity: 0.3;
+}

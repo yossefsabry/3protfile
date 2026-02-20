@@ -1,0 +1,49 @@
+.hero-scan-text {
+  display: inline-block;
+  background-image: linear-gradient(90deg, #1a1e25 0%, #101319 40%, #2c313a 50%, #101319 60%, #1a1e25 100%);
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: heroScan 3.4s ease-in-out infinite;
+}
+
+.dark .hero-scan-text {
+  background-image: linear-gradient(90deg, #0f1115 0%, #ffffff 45%, #ffffff 55%, #0f1115 100%);
+}
+
+@keyframes heroScan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.typing-line {
+  display: block;
+  width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 1px solid currentColor;
+  animation: typingLine 1.8s steps(28, end) forwards;
+  animation-delay: var(--delay, 0s);
+  will-change: width;
+}
+
+.typing-line + .typing-line {
+  margin-top: 4px;
+}
+
+@keyframes typingLine {
+  to {
+    width: 100%;
+  }
+}

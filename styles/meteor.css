@@ -1,0 +1,105 @@
+.meteor-field {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.meteor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--meteor-width, 180px);
+  height: var(--meteor-height, 2px);
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--meteor-tail), var(--meteor-core));
+  filter: drop-shadow(0 0 8px var(--meteor-glow));
+  transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(0.9);
+  opacity: 0;
+  animation: meteorFly var(--meteor-duration, 6s) cubic-bezier(0.3, 0, 0.2, 1) infinite;
+  animation-delay: var(--meteor-delay, 0s);
+  will-change: transform, opacity;
+}
+
+.low-power .meteor {
+  filter: none;
+}
+
+.low-power .meteor-2,
+.low-power .meteor-3,
+.low-power .meteor-4 {
+  display: none;
+}
+
+.meteor-hero {
+  height: 3px;
+  width: 240px;
+  filter: drop-shadow(0 0 10px rgba(255, 220, 170, 0.65));
+}
+
+.meteor-1 {
+  --meteor-width: 170px;
+  --meteor-height: 2px;
+  --start-x: -20vw;
+  --start-y: 18vh;
+  --end-x: 120vw;
+  --end-y: -30vh;
+  --angle: -18deg;
+  --meteor-duration: 12s;
+  --meteor-delay: -3s;
+}
+
+.meteor-2 {
+  --meteor-width: 150px;
+  --meteor-height: 2px;
+  --start-x: 10vw;
+  --start-y: 82vh;
+  --end-x: 120vw;
+  --end-y: 5vh;
+  --angle: -28deg;
+  --meteor-duration: 10.5s;
+  --meteor-delay: -6s;
+}
+
+.meteor-3 {
+  --meteor-width: 180px;
+  --meteor-height: 2px;
+  --start-x: 120vw;
+  --start-y: 65vh;
+  --end-x: -40vw;
+  --end-y: 15vh;
+  --angle: 150deg;
+  --meteor-duration: 14s;
+  --meteor-delay: -9s;
+}
+
+.meteor-4 {
+  --meteor-width: 240px;
+  --meteor-height: 3px;
+  --start-x: -30vw;
+  --start-y: 52vh;
+  --end-x: 120vw;
+  --end-y: -5vh;
+  --angle: -12deg;
+  --meteor-duration: 16s;
+  --meteor-delay: -12s;
+}
+
+@keyframes meteorFly {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(0.85);
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--end-x), var(--end-y), 0) rotate(var(--angle)) scale(1.05);
+  }
+}

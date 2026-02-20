@@ -1,0 +1,112 @@
+.low-power .starfield,
+.low-power .starfield-far,
+.low-power .starfield-near {
+  animation: none;
+}
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--star-base);
+  background-image:
+    radial-gradient(1.6px 1.6px at 42px 56px, var(--star-1) 0, var(--star-1) 1.6px, transparent 2px),
+    radial-gradient(1.8px 1.8px at 120px 88px, var(--star-2) 0, var(--star-2) 1.8px, transparent 2.2px),
+    radial-gradient(2.2px 2.2px at 210px 160px, var(--star-3) 0, var(--star-3) 2.2px, transparent 2.6px);
+  background-size: 300px 260px, 420px 360px, 600px 520px;
+  background-position: 0 0, 140px 100px, 220px 180px;
+  animation: starDrift 90s linear infinite;
+  will-change: background-position;
+}
+
+.starfield-far {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image:
+    radial-gradient(1px 1px at 30px 40px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
+    radial-gradient(1.2px 1.2px at 110px 80px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
+    radial-gradient(1.4px 1.4px at 180px 140px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
+  background-size: 520px 480px, 760px 640px, 980px 820px;
+  background-position: 0 0, 120px 120px, 220px 200px;
+  animation: starDriftFast 60s linear infinite;
+  will-change: background-position;
+}
+
+.starfield-near {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(2.4px 2.4px at 60px 70px, var(--star-1) 0, var(--star-1) 2.4px, transparent 3px),
+    radial-gradient(2.8px 2.8px at 160px 120px, var(--star-2) 0, var(--star-2) 2.8px, transparent 3.4px),
+    radial-gradient(3.2px 3.2px at 260px 200px, var(--star-3) 0, var(--star-3) 3.2px, transparent 3.8px);
+  background-size: 820px 700px, 1080px 920px, 1400px 1200px;
+  background-position: 0 0, 220px 180px, 360px 280px;
+  animation: starDriftSlow 140s linear infinite;
+  will-change: background-position;
+}
+
+.low-power .starfield-far,
+.low-power .starfield-near {
+  display: none;
+}
+
+.dark .starfield {
+  background-image:
+    radial-gradient(1px 1px at 42px 56px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
+    radial-gradient(1.2px 1.2px at 120px 88px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
+    radial-gradient(1.4px 1.4px at 210px 160px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
+  background-size: 560px 460px, 820px 700px, 1080px 920px;
+  background-position: 0 0, 220px 140px, 380px 260px;
+}
+
+.dark .starfield-far {
+  background-image:
+    radial-gradient(1px 1px at 30px 40px, var(--star-1) 0, var(--star-1) 1px, transparent 1.4px),
+    radial-gradient(1.2px 1.2px at 110px 80px, var(--star-2) 0, var(--star-2) 1.2px, transparent 1.6px),
+    radial-gradient(1.4px 1.4px at 180px 140px, var(--star-3) 0, var(--star-3) 1.4px, transparent 1.8px);
+  background-size: 760px 640px, 980px 820px, 1200px 1000px;
+  background-position: 0 0, 200px 160px, 360px 300px;
+}
+
+.dark .starfield-near {
+  background-image:
+    radial-gradient(2.4px 2.4px at 60px 70px, var(--star-1) 0, var(--star-1) 2.4px, transparent 3px),
+    radial-gradient(2.8px 2.8px at 160px 120px, var(--star-2) 0, var(--star-2) 2.8px, transparent 3.4px),
+    radial-gradient(3.2px 3.2px at 260px 200px, var(--star-3) 0, var(--star-3) 3.2px, transparent 3.8px);
+  background-size: 1080px 920px, 1400px 1200px, 1700px 1500px;
+  background-position: 0 0, 260px 220px, 420px 340px;
+}
+
+@keyframes starDriftFast {
+  from {
+    background-position: 0 0, 120px 120px, 220px 200px;
+  }
+  to {
+    background-position: -2400px 80px, -3200px 120px, -4200px 160px;
+  }
+}
+
+@keyframes starDriftSlow {
+  from {
+    background-position: 0 0, 220px 180px, 360px 280px;
+  }
+  to {
+    background-position: -1400px -40px, -2000px -60px, -2600px -80px;
+  }
+}
+
+@keyframes starDrift {
+  from {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: -1800px 0, -2600px 0, -3600px 0;
+  }
+}

@@ -1,0 +1,34 @@
+@media (prefers-reduced-motion: reduce) {
+  .hero-scan-text {
+    animation: none;
+    background-position: 50% 50%;
+  }
+
+  .typing-line {
+    width: auto;
+    border-right: none;
+    animation: none;
+  }
+
+  .starfield {
+    animation: none;
+  }
+
+  .starfield-far,
+  .starfield-near {
+    animation: none;
+  }
+
+  .meteor {
+    animation: none;
+    opacity: 0;
+  }
+
+  .nebula {
+    animation: none;
+  }
+
+  .section-aurora {
+    animation: none;
+  }
+}

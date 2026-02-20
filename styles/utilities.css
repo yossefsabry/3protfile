@@ -1,0 +1,5 @@
+.no-radius *,
+.no-radius *::before,
+.no-radius *::after {
+  border-radius: 0 !important;
+}

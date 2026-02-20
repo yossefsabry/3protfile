@@ -1,0 +1,120 @@
+.low-power .nebula,
+.low-power .section-aurora {
+  animation: none;
+}
+
+.section-aurora {
+  position: absolute;
+  inset: -10% -5% -10% -5%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--aurora-opacity);
+  background-image:
+    radial-gradient(70% 70% at 15% 80%, var(--aurora-1) 0%, transparent 60%),
+    radial-gradient(70% 70% at 85% 25%, var(--aurora-2) 0%, transparent 58%),
+    radial-gradient(65% 65% at 50% 45%, var(--aurora-3) 0%, transparent 60%),
+    linear-gradient(120deg, var(--aurora-5) 0%, var(--aurora-4) 40%, var(--aurora-6) 100%);
+  background-size: 130% 130%, 140% 140%, 120% 120%, 200% 200%;
+  background-position: 0% 100%, 100% 0%, 50% 50%, 0% 0%;
+  mix-blend-mode: normal;
+  filter: saturate(1.15);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 18%, rgba(0, 0, 0, 0.85) 82%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 18%, rgba(0, 0, 0, 0.85) 82%, rgba(0, 0, 0, 0) 100%);
+  animation: auroraFlow 120s ease-in-out infinite;
+  will-change: background-position;
+}
+
+.nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--nebula-opacity);
+  background-image:
+    radial-gradient(60% 60% at 20% 30%, var(--nebula-1) 0%, var(--nebula-1b) 45%, transparent 70%),
+    radial-gradient(55% 55% at 80% 20%, var(--nebula-2) 0%, var(--nebula-2b) 48%, transparent 72%),
+    radial-gradient(65% 65% at 70% 85%, var(--nebula-3) 0%, var(--nebula-3b) 50%, transparent 75%);
+  background-size: 140% 140%, 160% 160%, 180% 180%;
+  background-position: 0% 0%, 50% 10%, 80% 80%;
+  animation: nebulaDrift 140s ease-in-out infinite;
+  will-change: background-position;
+}
+
+.film-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjQiLz48L3N2Zz4=");
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  mix-blend-mode: soft-light;
+}
+
+.hero-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: var(--glow-opacity);
+  background-image:
+    radial-gradient(65% 55% at 50% 42%, var(--glow-warm) 0%, var(--glow-soft) 45%, transparent 70%),
+    radial-gradient(55% 50% at 60% 52%, var(--glow-cool) 0%, transparent 65%);
+  mix-blend-mode: normal;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(15, 17, 21, 0) 55%, rgba(15, 17, 21, 0.18) 75%, rgba(15, 17, 21, 0.35) 100%);
+  mix-blend-mode: multiply;
+}
+
+.dark .vignette {
+  background: radial-gradient(circle at center, rgba(15, 17, 21, 0) 50%, rgba(15, 17, 21, 0.35) 75%, rgba(15, 17, 21, 0.7) 100%);
+  mix-blend-mode: screen;
+}
+
+.dark .hero-glow {
+  mix-blend-mode: screen;
+}
+
+.dark .section-aurora {
+  mix-blend-mode: screen;
+}
+
+.site-3d {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+@keyframes nebulaDrift {
+  0% {
+    background-position: 0% 0%, 50% 10%, 80% 80%;
+  }
+  50% {
+    background-position: 18% 8%, 35% 20%, 68% 60%;
+  }
+  100% {
+    background-position: 0% 0%, 50% 10%, 80% 80%;
+  }
+}
+
+@keyframes auroraFlow {
+  0% {
+    background-position: 0% 100%, 100% 0%, 50% 50%, 0% 0%;
+  }
+  50% {
+    background-position: 8% 92%, 88% 12%, 52% 45%, 10% 10%;
+  }
+  100% {
+    background-position: 0% 100%, 100% 0%, 50% 50%, 0% 0%;
+  }
+}
