@@ -9,7 +9,11 @@ export type MusicTrack = {
   url: string;
 };
 
-const musicTrackEntries = import.meta.glob('../music/*.mp3', { eager: true, as: 'url' }) as Record<string, string>;
+const musicTrackEntries = import.meta.glob('../music/*.mp3', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>;
 
 export const musicTracks: MusicTrack[] = Object.entries(musicTrackEntries)
   .map(([path, url]) => {
