@@ -12,14 +12,24 @@ export const SurfaceCodeDiagram = memo(() => (
     {PROJECTS.map((project, index) => {
       const [cover, ...gallery] = project.imageUrls;
       const statusClass = STATUS_STYLES[project.status.toLowerCase()] ?? STATUS_STYLES.default;
-      const galleryItems = gallery.slice(0, 3);
-      const galleryColumns = galleryItems.length >= 3
+      const categoryLabel = project.category.toLowerCase();
+      const roleLabel = project.role.toLowerCase();
+      const isApplicationProject = categoryLabel.includes('android')
+        || categoryLabel.includes('application')
+        || roleLabel.includes('app');
+      const hasHeroRow = isApplicationProject && project.imageUrls.length >= 3;
+      const heroRowItems = project.imageUrls.slice(0, 3);
+      const mobileStripItems = project.imageUrls.slice(0, 3);
+      const showMobileStrip = mobileStripItems.length === 3;
+      const bodyGalleryItems = hasHeroRow ? [] : gallery.slice(0, 3);
+      const bodyGalleryVisibility = showMobileStrip ? 'hidden md:grid' : 'grid';
+      const galleryColumns = bodyGalleryItems.length >= 3
         ? 'grid-cols-3'
-        : galleryItems.length === 2
+        : bodyGalleryItems.length === 2
           ? 'grid-cols-2'
           : 'grid-cols-1';
-      const galleryGap = galleryItems.length >= 3 ? 'gap-2' : 'gap-3';
-      const galleryItemHeight = galleryItems.length >= 3 ? 'h-24' : 'h-32';
+      const galleryGap = bodyGalleryItems.length >= 3 ? 'gap-2' : 'gap-3';
+      const galleryItemHeight = bodyGalleryItems.length >= 3 ? 'h-24' : 'h-32';
 
       return (
         <motion.article
@@ -31,8 +41,43 @@ export const SurfaceCodeDiagram = memo(() => (
           viewport={{ once: true, amount: 0.25 }}
         >
           <div className="relative">
-            {cover ? (
-              <div className="h-60 w-full bg-stone-100 dark:bg-stone-950 flex items-center justify-center">
+            {showMobileStrip ? (
+              <div className="h-56 sm:h-64 w-full bg-stone-100 dark:bg-stone-950 grid grid-cols-3 gap-2 p-2 md:hidden">
+                {mobileStripItems.map((image, imageIndex) => (
+                  <div
+                    key={`${project.slug}-strip-${imageIndex}`}
+                    className="overflow-hidden bg-stone-100 dark:bg-stone-900"
+                  >
+                    <img
+                      src={image}
+                      alt={`${project.title} preview ${imageIndex + 1}`}
+                      className="block h-full w-full object-cover object-top"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+            {hasHeroRow ? (
+              <div className="hidden md:grid h-72 lg:h-80 w-full grid-cols-3 gap-3 bg-stone-100 dark:bg-stone-950 p-3 sm:p-4">
+                {heroRowItems.map((image, imageIndex) => (
+                  <div
+                    key={`${project.slug}-hero-${imageIndex}`}
+                    className="overflow-hidden rounded-none border border-stone-200/70 dark:border-stone-800/80 bg-stone-100 dark:bg-stone-900 flex items-center justify-center"
+                  >
+                    <img
+                      src={image}
+                      alt={`${project.title} preview ${imageIndex + 1}`}
+                      className="block h-full w-full object-cover object-top"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : cover ? (
+              <div
+                className={`h-60 w-full bg-stone-100 dark:bg-stone-950 items-center justify-center ${showMobileStrip ? 'hidden md:flex' : 'flex'}`}
+              >
                 <img
                   src={cover}
                   alt={`${project.title} cover`}
@@ -41,9 +86,11 @@ export const SurfaceCodeDiagram = memo(() => (
                 />
               </div>
             ) : (
-              <div className="h-60 w-full bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50 dark:from-stone-900 dark:via-stone-800 dark:to-stone-950" />
+              <div
+                className={`h-60 w-full bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50 dark:from-stone-900 dark:via-stone-800 dark:to-stone-950 ${showMobileStrip ? 'hidden md:block' : ''}`}
+              />
             )}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stone-950/70" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stone-950/55" />
             <div className="absolute inset-x-0 bottom-0 p-5 flex items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className={`rounded-none border px-3 py-1 text-[10px] uppercase tracking-[0.3em] ${statusClass}`}>
@@ -105,9 +152,9 @@ export const SurfaceCodeDiagram = memo(() => (
                 </span>
               ))}
             </div>
-            {galleryItems.length ? (
-              <div className={`mt-5 grid ${galleryGap} ${galleryColumns}`}>
-                {galleryItems.map((image, imageIndex) => (
+            {bodyGalleryItems.length ? (
+              <div className={`mt-5 ${bodyGalleryVisibility} ${galleryGap} ${galleryColumns}`}>
+                {bodyGalleryItems.map((image, imageIndex) => (
                   <div
                     key={`${project.slug}-gallery-${imageIndex}`}
                     className={`overflow-hidden rounded-none border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 ${galleryItemHeight} flex items-center justify-center`}
