@@ -12,7 +12,14 @@ export const SurfaceCodeDiagram = memo(() => (
     {PROJECTS.map((project, index) => {
       const [cover, ...gallery] = project.imageUrls;
       const statusClass = STATUS_STYLES[project.status.toLowerCase()] ?? STATUS_STYLES.default;
-      const galleryColumns = gallery.length > 1 ? 'grid-cols-2' : 'grid-cols-1';
+      const galleryItems = gallery.slice(0, 3);
+      const galleryColumns = galleryItems.length >= 3
+        ? 'grid-cols-3'
+        : galleryItems.length === 2
+          ? 'grid-cols-2'
+          : 'grid-cols-1';
+      const galleryGap = galleryItems.length >= 3 ? 'gap-2' : 'gap-3';
+      const galleryItemHeight = galleryItems.length >= 3 ? 'h-24' : 'h-32';
 
       return (
         <motion.article
@@ -25,14 +32,16 @@ export const SurfaceCodeDiagram = memo(() => (
         >
           <div className="relative">
             {cover ? (
-              <img
-                src={cover}
-                alt={`${project.title} cover`}
-                className="h-56 w-full object-cover"
-                loading="lazy"
-              />
+              <div className="h-60 w-full bg-stone-100 dark:bg-stone-950 flex items-center justify-center">
+                <img
+                  src={cover}
+                  alt={`${project.title} cover`}
+                  className="block max-h-full max-w-full object-contain"
+                  loading="lazy"
+                />
+              </div>
             ) : (
-              <div className="h-56 w-full bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50 dark:from-stone-900 dark:via-stone-800 dark:to-stone-950" />
+              <div className="h-60 w-full bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50 dark:from-stone-900 dark:via-stone-800 dark:to-stone-950" />
             )}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stone-950/70" />
             <div className="absolute inset-x-0 bottom-0 p-5 flex items-center justify-between gap-4">
@@ -96,17 +105,17 @@ export const SurfaceCodeDiagram = memo(() => (
                 </span>
               ))}
             </div>
-            {gallery.length ? (
-              <div className={`mt-5 grid gap-3 ${galleryColumns}`}>
-                {gallery.slice(0, 2).map((image, imageIndex) => (
+            {galleryItems.length ? (
+              <div className={`mt-5 grid ${galleryGap} ${galleryColumns}`}>
+                {galleryItems.map((image, imageIndex) => (
                   <div
                     key={`${project.slug}-gallery-${imageIndex}`}
-                    className="overflow-hidden rounded-none border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900"
+                    className={`overflow-hidden rounded-none border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 ${galleryItemHeight} flex items-center justify-center`}
                   >
                     <img
                       src={image}
                       alt={`${project.title} detail ${imageIndex + 1}`}
-                      className="h-28 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      className="block max-h-full max-w-full object-contain"
                       loading="lazy"
                     />
                   </div>

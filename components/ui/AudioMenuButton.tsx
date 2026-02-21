@@ -5,7 +5,7 @@
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { List, Volume2, VolumeX } from 'lucide-react';
+import { Music, Volume2, VolumeX } from 'lucide-react';
 import type { MusicTrack } from '../../data/audio';
 
 type AudioMenuButtonProps = {
@@ -146,7 +146,7 @@ export const AudioMenuButton = ({
         aria-expanded={menuOpen}
         aria-controls={`track-menu-${listId}`}
       >
-        <List size={iconSize} />
+        <Music size={iconSize} />
       </button>
       <AnimatePresence>
         {menuOpen && (
@@ -155,7 +155,7 @@ export const AudioMenuButton = ({
             id={`track-menu-${listId}`}
             role="listbox"
             aria-label="Background music"
-            className="absolute right-0 mt-3 w-64 overflow-hidden rounded-2xl border border-stone-200/80 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-stone-800/80 dark:bg-stone-900/95 z-50"
+            className="absolute right-0 top-full mt-5 w-64 overflow-hidden rounded-2xl border border-stone-200/80 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-stone-800/80 dark:bg-stone-900/95 z-50"
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 8, scale: 0.98 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}

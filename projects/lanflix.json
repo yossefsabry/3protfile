@@ -1,22 +1,22 @@
 {
   "slug": "lanflix",
-  "title": "lanflix",
+  "title": "LANflix",
   "status": "open source",
   "year": "2024",
-  "category": "Streaming / Systems",
-  "role": "Local media platform",
-  "tagline": "Local-first streaming platform for LAN media libraries.",
-  "description": "Self-hosted streaming experience with fast indexing, multi-device playback, and clean UI for local networks. Focused on low-latency browsing and offline-friendly playback.",
+  "category": "Android / LAN Streaming",
+  "role": "Server + client media app",
+  "tagline": "Local-only streaming with a built-in server and LAN discovery.",
+  "description": "Android app that runs in two modes: Server hosts a local media folder over LAN with live indexing and cached metadata; Client discovers servers, opens the in-app library UI, and streams via Media3 with resume history. Everything stays on your local network with optional PIN protection.",
   "highlights": [
-    "Fast metadata indexing and search",
-    "Adaptive streaming over LAN",
-    "Multi-device sessions with watch sync"
+    "Server mode with live indexing, metadata cache, and optional PIN",
+    "Client discovery via LAN health checks and strict host enforcement",
+    "Media3 playback with resume history and retention settings"
   ],
-  "stack": ["TypeScript", "React", "Node.js", "FFmpeg", "SQLite"],
+  "stack": ["Kotlin", "Android", "Ktor", "Media3", "Room", "Koin", "DataStore", "NSD"],
   "typing": [
-    "library_scan: 12k files",
-    "stream: hls + local",
-    "latency_p95: 65ms"
+    "mode: server + client",
+    "discovery: nsd + health checks",
+    "player: media3 + resume"
   ],
   "links": [
     {
@@ -25,6 +25,6 @@
     }
   ],
   "imageFolder": "lanflix_images",
-  "images": ["cover.svg", "detail.svg"],
+  "images": ["lanflix_server_setup.png", "lanflix_client_browse.png", "lanflix_media_player.png"],
   "order": 4
 }
