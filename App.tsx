@@ -31,7 +31,7 @@ const App: React.FC = () => {
   const scrolled = useScrolledState();
   const { isPhone, isLowPower, canRender3d } = useDeviceProfile(prefersReducedMotion);
   const shouldRender3d = canRender3d && !isPhone;
-  const { isSceneActive, markSceneActive, setSceneInvalidate, invalidateScene } = useSceneActivity(shouldRender3d);
+  const { markSceneActive, setSceneInvalidate, invalidateScene } = useSceneActivity(shouldRender3d);
   const { scrollStateRef, sceneWrapperRef, meteorWrapperRef, footerRef } = useSceneScroll(markSceneActive);
   const { isLoading, setSceneReady } = useLoadingSequence(shouldRender3d);
   const audio = useAudioController();
@@ -97,7 +97,7 @@ const App: React.FC = () => {
           shouldRender3d={shouldRender3d}
           reducedMotion={prefersReducedMotion}
           lowPower={isLowPower}
-          active={isSceneActive && !isLowPower && !prefersReducedMotion}
+          active={shouldRender3d && !prefersReducedMotion}
           onSceneReady={() => setSceneReady(true)}
           onInvalidateReady={setSceneInvalidate}
           scrollStateRef={scrollStateRef}
