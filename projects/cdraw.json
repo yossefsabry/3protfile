@@ -1,21 +1,21 @@
 {
   "slug": "cdraw",
-  "title": "cdraw",
+  "title": "Cdraw",
   "status": "open source",
   "year": "2023",
   "category": "Graphics / Tools",
   "role": "Linux drawing app",
-  "tagline": "Linux drawing app integrated with AI-assisted tooling.",
-  "description": "Sketching environment with custom brush engines, layers, and AI assist for cleanup and ideation. Built for tight interaction loops and consistent frame pacing.",
+  "tagline": "Linux desktop drawing app with AI-assisted cleanup and styling workflows.",
+  "description": "Workflow stays fast: sketch with pressure + stabilization, refine with layers and masks, then export presets for PNG/SVG. AI passes run on-demand for cleanup, palette harmonies, and style exploration without slowing the canvas.",
   "highlights": [
     "Pressure-aware brush engine with Bezier smoothing",
-    "Layered canvas with quick export presets",
-    "AI-assisted cleanup and style suggestions"
+    "Layer stack with masks and quick export presets",
+    "AI-assisted cleanup, palette harmonies, and style prompts"
   ],
   "stack": ["C", "GTK", "OpenGL", "Linux", "AI"],
   "typing": [
-    "stroke_engine: bezier + pressure",
-    "ai_assist: on-demand",
+    "workflow: sketch -> refine -> export",
+    "ai_assist: cleanup + style",
     "fps_target: 120"
   ],
   "links": [
@@ -25,6 +25,6 @@
     }
   ],
   "imageFolder": "cdraw_images",
-  "images": ["cover.svg", "detail.svg"],
+  "images": ["application _nterface.png", "light_mode_interface.png"],
   "order": 1
 }
