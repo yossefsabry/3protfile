@@ -29,7 +29,14 @@ export const SurfaceCodeDiagram = memo(() => (
           ? 'grid-cols-2'
           : 'grid-cols-1';
       const galleryGap = bodyGalleryItems.length >= 3 ? 'gap-2' : 'gap-3';
-      const galleryItemHeight = bodyGalleryItems.length >= 3 ? 'h-24' : 'h-32';
+      const galleryItemHeight = bodyGalleryItems.length >= 3
+        ? 'h-24'
+        : bodyGalleryItems.length === 1
+          ? 'h-40 sm:h-44'
+          : 'h-32';
+      const galleryImageClass = bodyGalleryItems.length === 1
+        ? 'block h-full w-full object-cover'
+        : 'block max-h-full max-w-full object-contain';
 
       return (
         <motion.article
@@ -162,7 +169,7 @@ export const SurfaceCodeDiagram = memo(() => (
                     <img
                       src={image}
                       alt={`${project.title} detail ${imageIndex + 1}`}
-                      className="block max-h-full max-w-full object-contain"
+                      className={galleryImageClass}
                       loading="lazy"
                     />
                   </div>
