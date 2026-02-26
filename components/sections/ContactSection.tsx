@@ -13,7 +13,7 @@ export const ContactSection = () => (
         <h2 className="font-serif text-4xl sm:text-5xl mb-6 text-stone-900 dark:text-white">Contact & Links</h2>
         <p className="text-stone-500 dark:text-stone-400 text-lg">Find me and my work across the web.</p>
       </div>
-      <div className="flex flex-col md:flex-row gap-10 justify-center items-stretch flex-wrap">
+      <div className="flex flex-col md:flex-row gap-10 justify-center items-center md:items-stretch flex-wrap">
         <InfoCard title="GitHub" detail="github.com/yossefsabry" href="https://github.com/yossefsabry" delay="0s" />
         {/* comment for now because i gone use only one website for protfile */} 
         {/* <InfoCard title="Website" detail="yossefsabry.me" href="https://yossefsabry.me" delay="0.1s" /> */}
