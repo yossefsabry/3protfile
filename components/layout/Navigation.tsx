@@ -77,6 +77,13 @@ export const Navigation = ({
         />
 
         <a
+          href="/cv.html"
+          className="px-6 py-2.5 border border-nobel-gold/70 text-stone-900 dark:text-white rounded-xl hover:bg-nobel-gold/10 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+        >
+          VIEW CV
+        </a>
+
+        <a
           href="https://github.com/yossefsabry"
           target="_blank"
           rel="noopener noreferrer"

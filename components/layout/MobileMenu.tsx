@@ -26,6 +26,12 @@ export const MobileMenu = ({ isOpen, onClose, onScrollTo }: MobileMenuProps) => 
         <a href="#projects" onClick={onScrollTo('projects')} className="hover:text-nobel-gold transition-colors dark:text-white">Projects</a>
         <a href="#contact" onClick={onScrollTo('contact')} className="hover:text-nobel-gold transition-colors dark:text-white">Contact</a>
         <a
+          href="/cv.html"
+          className="px-8 py-3 border border-nobel-gold/70 text-stone-900 dark:text-white rounded-xl shadow-lg"
+        >
+          View CV
+        </a>
+        <a
           href="https://github.com/yossefsabry"
           target="_blank"
           rel="noopener noreferrer"

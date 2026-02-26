@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV</title>
+    <link rel="icon" href="/yon-logo-black.png" type="image/png">
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #f3f3f1;
+        color: #1b1b1b;
+        font-family: "Times New Roman", Times, serif;
+      }
+
+      a {
+        color: #1b1b1b;
+        text-decoration: none;
+        border-bottom: 1px solid #d7d7d3;
+      }
+
+      a:hover {
+        border-bottom-color: #1b1b1b;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 32px 16px 64px;
+      }
+
+      .sheet {
+        width: min(900px, 100%);
+        background: #ffffff;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+        border: 1px solid #e5e5e3;
+        padding: 48px 56px 56px;
+      }
+
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 28px;
+      }
+
+      .pdf-button {
+        border: 1px solid #1b1b1b;
+        background: #ffffff;
+        color: #1b1b1b;
+        padding: 8px 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .pdf-button:active {
+        transform: translateY(1px);
+      }
+
+      header {
+        margin-bottom: 28px;
+      }
+
+      .name {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+
+      .role {
+        font-size: 14px;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+      }
+
+      .contact {
+        margin-top: 16px;
+        display: grid;
+        gap: 4px 24px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        font-size: 13px;
+      }
+
+      .summary {
+        margin: 24px 0;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .section {
+        margin-top: 24px;
+      }
+
+      .section-title {
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        margin: 0 0 12px;
+      }
+
+      .entry {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e5e5e3;
+        margin-bottom: 16px;
+      }
+
+      .entry:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .entry-time {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #555555;
+      }
+
+      .entry-title {
+        font-weight: 700;
+        font-size: 15px;
+        margin: 0 0 4px;
+      }
+
+      .project-link {
+        display: inline-block;
+        border-bottom: 1px solid #d7d7d3;
+      }
+
+      .project-link:hover {
+        border-bottom-color: #1b1b1b;
+      }
+
+      .entry-org {
+        font-size: 13px;
+        margin: 0 0 6px;
+        color: #333333;
+      }
+
+      .entry-desc {
+        font-size: 13px;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .skills-grid,
+      .language-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px 32px;
+      }
+
+      .skill-item,
+      .language-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 13px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #ecece8;
+      }
+
+      .language-item {
+        border-bottom: none;
+      }
+
+      .item-label {
+        line-height: 1.4;
+        font-weight: 600;
+      }
+
+      .bar {
+        width: 100%;
+        height: 4px;
+        background: #e7e7e3;
+        border-radius: 999px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .bar span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background: #1b1b1b;
+        border-radius: 999px;
+      }
+
+      .cert-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px 28px;
+      }
+
+      .cert-title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin: 0 0 8px;
+        color: #555555;
+      }
+
+      .cert-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .cert-list li {
+        margin-bottom: 6px;
+      }
+
+      @media (max-width: 700px) {
+        .sheet {
+          padding: 32px 24px 40px;
+        }
+
+        .entry {
+          grid-template-columns: 1fr;
+        }
+
+        .entry-time {
+          margin-bottom: 4px;
+        }
+      }
+
+      @media print {
+        body {
+          background: #ffffff;
+        }
+
+        .page {
+          padding: 0;
+        }
+
+        .sheet {
+          box-shadow: none;
+          border: none;
+          width: 100%;
+          padding: 0;
+        }
+
+        .top-bar {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="sheet">
+        <div class="top-bar">
+          <button class="pdf-button" type="button" onclick="window.print()">Export PDF</button>
+        </div>
+
+        <header>
+          <h1 class="name">Yossef Sabry Farouk</h1>
+          <p class="role">Full Stack Developer - Web & Apps</p>
+          <div class="contact">
+            <div>Location: Egypt</div>
+            <div>Email: <a href="mailto:yossefsabry66@gmail.com">yossefsabry66@gmail.com</a></div>
+            <div>GitHub: <a href="https://github.com/yossefsabry">github.com/yossefsabry</a></div>
+            <div>Age: <span data-age></span></div>
+            <div>Experience: <span data-experience></span> years</div>
+          </div>
+        </header>
+
+        <p class="summary">
+          Full-stack web and application developer from Egypt with <span data-experience></span> years
+          of hands-on experience, building products since <span data-experience-start-year></span>.
+          I ship end-to-end web, backend, and Android solutions with a focus on clean UX, reliable
+          APIs, and practical AI integrations.
+        </p>
+
+        <section class="section">
+          <h2 class="section-title">Experience</h2>
+
+          <div class="entry">
+            <div class="entry-time" data-exp-range></div>
+            <div>
+              <p class="entry-title">Full Stack Web and Application Developer</p>
+              <p class="entry-org">Freelance and personal projects</p>
+              <p class="entry-desc">
+                Build and ship full-stack products across web, backend APIs, and Android. Focus on
+                performance, real-world usability, and clean data flows from UI to database.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Selected Projects</h2>
+          <div class="entry">
+            <div class="entry-time">2024</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/yossefsabry/lanflix" target="_blank" rel="noopener noreferrer">LANflix</a>
+              </p>
+              <p class="entry-org">Android / LAN streaming</p>
+              <p class="entry-desc">
+                Local-only media server and client app with LAN discovery and Media3 playback.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="entry-time">2024</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/yossefsabry/social-media/tree/feature/backend-express" target="_blank" rel="noopener noreferrer">Social Nation</a>
+              </p>
+              <p class="entry-org">Full-stack social platform</p>
+              <p class="entry-desc">
+                Vanilla JS frontend with Express API, MongoDB, authentication, and media uploads.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="entry-time">2024</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/yossefsabry/inguide" target="_blank" rel="noopener noreferrer">inGuide</a>
+              </p>
+              <p class="entry-org">Maps and AI</p>
+              <p class="entry-desc">
+                Map-first city guide with AI summaries and fast geospatial rendering.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="entry-time">2023</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/yossefsabry/cdraw" target="_blank" rel="noopener noreferrer">Cdraw</a>
+              </p>
+              <p class="entry-org">Linux drawing app</p>
+              <p class="entry-desc">
+                Desktop drawing tool with pressure-aware brushes, layer stacks, and AI cleanup.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Education</h2>
+          <div class="entry">
+            <div class="entry-time">Graduate</div>
+            <div>
+              <p class="entry-title">BSc in Computer Science (AI)</p>
+              <p class="entry-org">Sinai University</p>
+              <p class="entry-desc">Egypt.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Certifications</h2>
+          <div class="cert-grid">
+            <div>
+              <p class="cert-title">AI & Data</p>
+              <ul class="cert-list">
+                <li>Machine Learning (Udemy)</li>
+                <li>Generative AI (Udemy)</li>
+                <li>PyTorch (Udemy)</li>
+                <li>Python Essentials 2 (Cisco)</li>
+                <li>ChatGPT Prompt Engineer</li>
+              </ul>
+            </div>
+            <div>
+              <p class="cert-title">Web & Backend</p>
+              <ul class="cert-list">
+                <li>Full Stack Spring Boot (Java)</li>
+                <li>Flask Backend</li>
+                <li>React + HTML</li>
+                <li>JavaScript Projects (1 & 2)</li>
+              </ul>
+            </div>
+            <div>
+              <p class="cert-title">Programming</p>
+              <ul class="cert-list">
+                <li>CS50P (Harvard)</li>
+                <li>C Language</li>
+                <li>C++ Language</li>
+                <li>Java Language</li>
+                <li>Master SQL</li>
+              </ul>
+            </div>
+            <div>
+              <p class="cert-title">Security & Cloud</p>
+              <ul class="cert-list">
+                <li>Linux Root Access</li>
+                <li>Pre-Security (TryHackMe)</li>
+                <li>Security Engineer (TryHackMe)</li>
+                <li>Master Black Hat</li>
+                <li>Automating AWS StationsOps</li>
+              </ul>
+            </div>
+          </div>
+          <p class="entry-desc" style="margin-top: 12px;">
+            Full certificate archive: <a href="https://github.com/yossefsabry/cert">github.com/yossefsabry/cert</a>
+          </p>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Skills</h2>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <span class="item-label">Full-stack web (React, Node, Express)</span>
+              <div class="bar"><span style="width: 90%;"></span></div>
+            </div>
+            <div class="skill-item">
+              <span class="item-label">Backend APIs (FastAPI, MongoDB, PostgreSQL)</span>
+              <div class="bar"><span style="width: 85%;"></span></div>
+            </div>
+            <div class="skill-item">
+              <span class="item-label">Android apps (Kotlin, Ktor)</span>
+              <div class="bar"><span style="width: 80%;"></span></div>
+            </div>
+            <div class="skill-item">
+              <span class="item-label">AI and ML (PyTorch, CV, NLP)</span>
+              <div class="bar"><span style="width: 75%;"></span></div>
+            </div>
+            <div class="skill-item">
+              <span class="item-label">Systems (C, C++, OpenGL, Linux)</span>
+              <div class="bar"><span style="width: 72%;"></span></div>
+            </div>
+            <div class="skill-item">
+              <span class="item-label">UI and product polish</span>
+              <div class="bar"><span style="width: 78%;"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Languages</h2>
+          <div class="language-grid">
+            <div class="language-item">
+              <span class="item-label">Arabic (Native)</span>
+              <div class="bar"><span style="width: 100%;"></span></div>
+            </div>
+            <div class="language-item">
+              <span class="item-label">English (Professional)</span>
+              <div class="bar"><span style="width: 85%;"></span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script>
+      const profileMeta = {
+        birthDate: '2003-02-08',
+        experienceStart: '2022-01-01',
+      };
+
+      const calculateYears = (startDate, endDate = new Date()) => {
+        let years = endDate.getFullYear() - startDate.getFullYear();
+        const hasReachedAnniversary =
+          endDate.getMonth() > startDate.getMonth() ||
+          (endDate.getMonth() === startDate.getMonth() && endDate.getDate() >= startDate.getDate());
+        if (!hasReachedAnniversary) {
+          years -= 1;
+        }
+        return Math.max(0, years);
+      };
+
+      const setText = (selector, value) => {
+        document.querySelectorAll(selector).forEach((element) => {
+          element.textContent = value;
+        });
+      };
+
+      const birthDate = new Date(profileMeta.birthDate);
+      const experienceStart = new Date(profileMeta.experienceStart);
+      const ageYears = calculateYears(birthDate);
+      const experienceYears = calculateYears(experienceStart);
+      const experienceRange = `${experienceStart.getFullYear()}-Present`;
+      const experienceStartYear = experienceStart.getFullYear();
+
+      setText('[data-age]', `${ageYears}`);
+      setText('[data-experience]', `${experienceYears}`);
+      setText('[data-experience-start-year]', `${experienceStartYear}`);
+      setText('[data-exp-range]', experienceRange);
+    </script>
+  </body>
+</html>
