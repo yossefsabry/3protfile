@@ -1,0 +1,55 @@
+{
+  "slug": "fun-small-projects",
+  "title": "Fun & Small Projects",
+  "status": "open source",
+  "year": "2024",
+  "category": "Games / Experiments",
+  "role": "Mini project collection",
+  "tagline": "Small games and experiments.",
+  "description": "Small games, quick tools, and learning builds.",
+  "highlights": [
+    "Raylib C++ arcade minis, Pacman CLI + Hexagon runner, Space Invaders + media players"
+  ],
+  "stack": ["C++", "raylib", "Go", "OpenGL", "Python", "Pygame", "Flask", "PyQt5"],
+  "typing": [
+    "games: raylib + OpenGL",
+    "cli: ANSI terminal",
+    "media: Flask + PyQt"
+  ],
+  "links": [
+    {
+      "label": "Games in raylib (C++)",
+      "href": "https://github.com/yossefsabry/games-reylib-cpp"
+    },
+    {
+      "label": "Pacman CLI (Go)",
+      "href": "https://github.com/yossefsabry/pacman"
+    },
+    {
+      "label": "Hexagon Game (OpenGL)",
+      "href": "https://github.com/yossefsabry/hexagon-game"
+    },
+    {
+      "label": "Flask Media Player",
+      "href": "https://github.com/yossefsabry/flask_media_player"
+    },
+    {
+      "label": "PyQt Media Player",
+      "href": "https://github.com/yossefsabry/media_player"
+    },
+    {
+      "label": "Space Invaders (Pygame)",
+      "href": "https://github.com/yossefsabry/space_invaders"
+    }
+  ],
+  "imageFolder": "fun_small_projects_images",
+  "images": [
+    "hexagon_game.png",
+    "reylib_ping_pong.png",
+    "pacman.png",
+    "media_player.png",
+    "flask_media_player.png",
+    "space_invaders.png"
+  ],
+  "order": 10
+}

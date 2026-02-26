@@ -10,10 +10,12 @@ import { PROJECTS, STATUS_STYLES } from './projectData';
 export const SurfaceCodeDiagram = memo(() => (
   <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 2xl:gap-6">
     {PROJECTS.map((project, index) => {
-      const [cover, ...gallery] = project.imageUrls;
-      const statusClass = STATUS_STYLES[project.status.toLowerCase()] ?? STATUS_STYLES.default;
-      const categoryLabel = project.category.toLowerCase();
-      const roleLabel = project.role.toLowerCase();
+       const [cover, ...gallery] = project.imageUrls;
+       const statusClass = STATUS_STYLES[project.status.toLowerCase()] ?? STATUS_STYLES.default;
+       const categoryLabel = project.category.toLowerCase();
+       const roleLabel = project.role.toLowerCase();
+       const isCompactCopy = project.slug === 'fun-small-projects';
+       const isTwoColumnLinks = project.slug === 'fun-small-projects';
       const isApplicationProject = categoryLabel.includes('android')
         || categoryLabel.includes('application')
         || roleLabel.includes('app');
@@ -119,9 +121,11 @@ export const SurfaceCodeDiagram = memo(() => (
                 <p className="mt-2 text-xs uppercase tracking-[0.35em] text-stone-500 dark:text-stone-400">{project.role}</p>
               </div>
             </div>
-            <p className="mt-4 text-lg sm:text-xl text-stone-600 dark:text-stone-300 leading-relaxed">
-              {project.tagline}
-            </p>
+             <p
+               className={`mt-4 ${isCompactCopy ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'} text-stone-600 dark:text-stone-300 leading-relaxed`}
+             >
+               {project.tagline}
+             </p>
             {project.typing?.length ? (
               <div className="mt-5 rounded-none border border-stone-200/80 dark:border-stone-800/80 bg-white/70 dark:bg-stone-900/60 px-4 py-3">
                 <div className="text-[11px] uppercase tracking-[0.35em] text-stone-500 dark:text-stone-400 mb-2">Telemetry</div>
@@ -138,27 +142,31 @@ export const SurfaceCodeDiagram = memo(() => (
                 </div>
               </div>
             ) : null}
-            <p className="mt-5 text-lg sm:text-xl text-stone-600 dark:text-stone-300 leading-relaxed">
-              {project.description}
-            </p>
-            <ul className="mt-4 space-y-3 text-lg text-stone-600 dark:text-stone-300">
-              {project.highlights.map((highlight) => (
-                <li key={`${project.slug}-${highlight}`} className="flex gap-2">
+             <p
+               className={`mt-5 ${isCompactCopy ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'} text-stone-600 dark:text-stone-300 leading-relaxed`}
+             >
+               {project.description}
+             </p>
+             <ul
+               className={`mt-4 ${isCompactCopy ? 'space-y-2 text-base' : 'space-y-3 text-lg'} text-stone-600 dark:text-stone-300`}
+             >
+               {project.highlights.map((highlight) => (
+                 <li key={`${project.slug}-${highlight}`} className="flex gap-2">
                   <span className="mt-1 text-nobel-gold">&bull;</span>
                   <span>{highlight}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.stack.map((item) => (
-                <span
-                  key={`${project.slug}-${item}`}
-                  className="px-3 py-1.5 text-[11px] uppercase tracking-[0.2em] rounded-none bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+             <div className="mt-4 flex flex-wrap gap-2">
+               {project.stack.map((item) => (
+                 <span
+                   key={`${project.slug}-${item}`}
+                   className={`px-3 py-1.5 ${isCompactCopy ? 'text-[10px]' : 'text-[11px]'} uppercase tracking-[0.2em] rounded-none bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300`}
+                 >
+                   {item}
+                 </span>
+               ))}
+             </div>
             {bodyGalleryItems.length ? (
               <div className={`mt-5 ${bodyGalleryVisibility} ${galleryGap} ${galleryColumns}`}>
                 {bodyGalleryItems.map((image, imageIndex) => (
@@ -176,19 +184,23 @@ export const SurfaceCodeDiagram = memo(() => (
                 ))}
               </div>
             ) : null}
-            <div className="mt-6 flex flex-wrap gap-3">
-              {project.links.map((link) => (
-                <a
-                  key={`${project.slug}-${link.href}`}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2.5 text-[12px] uppercase tracking-[0.35em] rounded-none border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-200 hover:border-nobel-gold/60 hover:text-nobel-gold transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+             <div className={isTwoColumnLinks ? 'mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2' : 'mt-6 flex flex-wrap gap-3'}>
+               {project.links.map((link) => (
+                 <a
+                   key={`${project.slug}-${link.href}`}
+                   href={link.href}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className={
+                     isTwoColumnLinks
+                       ? 'w-full px-4 py-2.5 text-center text-[12px] uppercase tracking-[0.35em] rounded-none border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-200 hover:border-nobel-gold/60 hover:text-nobel-gold transition-colors'
+                       : 'px-4 py-2.5 text-[12px] uppercase tracking-[0.35em] rounded-none border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-200 hover:border-nobel-gold/60 hover:text-nobel-gold transition-colors'
+                   }
+                 >
+                   {link.label}
+                 </a>
+               ))}
+             </div>
           </div>
         </motion.article>
       );

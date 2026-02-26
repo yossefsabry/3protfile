@@ -1,0 +1,34 @@
+{
+  "slug": "0xyon3-blog-notes",
+  "title": "0xYON3 Blog + Notes",
+  "status": "closed source",
+  "year": "2025",
+  "category": "Web / Digital Garden",
+  "role": "Personal knowledge base",
+  "tagline": "Blog + notes hub with connected pages and fast discovery.",
+  "description": "A cozy digital garden for my blog and notes — browse by tags, hop through the connected pages graph, and surface ideas fast.",
+  "highlights": [
+    "Connected pages graph for topic exploration",
+    "Tag + folder navigation across notes",
+    "Static build optimized for fast browsing"
+  ],
+  "stack": ["Eleventy", "Nunjucks", "SCSS", "JavaScript"],
+  "typing": [
+    "navigation: tags + graph",
+    "search: instant",
+    "content: notes + blog"
+  ],
+  "links": [
+    {
+      "label": "Live Site",
+      "href": "https://0xyon3.netlify.app/"
+    },
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/yossefsabry/notes_publisher_digital_garden"
+    }
+  ],
+  "imageFolder": "0xyon3_blog_notes_images",
+  "images": ["main_page.png", "note_page.png"],
+  "order": 9
+}

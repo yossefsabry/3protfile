@@ -53,7 +53,6 @@ export const Navigation = ({
       <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.2em] text-stone-600 dark:text-stone-400">
         <a href="#about" onClick={onScrollTo('about')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">About</a>
         <a href="#projects" onClick={onScrollTo('projects')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Projects</a>
-        <a href="#focus" onClick={onScrollTo('focus')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Focus</a>
         <a href="#contact" onClick={onScrollTo('contact')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Contact</a>
 
         <div className="w-[1px] h-6 bg-stone-200 dark:bg-stone-800 mx-2"></div>

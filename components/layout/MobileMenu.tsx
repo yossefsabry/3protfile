@@ -24,7 +24,6 @@ export const MobileMenu = ({ isOpen, onClose, onScrollTo }: MobileMenuProps) => 
       >
         <a href="#about" onClick={onScrollTo('about')} className="hover:text-nobel-gold transition-colors dark:text-white">About</a>
         <a href="#projects" onClick={onScrollTo('projects')} className="hover:text-nobel-gold transition-colors dark:text-white">Projects</a>
-        <a href="#focus" onClick={onScrollTo('focus')} className="hover:text-nobel-gold transition-colors dark:text-white">Focus</a>
         <a href="#contact" onClick={onScrollTo('contact')} className="hover:text-nobel-gold transition-colors dark:text-white">Contact</a>
         <a
           href="https://github.com/yossefsabry"

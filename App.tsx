@@ -15,7 +15,6 @@ import { Footer } from './components/layout/Footer';
 import { HeroSection } from './components/sections/HeroSection';
 import { AboutSection } from './components/sections/AboutSection';
 import { ProjectsSection } from './components/sections/ProjectsSection';
-import { FocusSection } from './components/sections/FocusSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { useAudioController } from './hooks/useAudioController';
 import { useDeviceProfile } from './hooks/useDeviceProfile';
@@ -128,7 +127,6 @@ const App: React.FC = () => {
           <main>
             <AboutSection />
             <ProjectsSection />
-            <FocusSection />
             <ContactSection />
           </main>
         </div>

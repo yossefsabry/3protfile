@@ -58,7 +58,12 @@ const resolveProjectImages = (project: ProjectJson) => {
 
   if (project.images?.length) {
     return project.images
-      .map((name) => sorted.find((entry) => entry.path.endsWith(`/${name}`))?.url)
+      .map((name) => {
+        if (/^https?:\/\//.test(name)) {
+          return name;
+        }
+        return sorted.find((entry) => entry.path.endsWith(`/${name}`))?.url;
+      })
       .filter((url): url is string => Boolean(url));
   }
 
