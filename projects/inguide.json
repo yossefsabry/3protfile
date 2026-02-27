@@ -1,30 +1,52 @@
 {
   "slug": "inguide",
-  "title": "inguide",
+  "title": "InGuide",
   "status": "open source",
   "year": "2024",
-  "category": "Maps / AI",
-  "role": "City guide platform",
-  "tagline": "AI-assisted city guide with map-first exploration.",
-  "description": "Location-aware guide for curated routes, local recommendations, and rapid map rendering. Maplibre powers the geospatial layer for smooth interactions and flexible styling.",
+  "category": "Maps / Android + Web",
+  "role": "Android app + indoor map viewer",
+  "tagline": "Dual-version guide: native Android app and MVF map web viewer.",
+  "description": "InGuide ships as a Kotlin/Jetpack Compose Android app and a web map viewer. The app covers auth, dashboard, schedule, and AI chat UI, while the web build loads MVF zip bundles, filters floors, and visualizes debug node layers with Mapbox GL/MapLibre tooling.",
   "highlights": [
-    "Maplibre-powered vector rendering",
-    "Route planning with POI clustering",
-    "AI summaries for venues and districts"
+    "Android app screens for auth, home, schedule, map, and chat (Material3)",
+    "Web viewer loads MVF zip bundles with floor filtering + legend-driven debug layers",
+    "Indoor map tooling built around Mappedin MVF data and node visualization workflows"
   ],
-  "stack": ["TypeScript", "React", "Maplibre", "PostGIS", "AI"],
+  "stack": [
+    "Kotlin",
+    "Jetpack Compose",
+    "Android",
+    "JavaScript",
+    "Vite",
+    "Mapbox GL",
+    "Mappedin MVF",
+    "Turf.js"
+  ],
   "typing": [
-    "tiles: vector + raster",
-    "poi_count: 3.2k",
-    "routes: multi-stop"
+    "platforms: android + web",
+    "maps: mvf zip + floor filtering",
+    "ui: compose + map viewer"
   ],
   "links": [
     {
-      "label": "View Source on GitHub",
+      "label": "Android App Repo",
       "href": "https://github.com/yossefsabry/inguide"
+    },
+    {
+      "label": "Web Map Repo",
+      "href": "https://github.com/yossefsabry/maplibra_map"
+    },
+    {
+      "label": "Live Web Demo",
+      "href": "https://mapsu.netlify.app/"
     }
   ],
   "imageFolder": "inguide_images",
-  "images": ["cover.svg", "detail.svg"],
+  "images": [
+    "inguide_phone_home.jpg",
+    "inguide_phone_map.jpg",
+    "inguide_phone_schedule.jpg",
+    "inguide_web.png"
+  ],
   "order": 2
 }
