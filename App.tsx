@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, Suspense } from 'react';
 import { AnimatePresence, useReducedMotion } from 'framer-motion';
-import { CustomCursor } from './components/ui/CustomCursor';
 import { LoadingScreen } from './components/ui/LoadingScreen';
 import { ThemeWaterTransition } from './components/ui/ThemeWaterTransition';
 import { Navigation } from './components/layout/Navigation';
 import { MobileMenu } from './components/layout/MobileMenu';
 import { SceneLayers } from './components/layout/SceneLayers';
 import { Footer } from './components/layout/Footer';
-import { HeroSection } from './components/sections/HeroSection';
-import { AboutSection } from './components/sections/AboutSection';
-import { ProjectsSection } from './components/sections/ProjectsSection';
-import { ContactSection } from './components/sections/ContactSection';
+
+const HeroSection = React.lazy(() => import('./components/sections/HeroSection').then(m => ({ default: m.HeroSection })));
+const AboutSection = React.lazy(() => import('./components/sections/AboutSection').then(m => ({ default: m.AboutSection })));
+const ProjectsSection = React.lazy(() => import('./components/sections/ProjectsSection').then(m => ({ default: m.ProjectsSection })));
+const ContactSection = React.lazy(() => import('./components/sections/ContactSection').then(m => ({ default: m.ContactSection })));
 import { useAudioController } from './hooks/useAudioController';
 import { useDeviceProfile } from './hooks/useDeviceProfile';
 import { useLoadingSequence } from './hooks/useLoadingSequence';
@@ -88,7 +88,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <CustomCursor theme={theme} disabled={isLoading || prefersReducedMotion || isLowPower} />
+
 
       <div className="relative">
         <SceneLayers
@@ -123,12 +123,14 @@ const App: React.FC = () => {
           />
           <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} onScrollTo={scrollToSection} />
 
-          <HeroSection onScrollTo={scrollToSection} />
-          <main>
-            <AboutSection />
-            <ProjectsSection />
-            <ContactSection />
-          </main>
+          <Suspense fallback={<div className="min-h-screen" />}>
+            <HeroSection onScrollTo={scrollToSection} />
+            <main>
+              <AboutSection />
+              <ProjectsSection />
+              <ContactSection />
+            </main>
+          </Suspense>
         </div>
       </div>
 
