@@ -1,30 +1,30 @@
 :root {
-  --star-base: #f9f8f4;
-  --star-1: rgba(10, 12, 14, 0.6);
-  --star-2: rgba(10, 12, 14, 0.45);
-  --star-3: rgba(10, 12, 14, 0.32);
-  --nebula-1: rgba(120, 180, 255, 0.18);
-  --nebula-1b: rgba(90, 200, 220, 0.12);
-  --nebula-2: rgba(90, 150, 230, 0.16);
-  --nebula-2b: rgba(120, 220, 255, 0.1);
-  --nebula-3: rgba(70, 120, 210, 0.14);
-  --nebula-3b: rgba(70, 180, 200, 0.09);
-  --nebula-opacity: 0.24;
-  --grain-opacity: 0.045;
-  --glow-warm: rgba(237, 184, 114, 0.18);
-  --glow-soft: rgba(255, 230, 200, 0.08);
-  --glow-cool: rgba(140, 210, 255, 0.12);
-  --glow-opacity: 0.45;
-  --aurora-1: rgba(255, 190, 210, 0.6);
-  --aurora-2: rgba(255, 200, 130, 0.5);
-  --aurora-3: rgba(180, 220, 255, 0.55);
-  --aurora-4: rgba(255, 210, 150, 0.4);
-  --aurora-5: rgba(255, 150, 200, 0.45);
-  --aurora-6: rgba(140, 210, 255, 0.35);
-  --aurora-opacity: 0.6;
-  --meteor-tail: rgba(237, 184, 114, 0.5);
-  --meteor-core: rgba(237, 184, 114, 0.95);
-  --meteor-glow: rgba(237, 184, 114, 0.55);
+  --star-base: #f5f4ef; /* Softer, more paper-like background */
+  --star-1: rgba(68, 64, 60, 0.4);
+  --star-2: rgba(68, 64, 60, 0.25);
+  --star-3: rgba(68, 64, 60, 0.15);
+  --nebula-1: rgba(197, 160, 89, 0.08);
+  --nebula-1b: rgba(197, 160, 89, 0.04);
+  --nebula-2: rgba(120, 113, 108, 0.06);
+  --nebula-2b: rgba(120, 113, 108, 0.03);
+  --nebula-3: rgba(197, 160, 89, 0.05);
+  --nebula-3b: rgba(197, 160, 89, 0.02);
+  --nebula-opacity: 0.15;
+  --grain-opacity: 0.035;
+  --glow-warm: rgba(197, 160, 89, 0.12);
+  --glow-soft: rgba(197, 160, 89, 0.05);
+  --glow-cool: rgba(168, 162, 158, 0.08);
+  --glow-opacity: 0.35;
+  --aurora-1: rgba(197, 160, 89, 0.3);
+  --aurora-2: rgba(120, 113, 108, 0.25);
+  --aurora-3: rgba(197, 160, 89, 0.2);
+  --aurora-4: rgba(120, 113, 108, 0.15);
+  --aurora-5: rgba(197, 160, 89, 0.1);
+  --aurora-6: rgba(120, 113, 108, 0.05);
+  --aurora-opacity: 0.4;
+  --meteor-tail: rgba(197, 160, 89, 0.3);
+  --meteor-core: rgba(197, 160, 89, 0.7);
+  --meteor-glow: rgba(197, 160, 89, 0.3);
 }
 
 .dark {

@@ -43,24 +43,24 @@ export const Navigation = ({
 }: NavigationProps) => (
   <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 dark:bg-nobel-dark/80 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-6'}`}>
     <div className="container mx-auto px-6 flex justify-between items-center">
-      <div className="flex items-center gap-4 cursor-pointer group" onClick={onScrollTop}>
+      <div className="flex items-center gap-4 cursor-pointer group" onClick={onScrollTo}>
         <div className="w-10 h-10 bg-nobel-gold rounded-xl flex items-center justify-center text-white font-serif font-bold text-2xl shadow-lg transition-transform group-hover:scale-110 pb-1">Y</div>
-        <span className={`font-serif font-bold text-xl tracking-wider transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0 dark:text-white'}`}>
+        <span className={`font-serif font-bold text-xl tracking-wider transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0 dark:text-stone-200'}`}>
           YON3
         </span>
       </div>
 
-      <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.2em] text-stone-600 dark:text-stone-400">
+      <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.2em] text-stone-600 dark:text-stone-200">
         <a href="#about" onClick={onScrollTo('about')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">About</a>
         <a href="#projects" onClick={onScrollTo('projects')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Projects</a>
         <a href="#contact" onClick={onScrollTo('contact')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Contact</a>
 
-        <div className="w-[1px] h-6 bg-stone-200 dark:bg-stone-800 mx-2"></div>
+        <div className="w-[1px] h-6 bg-stone-100 dark:bg-stone-800 mx-2"></div>
 
         <button
           onClick={onToggleTheme}
           disabled={isThemeTransitioning || isLoading}
-          className="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-900 hover:bg-stone-200 dark:hover:bg-stone-800 transition-all text-stone-900 dark:text-stone-100 shadow-sm active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-900 hover:bg-stone-200 dark:hover:bg-stone-800 transition-all text-stone-700 dark:text-stone-200 shadow-sm active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
           aria-label="Toggle Theme"
         >
           {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
@@ -72,13 +72,13 @@ export const Navigation = ({
           tracks={tracks}
           activeTrackId={activeTrackId}
           onSelectTrack={onSelectTrack}
-          buttonClassName="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-900 hover:bg-stone-200 dark:hover:bg-stone-800 transition-all text-stone-900 dark:text-stone-100 shadow-sm active:scale-95"
+          buttonClassName="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-900 hover:bg-stone-200 dark:hover:bg-stone-800 transition-all text-stone-700 dark:text-stone-200 shadow-sm active:scale-95"
           iconSize={18}
         />
 
         <a
           href="/cv.html"
-          className="px-6 py-2.5 border border-nobel-gold/70 text-stone-900 dark:text-white rounded-xl hover:bg-nobel-gold/10 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+          className="px-6 py-2.5 border border-nobel-gold/70 text-stone-700 dark:text-stone-200 rounded-xl hover:bg-nobel-gold/10 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
         >
           VIEW CV
         </a>
@@ -87,7 +87,7 @@ export const Navigation = ({
           href="https://github.com/yossefsabry"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-2.5 bg-stone-900 dark:bg-white dark:text-stone-900 text-white rounded-xl hover:bg-stone-800 dark:hover:bg-stone-100 transition-all shadow-md hover:shadow-xl active:scale-95 cursor-pointer"
+          className="px-6 py-2.5 bg-stone-900 dark:bg-white dark:text-stone-800 text-white rounded-xl hover:bg-stone-800 dark:hover:bg-stone-100 transition-all shadow-md hover:shadow-xl active:scale-95 cursor-pointer"
         >
           VIEW GITHUB
         </a>
@@ -97,7 +97,7 @@ export const Navigation = ({
         <button
           onClick={onToggleTheme}
           disabled={isThemeTransitioning || isLoading}
-          className="p-2 rounded-lg bg-stone-100 dark:bg-stone-900 text-stone-900 dark:text-stone-100 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="p-2 rounded-lg bg-stone-100 dark:bg-stone-900 text-stone-700 dark:text-stone-200 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
         </button>
@@ -107,10 +107,10 @@ export const Navigation = ({
           tracks={tracks}
           activeTrackId={activeTrackId}
           onSelectTrack={onSelectTrack}
-          buttonClassName="p-2 rounded-lg bg-stone-100 dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+          buttonClassName="p-2 rounded-lg bg-stone-100 dark:bg-stone-900 text-stone-700 dark:text-stone-200"
           iconSize={20}
         />
-        <button className="p-2 rounded-lg bg-stone-900 dark:bg-white text-white dark:text-stone-900" onClick={onToggleMenu}>
+        <button className="p-2 rounded-lg bg-stone-900 dark:bg-white text-white dark:text-stone-800" onClick={onToggleMenu}>
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>

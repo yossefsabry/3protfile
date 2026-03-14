@@ -26,9 +26,9 @@ export const InfoCard = memo(({ title, detail, href, delay }: InfoCardProps) => 
 
   const content = (
     <>
-      <h3 className="font-serif text-2xl text-stone-900 dark:text-stone-100 text-center mb-3">{title}</h3>
+      <h3 className="font-serif text-2xl text-stone-700 dark:text-stone-100 text-center mb-3">{title}</h3>
       <div className="w-12 h-0.5 bg-nobel-gold mb-4 opacity-60"></div>
-      <p className="text-xs text-stone-500 dark:text-stone-400 font-bold uppercase tracking-widest text-center leading-relaxed">{detail}</p>
+      <p className="text-xs text-stone-600 dark:text-stone-200 font-bold uppercase tracking-widest text-center leading-relaxed">{detail}</p>
     </>
   );
 
@@ -38,7 +38,7 @@ export const InfoCard = memo(({ title, detail, href, delay }: InfoCardProps) => 
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-col group animate-fade-in-up items-center p-8 bg-white dark:bg-stone-900 rounded-xl border border-stone-200 dark:border-stone-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-xs hover:border-nobel-gold/50"
+        className="flex flex-col group animate-fade-in-up items-center p-8 bg-white dark:bg-stone-900 rounded-xl border border-stone-100 dark:border-stone-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-xs hover:border-nobel-gold/50"
         style={{ animationDelay: delay }}
         {...animationProps}
       >
@@ -49,7 +49,7 @@ export const InfoCard = memo(({ title, detail, href, delay }: InfoCardProps) => 
 
   return (
     <motion.div
-      className="flex flex-col group animate-fade-in-up items-center p-8 bg-white dark:bg-stone-900 rounded-xl border border-stone-200 dark:border-stone-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-xs hover:border-nobel-gold/50"
+      className="flex flex-col group animate-fade-in-up items-center p-8 bg-white dark:bg-stone-900 rounded-xl border border-stone-100 dark:border-stone-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-xs hover:border-nobel-gold/50"
       style={{ animationDelay: delay }}
       {...animationProps}
     >

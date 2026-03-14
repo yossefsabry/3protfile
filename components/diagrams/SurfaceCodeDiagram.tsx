@@ -43,11 +43,11 @@ export const SurfaceCodeDiagram = memo(() => (
       return (
         <motion.article
           key={project.slug}
-          className="group relative overflow-hidden rounded-none border border-stone-200/70 dark:border-stone-800/80 bg-white/80 dark:bg-stone-950/80 shadow-[0_30px_70px_-50px_rgba(15,17,21,0.6)] transition-all hover:-translate-y-1 hover:border-nobel-gold/60 hover:shadow-[0_35px_80px_-45px_rgba(15,17,21,0.7)]"
+          className="group relative overflow-hidden rounded-none border border-stone-100/70 dark:border-stone-800/80 bg-white/80 dark:bg-stone-950/80 shadow-[0_30px_70px_-50px_rgba(15,17,21,0.6)] transition-all hover:-translate-y-1 hover:border-nobel-gold/60 hover:shadow-[0_35px_80px_-45px_rgba(15,17,21,0.7)]"
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: 'easeOut', delay: index * 0.05 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.1 }}
         >
           <div className="relative">
             {showMobileStrip ? (
@@ -72,7 +72,7 @@ export const SurfaceCodeDiagram = memo(() => (
                 {heroRowItems.map((image, imageIndex) => (
                   <div
                     key={`${project.slug}-hero-${imageIndex}`}
-                    className="overflow-hidden rounded-none border border-stone-200/70 dark:border-stone-800/80 bg-stone-100 dark:bg-stone-900 flex items-center justify-center"
+                    className="overflow-hidden rounded-none border border-stone-100/70 dark:border-stone-800/80 bg-stone-100 dark:bg-stone-900 flex items-center justify-center"
                   >
                     <img
                       src={image}
@@ -105,7 +105,7 @@ export const SurfaceCodeDiagram = memo(() => (
                 <span className={`rounded-none border px-3 py-1 text-[10px] uppercase tracking-[0.3em] ${statusClass}`}>
                   {project.status}
                 </span>
-                <span className="rounded-none border border-stone-200/70 bg-white/70 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-stone-600 dark:border-stone-700/70 dark:bg-stone-900/70 dark:text-stone-300">
+                <span className="rounded-none border border-stone-100/70 bg-white/70 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-stone-600 dark:border-stone-700/70 dark:bg-stone-900/70 dark:text-stone-300">
                   {project.year}
                 </span>
               </div>
@@ -117,7 +117,7 @@ export const SurfaceCodeDiagram = memo(() => (
           <div className="p-6 sm:p-7">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-serif text-3xl sm:text-4xl text-stone-900 dark:text-stone-100">{project.title}</h3>
+                <h3 className="font-serif text-3xl sm:text-4xl text-stone-700 dark:text-stone-100">{project.title}</h3>
                 <p className="mt-2 text-xs uppercase tracking-[0.35em] text-stone-500 dark:text-stone-400">{project.role}</p>
               </div>
             </div>
@@ -127,7 +127,7 @@ export const SurfaceCodeDiagram = memo(() => (
                {project.tagline}
              </p>
             {project.typing?.length ? (
-              <div className="mt-5 rounded-none border border-stone-200/80 dark:border-stone-800/80 bg-white/70 dark:bg-stone-900/60 px-4 py-3">
+              <div className="mt-5 rounded-none border border-stone-100/80 dark:border-stone-800/80 bg-white/70 dark:bg-stone-900/60 px-4 py-3">
                 <div className="text-[11px] uppercase tracking-[0.35em] text-stone-500 dark:text-stone-400 mb-2">Telemetry</div>
                 <div className="space-y-1 font-mono text-sm sm:text-base text-stone-600 dark:text-stone-300">
                   {project.typing.map((line, lineIndex) => (
@@ -161,7 +161,7 @@ export const SurfaceCodeDiagram = memo(() => (
                {project.stack.map((item) => (
                  <span
                    key={`${project.slug}-${item}`}
-                   className={`px-3 py-1.5 ${isCompactCopy ? 'text-[10px]' : 'text-[11px]'} uppercase tracking-[0.2em] rounded-none bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300`}
+                   className={`px-3 py-1.5 ${isCompactCopy ? 'text-[10px]' : 'text-[11px]'} uppercase tracking-[0.2em] rounded-none bg-stone-100 dark:bg-stone-900 border border-stone-100 dark:border-stone-800 text-stone-600 dark:text-stone-300`}
                  >
                    {item}
                  </span>
@@ -172,7 +172,7 @@ export const SurfaceCodeDiagram = memo(() => (
                 {bodyGalleryItems.map((image, imageIndex) => (
                   <div
                     key={`${project.slug}-gallery-${imageIndex}`}
-                    className={`overflow-hidden rounded-none border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 ${galleryItemHeight} flex items-center justify-center`}
+                    className={`overflow-hidden rounded-none border border-stone-100 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 ${galleryItemHeight} flex items-center justify-center`}
                   >
                     <img
                       src={image}
@@ -193,8 +193,8 @@ export const SurfaceCodeDiagram = memo(() => (
                    rel="noopener noreferrer"
                    className={
                      isTwoColumnLinks
-                       ? 'w-full px-4 py-2.5 text-center text-[12px] uppercase tracking-[0.35em] rounded-none border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-200 hover:border-nobel-gold/60 hover:text-nobel-gold transition-colors'
-                       : 'px-4 py-2.5 text-[12px] uppercase tracking-[0.35em] rounded-none border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-200 hover:border-nobel-gold/60 hover:text-nobel-gold transition-colors'
+                       ? 'w-full px-4 py-2.5 text-center text-[12px] uppercase tracking-[0.35em] rounded-none border border-stone-100 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-200 hover:border-nobel-gold/60 hover:text-nobel-gold transition-colors'
+                       : 'px-4 py-2.5 text-[12px] uppercase tracking-[0.35em] rounded-none border border-stone-100 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-200 hover:border-nobel-gold/60 hover:text-nobel-gold transition-colors'
                    }
                  >
                    {link.label}

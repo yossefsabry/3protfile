@@ -155,13 +155,13 @@ export const AudioMenuButton = ({
             id={`track-menu-${listId}`}
             role="listbox"
             aria-label="Background music"
-            className="absolute right-0 top-full mt-5 w-64 overflow-hidden rounded-2xl border border-stone-200/80 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-stone-800/80 dark:bg-stone-900/95 z-50"
+            className="absolute right-0 top-full mt-5 w-64 overflow-hidden rounded-2xl border border-stone-100/80 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-stone-800/80 dark:bg-stone-900/95 z-50"
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 8, scale: 0.98 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}
             transition={{ duration: prefersReducedMotion ? 0.1 : 0.18, ease: 'easeOut' }}
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200/70 dark:border-stone-800/70">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100/70 dark:border-stone-800/70">
               <span className="text-[10px] uppercase tracking-[0.28em] text-stone-500 dark:text-stone-400">Background music</span>
               <span className="text-[10px] text-stone-400 dark:text-stone-500">{tracks.length} tracks</span>
             </div>

@@ -20,20 +20,6 @@ export const LoadingScreen = ({ theme }: { theme: 'light' | 'dark' }) => {
       transition={{ duration: 0.4, ease: 'easeOut' }}
       style={{ backgroundColor: isDark ? '#0F1115' : '#F9F8F4' }}
     >
-      <motion.div
-        aria-hidden="true"
-        className="absolute inset-0"
-        initial={{ clipPath: 'circle(12% at 100% 0%)' }}
-        animate={prefersReducedMotion ? undefined : {
-          clipPath: [
-            'circle(12% at 100% 0%)',
-            'circle(28% at 100% 0%)',
-            'circle(12% at 100% 0%)'
-          ]
-        }}
-        transition={prefersReducedMotion ? undefined : { duration: 2.4, ease: 'easeInOut', repeat: Infinity }}
-        style={{ background: isDark ? 'rgba(197,160,89,0.12)' : 'rgba(197,160,89,0.18)' }}
-      />
       <div className="relative z-10 flex flex-col items-center gap-4">
         <div
           className="font-serif text-4xl tracking-wide"

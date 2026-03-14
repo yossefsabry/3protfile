@@ -8,7 +8,6 @@ import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import { SceneLoadWatcher } from './SceneLoadWatcher';
 import { SceneInvalidateBridge } from './SceneInvalidateBridge';
-import { ScrollRig } from './ScrollRig';
 import type { ScrollStateRef, ThemeMode } from './types';
 
 type HeroSceneProps = {
@@ -46,7 +45,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({
 
         <SceneLoadWatcher onReady={onReady} reducedMotion={reducedMotion} lowPower={lowPower} />
         <SceneInvalidateBridge onInvalidateReady={onInvalidateReady} />
-        <ScrollRig scrollState={scrollState} reducedMotion={reducedMotion} isDark={isDark} />
 
         {!reducedMotion && !lowPower && (
           <Suspense fallback={null}>
