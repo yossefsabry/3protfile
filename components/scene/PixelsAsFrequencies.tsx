@@ -40,9 +40,10 @@ const vertexShader = `
     // Scroll interaction: Increase displacement on scroll
     float displacement = uDisplacementStrength + (uScroll * 0.25);
     
-    // Add wave noise and mouse distortion
-    float noise = sin(uv.x * 6.0 + uTime * 0.4) * 0.025 + cos(uv.y * 6.0 + uTime * 0.4) * 0.025;
-    float finalElevation = (elevation + noise + (mouseInfluence * 0.18)) * displacement;
+    // Add wave noise and mouse distortion (EXTREME frequencies)
+    // Massive multipliers for hyper-energetic movement
+    float noise = sin(uv.x * 85.0 + uTime * 2.5) * 0.08 + cos(uv.y * 85.0 + uTime * 2.5) * 0.08;
+    float finalElevation = (elevation + noise + (mouseInfluence * 0.25)) * displacement;
     
     vElevation = finalElevation;
     
@@ -83,6 +84,7 @@ type PixelsAsFrequenciesProps = {
   lowPower?: boolean;
   reducedMotion?: boolean;
   active?: boolean;
+  isPhone?: boolean;
   theme: 'light' | 'dark';
 };
 
@@ -90,6 +92,7 @@ export const PixelsAsFrequencies: React.FC<PixelsAsFrequenciesProps> = ({
   lowPower = false,
   reducedMotion = false,
   active = true,
+  isPhone = false,
   theme,
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -99,7 +102,9 @@ export const PixelsAsFrequencies: React.FC<PixelsAsFrequenciesProps> = ({
   const rotationYRef = useRef(0);
   const lastScrollYRef = useRef(0);
   
-  const videoUrl = 'https://ik.imagekit.io/sqiqig7tz/e4d8fe34-ac0f-4485-9c56-716f218acdc1_hd.mp4';
+  const videoUrl = lowPower 
+    ? 'https://ik.imagekit.io/sqiqig7tz/e4d8fe34-ac0f-4485-9c56-716f218acdc1_hd.mp4?tr=w-480,q-50' 
+    : 'https://ik.imagekit.io/sqiqig7tz/e4d8fe34-ac0f-4485-9c56-716f218acdc1_hd.mp4';
   
   const texture = useVideoTexture(videoUrl, {
     muted: true,
@@ -109,26 +114,28 @@ export const PixelsAsFrequencies: React.FC<PixelsAsFrequenciesProps> = ({
   });
 
   const { viewport, mouse } = useThree();
-  const scale = useAspect(1920, 1080, 1);
+  
+  // Conditionally set aspect ratio based on device
+  const scale = useAspect(isPhone ? 1080 : 1920, isPhone ? 1920 : 1080, 1);
 
   const resolution = useMemo(() => {
-    if (lowPower) return [80, 80];
-    if (reducedMotion) return [120, 120];
-    return [240, 240];
+    if (lowPower) return [100, 100]; 
+    if (reducedMotion) return [150, 150];
+    return [400, 400]; // High resolution for extreme frequency detail
   }, [lowPower, reducedMotion]);
 
   const geometry = useMemo(() => new THREE.PlaneGeometry(1, 1, resolution[0], resolution[1]), [resolution]);
 
   const uniforms = useMemo(() => ({
     uTexture: { value: texture },
-    uDisplacementStrength: { value: 0.38 },
-    uLayers: { value: 14.0 },
-    uSoftness: { value: 0.75 },
+    uDisplacementStrength: { value: isPhone ? 0.45 : 0.32 }, 
+    uLayers: { value: 160.0 },               // Double the previous layers
+    uSoftness: { value: 1.0 },                
     uTime: { value: 0.0 },
     uOpacity: { value: theme === 'dark' ? 0.6 : 0.4 },
     uMouse: { value: new THREE.Vector2(0, 0) },
     uScroll: { value: 0.0 },
-  }), [texture, theme]);
+  }), [texture, theme, isPhone]);
 
   useFrame((state) => {
     if (!active) return;
@@ -153,11 +160,10 @@ export const PixelsAsFrequencies: React.FC<PixelsAsFrequenciesProps> = ({
       lastScrollYRef.current = currentScrollY;
 
       if (Math.abs(scrollDelta) > 0.5) {
-        // While scrolling, add to the rotation based on delta (Incredibly slow speed)
+        // While scrolling, add to the rotation based on delta
         rotationYRef.current += scrollDelta * 0.0003;
       } else {
         // When stopped, lerp towards the nearest "original place" (multiple of 2 * PI)
-        // Reduced lerp factor to 0.0008 for an incredibly slow, near-imperceptible return
         const targetRotation = Math.round(rotationYRef.current / (Math.PI * 2)) * (Math.PI * 2);
         rotationYRef.current = THREE.MathUtils.lerp(rotationYRef.current, targetRotation, 0.0008);
       }

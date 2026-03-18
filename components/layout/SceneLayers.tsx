@@ -14,6 +14,7 @@ type SceneLayersProps = {
   shouldRender3d: boolean;
   reducedMotion: boolean;
   lowPower: boolean;
+  isPhone: boolean;
   active: boolean;
   onSceneReady: () => void;
   onInvalidateReady: (invalidate: (() => void) | null) => void;
@@ -27,6 +28,7 @@ export const SceneLayers = ({
   shouldRender3d,
   reducedMotion,
   lowPower,
+  isPhone,
   active,
   onSceneReady,
   onInvalidateReady,
@@ -50,6 +52,7 @@ export const SceneLayers = ({
                 scrollState={scrollStateRef}
                 reducedMotion={reducedMotion}
                 lowPower={lowPower}
+                isPhone={isPhone}
                 active={active}
                 onReady={onSceneReady}
                 onInvalidateReady={onInvalidateReady}

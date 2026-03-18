@@ -5,53 +5,45 @@
 
 /**
  * Centralized color system for the application.
- * Using the Rosé Pine palette for a professional, warm, and atmospheric feel.
+ * Use these constants to ensure visual consistency across components and scenes.
  */
 export const COLORS = {
-  // Brand Colors (Accents from Rosé Pine)
-  rose: '#ebbcba',
-  gold: '#f6c177',
-  iris: '#c4a7e7',
-  pine: '#31748f',
-  love: '#eb6f92',
-  foam: '#9ccfd8',
+  // Brand Colors
+  nobelGold: '#C5A059',
+  nobelGoldMuted: '#8a6d3b',
+  nobelGoldLight: '#F5E7C1',
+  copper: '#B87333',
   
-  // Nobel Gold compatibility (aliased to Rosé Pine Gold/Rose)
-  nobelGold: '#f6c177', 
-  nobelGoldMuted: '#ebbcba',
-  nobelGoldLight: '#f2e9e1',
-  copper: '#d7827e',
-  
-  // Neutral Palette - Light Mode (Rosé Pine Dawn)
+  // Neutral Palette - Light Mode
   light: {
-    background: '#faf4ed',     // base
-    backgroundMuted: '#fffaf3', // surface
-    text: '#575279',           // text
-    textMuted: '#797593',      // subtle
-    border: 'rgba(152, 147, 165, 0.15)', // muted
-    card: '#fffaf3',           // surface
-    cursor: '#575279',
-    cursorRing: 'rgba(152, 147, 165, 0.55)',
-    cursorTrail: 'rgba(152, 147, 165, 0.35)',
+    background: '#F9F8F4',
+    backgroundMuted: '#F5F4EF',
+    text: '#0F1115',
+    textMuted: '#6B7280',
+    border: 'rgba(15, 17, 21, 0.1)',
+    card: '#ffffff',
+    cursor: '#0f1115',
+    cursorRing: 'rgba(15, 17, 21, 0.55)',
+    cursorTrail: 'rgba(15, 17, 21, 0.35)',
   },
   
-  // Neutral Palette - Dark Mode (Rosé Pine)
+  // Neutral Palette - Dark Mode
   dark: {
-    background: '#191724',     // base
-    backgroundMuted: '#1f1d2e', // surface
-    text: '#e0def4',           // text
-    textMuted: '#908caa',      // subtle
-    border: 'rgba(110, 106, 134, 0.15)', // muted
-    card: '#1f1d2e',           // surface
-    cursor: '#e0def4',
-    cursorRing: 'rgba(110, 106, 134, 0.85)',
-    cursorTrail: 'rgba(110, 106, 134, 0.55)',
+    background: '#0F1115',
+    backgroundMuted: '#090a0c',
+    text: '#ffffff',
+    textMuted: '#A1A1AA',
+    border: 'rgba(255, 255, 255, 0.1)',
+    card: 'rgba(255, 255, 255, 0.02)',
+    cursor: '#ffffff',
+    cursorRing: 'rgba(255, 255, 255, 0.85)',
+    cursorTrail: 'rgba(255, 255, 255, 0.55)',
   },
   
   // Functional Colors
-  overlay: 'rgba(31, 29, 46, 0.75)',
-  error: '#eb6f92', // love
-  success: '#9ccfd8', // foam
+  overlay: 'rgba(15, 17, 21, 0.6)',
+  error: '#ef4444',
+  success: '#22c55e',
 };
 
 /**

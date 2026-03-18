@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import React, { useEffect, useRef } from 'react';
 import { useProgress } from '@react-three/drei';
 
 type SceneLoadWatcherProps = {
@@ -15,38 +14,24 @@ type SceneLoadWatcherProps = {
 
 export const SceneLoadWatcher = ({ onReady, reducedMotion, lowPower }: SceneLoadWatcherProps) => {
   const { active, progress, total } = useProgress();
-  const progressRef = useRef({ active, progress, total });
   const calledRef = useRef(false);
-  const settledFramesRef = useRef(0);
 
-  // Sync progress state to ref to avoid triggering re-renders of this component
-  // during the render phase of other components (like EnvironmentCube)
-  React.useEffect(() => {
-    progressRef.current = { active, progress, total };
-  }, [active, progress, total]);
-
-  useFrame(() => {
+  useEffect(() => {
     if (calledRef.current) return;
 
-    const current = progressRef.current;
-    const assetsLoaded = current.total === 0 || current.progress >= 100;
-    const allowEarlyReady = reducedMotion || lowPower || current.total === 0;
-    const readyToSettle = !current.active && (assetsLoaded || allowEarlyReady);
+    const assetsLoaded = total === 0 || progress >= 100;
+    const allowEarlyReady = reducedMotion || lowPower || total === 0;
+    const readyToSettle = !active && (assetsLoaded || allowEarlyReady);
 
-    if (!readyToSettle) {
-      settledFramesRef.current = 0;
-      return;
+    if (readyToSettle) {
+      calledRef.current = true;
+      // Defer the callback to ensure it happens after the current render/frame cycle
+      const timer = setTimeout(() => {
+        onReady?.();
+      }, 500); // Give it a bit more time to settle
+      return () => clearTimeout(timer);
     }
-
-    settledFramesRef.current += 1;
-    if (settledFramesRef.current < 6) return;
-    calledRef.current = true;
-
-    // Defer the callback to ensure it happens after the current render/frame cycle
-    setTimeout(() => {
-      onReady?.();
-    }, 0);
-  });
+  }, [active, progress, total, reducedMotion, lowPower, onReady]);
 
   return null;
 };
