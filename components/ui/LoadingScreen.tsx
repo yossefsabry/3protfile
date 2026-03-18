@@ -5,10 +5,12 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { COLORS, getThemeColors } from '../../styles/colors';
 
 export const LoadingScreen = ({ theme }: { theme: 'light' | 'dark' }) => {
   const prefersReducedMotion = useReducedMotion();
   const isDark = theme === 'dark';
+  const themeColors = getThemeColors(isDark);
 
   return (
     <motion.div
@@ -18,30 +20,31 @@ export const LoadingScreen = ({ theme }: { theme: 'light' | 'dark' }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      style={{ backgroundColor: isDark ? '#0F1115' : '#F9F8F4' }}
+      style={{ backgroundColor: themeColors.background }}
     >
       <div className="relative z-10 flex flex-col items-center gap-4">
         <div
           className="font-serif text-4xl tracking-wide"
-          style={{ color: isDark ? '#F9F8F4' : '#0F1115' }}
+          style={{ color: themeColors.text }}
         >
           YON3
         </div>
         <div
           className="text-[10px] uppercase tracking-[0.4em]"
-          style={{ color: isDark ? '#A1A1AA' : '#6B7280' }}
+          style={{ color: themeColors.textMuted }}
         >
           Loading portfolio
         </div>
         <div
           className="mt-3 h-[3px] w-44 rounded-full overflow-hidden"
-          style={{ backgroundColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(15,17,21,0.1)' }}
+          style={{ backgroundColor: themeColors.border }}
         >
           <motion.div
             className="h-full w-1/3 bg-nobel-gold"
             initial={{ x: '-40%' }}
             animate={prefersReducedMotion ? { x: '0%' } : { x: '140%' }}
             transition={prefersReducedMotion ? { duration: 0 } : { duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ backgroundColor: COLORS.nobelGold }}
           />
         </div>
       </div>

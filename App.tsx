@@ -45,7 +45,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     invalidateScene();
-  }, [invalidateScene, isLowPower, prefersReducedMotion, theme]);
+    if (!isLoading) {
+      // Force multiple invalidations to ensure the canvas draws after the loading screen exits
+      const timers = [100, 500, 1000].map(ms => setTimeout(invalidateScene, ms));
+      return () => timers.forEach(clearTimeout);
+    }
+  }, [invalidateScene, isLowPower, prefersReducedMotion, theme, isLoading]);
 
   const scrollToSection = useCallback((id: string) => (event: React.MouseEvent) => {
     event.preventDefault();
@@ -64,7 +69,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="no-radius min-h-screen text-stone-700 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-white overflow-x-hidden">
+    <div className="no-radius min-h-screen text-stone-700 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-stone-900 overflow-x-hidden">
       <AnimatePresence>
         {isLoading && <LoadingScreen theme={theme} />}
       </AnimatePresence>
@@ -81,7 +86,7 @@ const App: React.FC = () => {
           <button
             type="button"
             onClick={audio.requestAudioStart}
-            className="flex items-center gap-3 rounded-full bg-stone-900/90 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white shadow-2xl transition-transform hover:-translate-y-0.5 dark:bg-white/90 dark:text-stone-800"
+            className="flex items-center gap-3 rounded-full bg-stone-700/90 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-stone-50 shadow-2xl transition-transform hover:-translate-y-0.5 dark:bg-white/90 dark:text-stone-900"
           >
             Enable Sound
           </button>
@@ -96,6 +101,7 @@ const App: React.FC = () => {
           shouldRender3d={shouldRender3d}
           reducedMotion={prefersReducedMotion}
           lowPower={isLowPower}
+          isPhone={isPhone}
           active={shouldRender3d && !prefersReducedMotion}
           onSceneReady={() => setSceneReady(true)}
           onInvalidateReady={setSceneInvalidate}

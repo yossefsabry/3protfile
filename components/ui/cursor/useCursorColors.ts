@@ -5,6 +5,7 @@
 
 import { useEffect } from 'react';
 import type { MutableRefObject } from 'react';
+import { getThemeColors } from '../../../styles/colors';
 
 export const useCursorColors = (
   theme: 'light' | 'dark',
@@ -12,11 +13,8 @@ export const useCursorColors = (
   drawColorRef: MutableRefObject<string>
 ) => {
   useEffect(() => {
-    trailColorRef.current = theme === 'dark'
-      ? 'rgba(255, 255, 255, 0.45)'
-      : 'rgba(15, 17, 21, 0.45)';
-    drawColorRef.current = theme === 'dark'
-      ? 'rgba(255, 255, 255, 0.7)'
-      : 'rgba(15, 17, 21, 0.6)';
+    const colors = getThemeColors(theme === 'dark');
+    trailColorRef.current = colors.cursorTrail;
+    drawColorRef.current = colors.cursorRing;
   }, [drawColorRef, theme, trailColorRef]);
 };

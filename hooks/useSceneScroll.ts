@@ -17,22 +17,28 @@ export const useSceneScroll = (markSceneActive: () => void) => {
 
     const update = () => {
       rafId = 0;
-      const footerEl = footerRef.current;
-      if (!footerEl) return;
-
       const scrollY = window.scrollY;
-      const deltaY = scrollY - lastScrollY;
-      const direction = deltaY >= 0 ? 1 : -1;
-      const velocity = Math.min(Math.abs(deltaY) / 120, 1);
+      const footerEl = footerRef.current;
 
-      const footerTop = footerEl.getBoundingClientRect().top + window.scrollY;
-      const viewportHeight = window.innerHeight;
-      const maxScroll = Math.max(1, footerTop - viewportHeight);
-      const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+      let fade = 1;
+      let progress = 0;
+      let velocity = 0;
+      let direction = 1;
 
-      const fadeRange = Math.max(200, viewportHeight * 0.5);
-      const footerDistance = footerTop - (scrollY + viewportHeight);
-      const fade = Math.min(Math.max(footerDistance / fadeRange, 0), 1);
+      if (footerEl) {
+        const deltaY = scrollY - lastScrollY;
+        direction = deltaY >= 0 ? 1 : -1;
+        velocity = Math.min(Math.abs(deltaY) / 120, 1);
+
+        const footerTop = footerEl.getBoundingClientRect().top + window.scrollY;
+        const viewportHeight = window.innerHeight;
+        const maxScroll = Math.max(1, footerTop - viewportHeight);
+        progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+
+        const fadeRange = Math.max(200, viewportHeight * 0.5);
+        const footerDistance = footerTop - (scrollY + viewportHeight);
+        fade = Math.min(Math.max(footerDistance / fadeRange, 0), 1);
+      }
 
       scrollStateRef.current.progress = progress;
       scrollStateRef.current.velocity = velocity;

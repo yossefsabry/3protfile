@@ -7,6 +7,7 @@ import React, { useRef } from 'react';
 import { useCursorColors } from './cursor/useCursorColors';
 import { useCursorDrawing } from './cursor/useCursorDrawing';
 import { useCursorMotion } from './cursor/useCursorMotion';
+import { COLORS } from '../../styles/colors';
 
 export const CustomCursor = ({ theme, disabled = false }: { theme: 'light' | 'dark'; disabled?: boolean }) => {
   if (disabled) return null;
@@ -14,8 +15,8 @@ export const CustomCursor = ({ theme, disabled = false }: { theme: 'light' | 'da
   const ringRef = useRef<HTMLDivElement | null>(null);
   const trailRef = useRef<HTMLCanvasElement | null>(null);
   const drawRef = useRef<HTMLCanvasElement | null>(null);
-  const trailColorRef = useRef('rgba(15, 17, 21, 0.35)');
-  const drawColorRef = useRef('rgba(15, 17, 21, 0.55)');
+  const trailColorRef = useRef(COLORS.light.cursorTrail);
+  const drawColorRef = useRef(COLORS.light.cursorRing);
   const drawingRef = useRef(false);
 
   useCursorColors(theme, trailColorRef, drawColorRef);

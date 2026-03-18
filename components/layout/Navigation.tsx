@@ -41,26 +41,29 @@ export const Navigation = ({
   onScrollTop,
   onScrollTo,
 }: NavigationProps) => (
-  <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 dark:bg-nobel-dark/80 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-6'}`}>
+  <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-6'}`}>
     <div className="container mx-auto px-6 flex justify-between items-center">
-      <div className="flex items-center gap-4 cursor-pointer group" onClick={onScrollTo}>
-        <div className="w-10 h-10 bg-nobel-gold rounded-xl flex items-center justify-center text-white font-serif font-bold text-2xl shadow-lg transition-transform group-hover:scale-110 pb-1">Y</div>
-        <span className={`font-serif font-bold text-xl tracking-wider transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0 dark:text-stone-200'}`}>
+      <div className="flex items-center gap-4 cursor-pointer group" onClick={onScrollTop}>
+        <div className="flex items-center justify-center transition-transform group-hover:scale-110">
+          <span className="font-serif text-3xl text-nobel-gold leading-none">和宮</span>
+        </div>
+        <div className="h-4 w-px bg-stone-500/40 mx-1"></div>
+        <span className={`font-sans font-black text-sm tracking-[0.5em] uppercase transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0 text-stone-700 dark:text-white'}`}>
           YON3
         </span>
       </div>
 
-      <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.2em] text-stone-600 dark:text-stone-200">
+      <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.2em] text-stone-600 dark:text-white">
         <a href="#about" onClick={onScrollTo('about')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">About</a>
         <a href="#projects" onClick={onScrollTo('projects')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Projects</a>
         <a href="#contact" onClick={onScrollTo('contact')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Contact</a>
 
-        <div className="w-[1px] h-6 bg-stone-100 dark:bg-stone-800 mx-2"></div>
+        <div className="w-[1px] h-6 bg-stone-200 dark:bg-white/10 mx-2"></div>
 
         <button
           onClick={onToggleTheme}
           disabled={isThemeTransitioning || isLoading}
-          className="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-900 hover:bg-stone-200 dark:hover:bg-stone-800 transition-all text-stone-700 dark:text-stone-200 shadow-sm active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-white/10 transition-all text-stone-700 dark:text-white shadow-sm active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
           aria-label="Toggle Theme"
         >
           {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
@@ -72,13 +75,13 @@ export const Navigation = ({
           tracks={tracks}
           activeTrackId={activeTrackId}
           onSelectTrack={onSelectTrack}
-          buttonClassName="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-900 hover:bg-stone-200 dark:hover:bg-stone-800 transition-all text-stone-700 dark:text-stone-200 shadow-sm active:scale-95"
+          buttonClassName="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-white/10 transition-all text-stone-700 dark:text-white shadow-sm active:scale-95"
           iconSize={18}
         />
 
         <a
           href="/cv.html"
-          className="px-6 py-2.5 border border-nobel-gold/70 text-stone-700 dark:text-stone-200 rounded-xl hover:bg-nobel-gold/10 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+          className="px-6 py-2.5 border border-nobel-gold/70 text-stone-700 dark:text-white rounded-xl hover:bg-nobel-gold/10 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
         >
           VIEW CV
         </a>
@@ -87,7 +90,7 @@ export const Navigation = ({
           href="https://github.com/yossefsabry"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-2.5 bg-stone-900 dark:bg-white dark:text-stone-800 text-white rounded-xl hover:bg-stone-800 dark:hover:bg-stone-100 transition-all shadow-md hover:shadow-xl active:scale-95 cursor-pointer"
+          className="px-6 py-2.5 bg-stone-700 dark:bg-white dark:text-stone-900 text-stone-50 rounded-xl hover:bg-stone-600 dark:hover:bg-white/90 transition-all shadow-md hover:shadow-xl active:scale-95 cursor-pointer"
         >
           VIEW GITHUB
         </a>
@@ -97,7 +100,7 @@ export const Navigation = ({
         <button
           onClick={onToggleTheme}
           disabled={isThemeTransitioning || isLoading}
-          className="p-2 rounded-lg bg-stone-100 dark:bg-stone-900 text-stone-700 dark:text-stone-200 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="p-2 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-white disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
         </button>
@@ -107,10 +110,10 @@ export const Navigation = ({
           tracks={tracks}
           activeTrackId={activeTrackId}
           onSelectTrack={onSelectTrack}
-          buttonClassName="p-2 rounded-lg bg-stone-100 dark:bg-stone-900 text-stone-700 dark:text-stone-200"
+          buttonClassName="p-2 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-white"
           iconSize={20}
         />
-        <button className="p-2 rounded-lg bg-stone-900 dark:bg-white text-white dark:text-stone-800" onClick={onToggleMenu}>
+        <button className="p-2 rounded-lg bg-stone-700 dark:bg-white text-stone-50 dark:text-stone-900" onClick={onToggleMenu}>
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>

@@ -6,7 +6,6 @@
 import React, { Suspense, useMemo } from 'react';
 import { SceneErrorBoundary } from '../ui/SceneErrorBoundary';
 import { SceneFallback } from '../ui/SceneFallback';
-import { WaveBackground } from '../scene/WaveBackground';
 
 const HeroScene = React.lazy(() => import('../QuantumScene').then((m) => ({ default: m.HeroScene })));
 
@@ -15,6 +14,7 @@ type SceneLayersProps = {
   shouldRender3d: boolean;
   reducedMotion: boolean;
   lowPower: boolean;
+  isPhone: boolean;
   active: boolean;
   onSceneReady: () => void;
   onInvalidateReady: (invalidate: (() => void) | null) => void;
@@ -28,6 +28,7 @@ export const SceneLayers = ({
   shouldRender3d,
   reducedMotion,
   lowPower,
+  isPhone,
   active,
   onSceneReady,
   onInvalidateReady,
@@ -35,13 +36,10 @@ export const SceneLayers = ({
   sceneWrapperRef,
   meteorWrapperRef,
 }: SceneLayersProps) => {
-  // We'll pass the raw scroll progress to WaveBackground
-  // Note: scrollStateRef is updated by useSceneScroll hook
+  // scrollStateRef is updated by useSceneScroll hook
   
   return (
     <>
-      <WaveBackground theme={theme} />
-      
       <div className="film-grain" aria-hidden="true" />
       <div className="vignette" aria-hidden="true" />
       
@@ -54,6 +52,7 @@ export const SceneLayers = ({
                 scrollState={scrollStateRef}
                 reducedMotion={reducedMotion}
                 lowPower={lowPower}
+                isPhone={isPhone}
                 active={active}
                 onReady={onSceneReady}
                 onInvalidateReady={onInvalidateReady}

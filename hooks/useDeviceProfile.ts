@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 export const useDeviceProfile = (prefersReducedMotion: boolean) => {
   const [isPhone, setIsPhone] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return window.matchMedia('(pointer: coarse)').matches;
+    // Improved detection: small screen AND touch support
+    return window.innerWidth < 768 && window.matchMedia('(pointer: coarse)').matches;
   });
   const [isLowPower, setIsLowPower] = useState(false);
   const [canRender3d, setCanRender3d] = useState(true);
@@ -26,18 +27,22 @@ export const useDeviceProfile = (prefersReducedMotion: boolean) => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
-    type NavigatorWithMemory = Navigator & { deviceMemory?: number };
+    
+    const handleResize = () => {
+      setIsPhone(window.innerWidth < 768 && window.matchMedia('(pointer: coarse)').matches);
+    };
 
+    window.addEventListener('resize', handleResize);
+
+    type NavigatorWithMemory = Navigator & { deviceMemory?: number };
     const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
     const reducedMotion = prefersReducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const deviceMemory = (navigator as NavigatorWithMemory).deviceMemory;
     const hardwareConcurrency = navigator.hardwareConcurrency;
 
-    setIsPhone(coarsePointer);
-
     const lowPower = Boolean(
       reducedMotion ||
-      coarsePointer ||
+      (window.innerWidth < 1024 && coarsePointer) || // Tablet/Phone
       (typeof deviceMemory === 'number' && deviceMemory <= 4) ||
       (typeof hardwareConcurrency === 'number' && hardwareConcurrency <= 4)
     );
@@ -46,6 +51,7 @@ export const useDeviceProfile = (prefersReducedMotion: boolean) => {
     document.documentElement.classList.toggle('low-power', lowPower);
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       document.documentElement.classList.remove('low-power');
     };
   }, [prefersReducedMotion]);

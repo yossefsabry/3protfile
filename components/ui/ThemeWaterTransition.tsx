@@ -5,13 +5,14 @@
 
 import React, { useId } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { COLORS } from '../../styles/colors';
 
 export const ThemeWaterTransition = ({ toTheme }: { toTheme: 'light' | 'dark' }) => {
   const prefersReducedMotion = useReducedMotion();
   const idBase = useId().replace(/:/g, '');
   const maskId = `${idBase}-mask`;
   const filterId = `${idBase}-filter`;
-  const overlayColor = toTheme === 'dark' ? '#0F1115' : '#F9F8F4';
+  const overlayColor = toTheme === 'dark' ? COLORS.dark.background : COLORS.light.background;
   const highlightColor = toTheme === 'dark'
     ? 'rgba(197, 160, 89, 0.12)'
     : 'rgba(197, 160, 89, 0.18)';
