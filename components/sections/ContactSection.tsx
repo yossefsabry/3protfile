@@ -7,11 +7,11 @@ import React from 'react';
 import { InfoCard } from '../ui/InfoCard';
 
 export const ContactSection = () => (
-  <section id="contact" className="py-24 md:py-32 bg-white/50 dark:bg-black/20">
+  <section id="contact" className="py-24 md:py-32 bg-rose-dawn-base/50 dark:bg-rose-base/20">
     <div className="container mx-auto px-6">
       <div className="text-center mb-12 md:mb-20">
-        <h2 className="font-serif text-4xl sm:text-5xl mb-6 text-stone-700 dark:text-stone-100">Contact & Links</h2>
-        <p className="text-stone-600 dark:text-stone-200 text-lg">Find me and my work across the web.</p>
+        <h2 className="font-serif text-4xl sm:text-5xl mb-6 text-rose-dawn-text dark:text-rose-text">Contact & Links</h2>
+        <p className="text-rose-dawn-subtle dark:text-rose-subtle text-lg">Find me and my work across the web.</p>
       </div>
       <div className="flex flex-col md:flex-row gap-10 justify-center items-center md:items-stretch flex-wrap">
         <InfoCard title="GitHub" detail="github.com/yossefsabry" href="https://github.com/yossefsabry" delay="0s" />

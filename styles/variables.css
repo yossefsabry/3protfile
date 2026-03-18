@@ -1,59 +1,71 @@
 :root {
-  --star-base: #f5f4ef; /* Softer, more paper-like background */
-  --star-1: rgba(68, 64, 60, 0.4);
-  --star-2: rgba(68, 64, 60, 0.25);
-  --star-3: rgba(68, 64, 60, 0.15);
-  --nebula-1: rgba(197, 160, 89, 0.08);
-  --nebula-1b: rgba(197, 160, 89, 0.04);
-  --nebula-2: rgba(120, 113, 108, 0.06);
-  --nebula-2b: rgba(120, 113, 108, 0.03);
-  --nebula-3: rgba(197, 160, 89, 0.05);
-  --nebula-3b: rgba(197, 160, 89, 0.02);
-  --nebula-opacity: 0.15;
+  /* Rosé Pine Dawn (Light Theme) */
+  --star-base: #faf4ed; /* base */
+  --star-1: rgba(152, 147, 165, 0.4); /* muted */
+  --star-2: rgba(152, 147, 165, 0.25);
+  --star-3: rgba(152, 147, 165, 0.15);
+  
+  --nebula-1: rgba(215, 130, 126, 0.1); /* rose */
+  --nebula-1b: rgba(215, 130, 126, 0.05);
+  --nebula-2: rgba(40, 105, 131, 0.08); /* pine */
+  --nebula-2b: rgba(40, 105, 131, 0.04);
+  --nebula-3: rgba(144, 122, 169, 0.08); /* iris */
+  --nebula-3b: rgba(144, 122, 169, 0.04);
+  
+  --nebula-opacity: 0.18;
   --grain-opacity: 0.035;
-  --glow-warm: rgba(197, 160, 89, 0.12);
-  --glow-soft: rgba(197, 160, 89, 0.05);
-  --glow-cool: rgba(168, 162, 158, 0.08);
+  
+  --glow-warm: rgba(234, 157, 52, 0.12); /* gold */
+  --glow-soft: rgba(215, 130, 126, 0.06); /* rose */
+  --glow-cool: rgba(86, 148, 159, 0.08); /* foam */
   --glow-opacity: 0.35;
-  --aurora-1: rgba(197, 160, 89, 0.3);
-  --aurora-2: rgba(120, 113, 108, 0.25);
-  --aurora-3: rgba(197, 160, 89, 0.2);
-  --aurora-4: rgba(120, 113, 108, 0.15);
-  --aurora-5: rgba(197, 160, 89, 0.1);
-  --aurora-6: rgba(120, 113, 108, 0.05);
+  
+  --aurora-1: rgba(215, 130, 126, 0.3); /* rose */
+  --aurora-2: rgba(144, 122, 169, 0.25); /* iris */
+  --aurora-3: rgba(234, 157, 52, 0.2); /* gold */
+  --aurora-4: rgba(40, 105, 131, 0.15); /* pine */
+  --aurora-5: rgba(86, 148, 159, 0.1); /* foam */
+  --aurora-6: rgba(152, 147, 165, 0.05); /* muted */
   --aurora-opacity: 0.4;
-  --meteor-tail: rgba(197, 160, 89, 0.3);
-  --meteor-core: rgba(197, 160, 89, 0.7);
-  --meteor-glow: rgba(197, 160, 89, 0.3);
+  
+  --meteor-tail: rgba(215, 130, 126, 0.3);
+  --meteor-core: rgba(215, 130, 126, 0.7);
+  --meteor-glow: rgba(215, 130, 126, 0.3);
 }
 
 .dark {
-  --star-base: #0f1115;
-  --star-1: rgba(252, 199, 122, 0.52);
-  --star-2: rgba(252, 199, 122, 0.34);
-  --star-3: rgba(252, 199, 122, 0.22);
-  --nebula-1: rgba(240, 180, 110, 0.22);
-  --nebula-1b: rgba(200, 120, 80, 0.14);
-  --nebula-2: rgba(210, 150, 90, 0.18);
-  --nebula-2b: rgba(255, 200, 120, 0.12);
-  --nebula-3: rgba(180, 120, 70, 0.16);
-  --nebula-3b: rgba(220, 150, 90, 0.1);
-  --nebula-opacity: 0.28;
+  /* Rosé Pine (Dark Theme) */
+  --star-base: #191724; /* base */
+  --star-1: rgba(235, 188, 186, 0.52); /* rose */
+  --star-2: rgba(246, 193, 119, 0.34); /* gold */
+  --star-3: rgba(196, 167, 231, 0.22); /* iris */
+  
+  --nebula-1: rgba(49, 116, 143, 0.22); /* pine */
+  --nebula-1b: rgba(235, 111, 146, 0.14); /* love */
+  --nebula-2: rgba(196, 167, 231, 0.18); /* iris */
+  --nebula-2b: rgba(246, 193, 119, 0.12); /* gold */
+  --nebula-3: rgba(156, 207, 216, 0.16); /* foam */
+  --nebula-3b: rgba(235, 188, 186, 0.1); /* rose */
+  
+  --nebula-opacity: 0.32;
   --grain-opacity: 0.055;
-  --glow-warm: rgba(237, 184, 114, 0.28);
-  --glow-soft: rgba(255, 215, 170, 0.12);
-  --glow-cool: rgba(120, 170, 255, 0.18);
+  
+  --glow-warm: rgba(246, 193, 119, 0.28); /* gold */
+  --glow-soft: rgba(235, 188, 186, 0.12); /* rose */
+  --glow-cool: rgba(49, 116, 143, 0.18); /* pine */
   --glow-opacity: 0.6;
-  --aurora-1: rgba(255, 170, 80, 0.85);
-  --aurora-2: rgba(255, 60, 160, 0.75);
-  --aurora-3: rgba(255, 110, 190, 0.65);
-  --aurora-4: rgba(255, 180, 90, 0.35);
-  --aurora-5: rgba(255, 80, 140, 0.5);
-  --aurora-6: rgba(80, 170, 255, 0.2);
+  
+  --aurora-1: rgba(235, 111, 146, 0.85); /* love */
+  --aurora-2: rgba(196, 167, 231, 0.75); /* iris */
+  --aurora-3: rgba(246, 193, 119, 0.65); /* gold */
+  --aurora-4: rgba(49, 116, 143, 0.35); /* pine */
+  --aurora-5: rgba(156, 207, 216, 0.5); /* foam */
+  --aurora-6: rgba(110, 106, 134, 0.2); /* muted */
   --aurora-opacity: 0.35;
-  --meteor-tail: rgba(120, 190, 255, 0.6);
-  --meteor-core: rgba(210, 240, 255, 0.95);
-  --meteor-glow: rgba(120, 190, 255, 0.7);
+  
+  --meteor-tail: rgba(196, 167, 231, 0.6); /* iris */
+  --meteor-core: rgba(235, 188, 186, 0.95); /* rose */
+  --meteor-glow: rgba(196, 167, 231, 0.7);
 }
 
 .low-power {

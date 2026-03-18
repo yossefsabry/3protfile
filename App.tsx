@@ -64,7 +64,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="no-radius min-h-screen text-stone-700 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-white overflow-x-hidden">
+    <div className="no-radius min-h-screen text-rose-dawn-text dark:text-rose-text transition-colors duration-500 selection:bg-rose-gold selection:text-rose-base overflow-x-hidden">
       <AnimatePresence>
         {isLoading && <LoadingScreen theme={theme} />}
       </AnimatePresence>
@@ -81,7 +81,7 @@ const App: React.FC = () => {
           <button
             type="button"
             onClick={audio.requestAudioStart}
-            className="flex items-center gap-3 rounded-full bg-stone-900/90 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white shadow-2xl transition-transform hover:-translate-y-0.5 dark:bg-white/90 dark:text-stone-800"
+            className="flex items-center gap-3 rounded-full bg-rose-dawn-text/90 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-rose-dawn-base shadow-2xl transition-transform hover:-translate-y-0.5 dark:bg-rose-text/90 dark:text-rose-base"
           >
             Enable Sound
           </button>

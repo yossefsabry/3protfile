@@ -4,9 +4,12 @@
  */
 
 import React, { useEffect, useRef } from 'react';
+import { COLORS, getThemeColors } from '../../styles/colors';
 
 export const SceneFallback = ({ theme, onReady }: { theme: 'light' | 'dark'; onReady?: () => void }) => {
   const calledRef = useRef(false);
+  const isDark = theme === 'dark';
+  const colors = getThemeColors(isDark);
 
   useEffect(() => {
     if (calledRef.current) return;
@@ -18,9 +21,9 @@ export const SceneFallback = ({ theme, onReady }: { theme: 'light' | 'dark'; onR
     <div
       className="absolute inset-0 pointer-events-none"
       style={{
-        background: theme === 'dark'
-          ? 'radial-gradient(circle at 50% 45%, rgba(197,160,89,0.15) 0%, rgba(15,17,21,0.95) 65%)'
-          : 'radial-gradient(circle at 50% 45%, rgba(197,160,89,0.2) 0%, rgba(249,248,244,1) 65%)'
+        background: isDark
+          ? `radial-gradient(circle at 50% 45%, rgba(197, 160, 89, 0.15) 0%, ${COLORS.dark.background}f2 65%)`
+          : `radial-gradient(circle at 50% 45%, rgba(197, 160, 89, 0.2) 0%, ${COLORS.light.background} 65%)`
       }}
     />
   );

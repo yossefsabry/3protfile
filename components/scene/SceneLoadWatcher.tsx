@@ -15,14 +15,23 @@ type SceneLoadWatcherProps = {
 
 export const SceneLoadWatcher = ({ onReady, reducedMotion, lowPower }: SceneLoadWatcherProps) => {
   const { active, progress, total } = useProgress();
+  const progressRef = useRef({ active, progress, total });
   const calledRef = useRef(false);
   const settledFramesRef = useRef(0);
 
+  // Sync progress state to ref to avoid triggering re-renders of this component
+  // during the render phase of other components (like EnvironmentCube)
+  React.useEffect(() => {
+    progressRef.current = { active, progress, total };
+  }, [active, progress, total]);
+
   useFrame(() => {
     if (calledRef.current) return;
-    const assetsLoaded = total === 0 || progress >= 100;
-    const allowEarlyReady = reducedMotion || lowPower || total === 0;
-    const readyToSettle = !active && (assetsLoaded || allowEarlyReady);
+
+    const current = progressRef.current;
+    const assetsLoaded = current.total === 0 || current.progress >= 100;
+    const allowEarlyReady = reducedMotion || lowPower || current.total === 0;
+    const readyToSettle = !current.active && (assetsLoaded || allowEarlyReady);
 
     if (!readyToSettle) {
       settledFramesRef.current = 0;
@@ -32,7 +41,11 @@ export const SceneLoadWatcher = ({ onReady, reducedMotion, lowPower }: SceneLoad
     settledFramesRef.current += 1;
     if (settledFramesRef.current < 6) return;
     calledRef.current = true;
-    onReady?.();
+
+    // Defer the callback to ensure it happens after the current render/frame cycle
+    setTimeout(() => {
+      onReady?.();
+    }, 0);
   });
 
   return null;

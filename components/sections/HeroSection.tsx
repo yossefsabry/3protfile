@@ -5,7 +5,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Mail, Cpu, BrainCircuit } from 'lucide-react';
+import { COLORS } from '../../styles/colors';
 
 type HeroSectionProps = {
   onScrollTo: (id: string) => (event: React.MouseEvent) => void;
@@ -13,58 +14,101 @@ type HeroSectionProps = {
 
 export const HeroSection = ({ onScrollTo }: HeroSectionProps) => (
   <header className="relative min-h-screen flex items-start lg:items-center justify-center overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16">
-    <div className="relative z-10 container mx-auto px-6 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="inline-block mb-5 sm:mb-6 px-3 sm:px-4 py-1.5 border-2 border-nobel-gold text-nobel-gold text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase font-black rounded-full backdrop-blur-md bg-white/60 dark:bg-black/40 drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
-      >
-        TECH GEEK &bull; EGYPT
-      </motion.div>
-
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="font-serif text-[clamp(2.8rem,6vw,8.5rem)] font-bold leading-none mb-8 text-stone-700 dark:text-stone-100 tracking-tight drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]"
-      >
-        Yossef Sabry
-        <span className="hero-scan-text italic font-light text-[clamp(1.05rem,2.2vw,3rem)] block w-fit mx-auto mt-5 sm:mt-6 tracking-normal drop-shadow-[0_3px_10px_rgba(0,0,0,0.25)] px-4 sm:px-5 py-2 rounded-full border border-white/60 dark:border-white/10 bg-white/70 dark:bg-black/40 backdrop-blur-md">Software Engineer | AI Engineer</span>
-      </motion.h1>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="max-w-xl sm:max-w-2xl mx-auto mb-16 drop-shadow-[0_2px_10px_rgba(0,0,0,0.25)] bg-white/[0.02] dark:bg-black/[0.02] backdrop-blur-md border border-white/30 dark:border-white/10 rounded-3xl px-6 sm:px-8 py-5 sm:py-6 flex flex-col items-center gap-4"
-      >
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-normal leading-relaxed text-stone-700 dark:text-stone-200">
-          Software engineer focused on AI applications and the systems that scale them. I build data pipelines,
-          model-serving stacks, and product-grade ML experiences.{' '}
-          <span className="font-medium">Interested in AI architecture or real-world ML? Let's talk.</span>
-        </p>
-        <a
-          href="mailto:yossefsabry66@gmail.com"
-          className="inline-flex items-center gap-2 rounded-full border border-nobel-gold/50 bg-white/70 px-4 py-1.5 text-sm font-semibold text-stone-700 shadow-sm transition hover:border-nobel-gold hover:text-nobel-gold dark:border-nobel-gold/40 dark:bg-black/40 dark:text-stone-200"
+    <div className="relative z-10 container mx-auto px-6">
+      <div className="flex flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 p-0.5 rounded-full bg-gradient-to-r from-rose-gold/50 via-rose-dawn-base/20 to-rose-gold/50 backdrop-blur-xl"
         >
-          yossefsabry66@gmail.com
-        </a>
-      </motion.div>
+        {/*
+          <div className="px-6 py-2 rounded-full bg-rose-base/40 dark:bg-rose-base/60 backdrop-blur-2xl border border-rose-text/10">
+            <span className="text-[10px] sm:text-xs tracking-[0.4em] uppercase font-black text-rose-gold">
+              Digital Architect &bull; AI Pioneer
+            </span>
+          </div>
+        */}
+        </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="flex justify-center"
-      >
-        <a href="#about" onClick={onScrollTo('about')} className="group flex flex-col items-center gap-3 text-xs font-black tracking-[0.4em] text-stone-600 hover:text-nobel-gold transition-colors cursor-pointer">
-          <span>EXPLORE</span>
-          <span className="p-3 border-2 border-stone-100 dark:border-stone-800 rounded-2xl group-hover:border-nobel-gold transition-all bg-white/50 dark:bg-white/5 backdrop-blur-sm group-hover:-translate-y-1">
-            <ArrowDown size={20} className="animate-bounce" />
-          </span>
-        </a>
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+          className="relative mb-12"
+        >
+          <h1 className="font-serif text-[clamp(3.5rem,10vw,9rem)] font-bold leading-[0.85] text-rose-dawn-text dark:text-rose-text tracking-tighter">
+            Yossef Sabry
+          </h1>
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ delay: 1, duration: 1 }}
+            className="h-px bg-gradient-to-r from-transparent via-rose-gold to-transparent mt-4 opacity-50"
+          />
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            <span className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-rose-text/10 bg-rose-text/5 backdrop-blur-md text-xs sm:text-sm font-medium text-rose-dawn-subtle dark:text-rose-subtle">
+              <Cpu size={14} className="text-rose-gold" /> Software Engineering
+            </span>
+            <span className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-rose-text/10 bg-rose-text/5 backdrop-blur-md text-xs sm:text-sm font-medium text-rose-dawn-subtle dark:text-rose-subtle">
+              <BrainCircuit size={14} className="text-rose-gold" /> AI / ML Systems
+            </span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="max-w-4xl mx-auto mb-16 relative"
+        >
+          <div className="absolute -inset-4 bg-gradient-to-b from-rose-gold/5 to-transparent rounded-[2rem] blur-2xl -z-10" />
+          <p className="text-xl sm:text-2xl md:text-3xl font-light leading-relaxed text-rose-dawn-text/90 dark:text-rose-text/90">
+            Software engineer focused on <span className="font-semibold text-rose-gold">AI applications</span> and the systems that scale them. 
+            I build data pipelines, model-serving stacks, and product-grade ML experiences. 
+            <span className="block mt-4 italic opacity-90">Interested in AI architecture or real-world ML? Let's talk.</span>
+          </p>
+          
+          <motion.div 
+            className="mt-12 flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <a
+              href="mailto:yossefsabry66@gmail.com"
+              className="group flex items-center gap-3 px-8 py-4 rounded-none border border-rose-gold/50 bg-rose-base/10 backdrop-blur-sm transition-all hover:bg-rose-gold/10 hover:border-rose-gold active:scale-95 shadow-2xl"
+            >
+              <span className="text-sm sm:text-base font-mono font-medium tracking-wider text-rose-dawn-text dark:text-rose-text">
+                yossefsabry66@gmail.com
+              </span>
+            </a>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1 }}
+          className="flex justify-center"
+        >
+          <a 
+            href="#about" 
+            onClick={onScrollTo('about')} 
+            className="group relative flex flex-col items-center gap-4 text-[10px] font-black tracking-[0.5em] text-rose-dawn-muted hover:text-rose-gold transition-colors cursor-pointer"
+          >
+            <span className="uppercase">Initiate Sequence</span>
+            <div className="w-12 h-20 rounded-full border-2 border-rose-dawn-overlay dark:border-rose-overlay flex justify-center p-2 group-hover:border-rose-gold transition-all">
+              <motion.div 
+                animate={{ y: [0, 24, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="w-1.5 h-1.5 rounded-full bg-rose-gold shadow-[0_0_10px_#f6c177]"
+                style={{ boxShadow: `0 0 10px #f6c177` }}
+              />
+            </div>
+          </a>
+        </motion.div>
+      </div>
     </div>
   </header>
 );
