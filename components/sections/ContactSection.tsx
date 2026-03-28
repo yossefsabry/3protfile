@@ -3,16 +3,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { motion } from 'framer-motion';
 import React from 'react';
 import { InfoCard } from '../ui/InfoCard';
 
 export const ContactSection = () => (
-  <section id="contact" className="py-24 md:py-32 bg-white/50 dark:bg-stone-900/20">
+  <section id="contact" className="py-24 md:py-32">
     <div className="container mx-auto px-6">
-      <div className="text-center mb-12 md:mb-20">
-        <h2 className="font-serif text-4xl sm:text-5xl mb-6 text-stone-700 dark:text-white">Contact & Links</h2>
-        <p className="text-stone-600 dark:text-stone-400 text-lg">Find me and my work across the web.</p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.7 }}
+        className="matrix-panel mb-12 rounded-[2rem] px-8 py-10 text-center md:mb-20"
+      >
+        <h2 className="mb-6 font-serif text-4xl text-[#f6f2ff] sm:text-5xl">Contact & Links</h2>
+        <p className="text-lg text-[#e0def4]/74">Find me and my work across the web.</p>
+      </motion.div>
       <div className="flex flex-col md:flex-row gap-10 justify-center items-center md:items-stretch flex-wrap">
         <InfoCard title="GitHub" detail="github.com/yossefsabry" href="https://github.com/yossefsabry" delay="0s" />
         {/* comment for now because i gone use only one website for protfile */} 

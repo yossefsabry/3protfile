@@ -12,49 +12,37 @@ export const useDeviceProfile = (prefersReducedMotion: boolean) => {
     return window.innerWidth < 768 && window.matchMedia('(pointer: coarse)').matches;
   });
   const [isLowPower, setIsLowPower] = useState(false);
-  const [canRender3d, setCanRender3d] = useState(true);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      setCanRender3d(!!gl);
-    } catch {
-      setCanRender3d(false);
-    }
-  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
-    
-    const handleResize = () => {
-      setIsPhone(window.innerWidth < 768 && window.matchMedia('(pointer: coarse)').matches);
-    };
-
-    window.addEventListener('resize', handleResize);
 
     type NavigatorWithMemory = Navigator & { deviceMemory?: number };
-    const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
-    const reducedMotion = prefersReducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const deviceMemory = (navigator as NavigatorWithMemory).deviceMemory;
-    const hardwareConcurrency = navigator.hardwareConcurrency;
+    const computeProfile = () => {
+      const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+      const reducedMotion = prefersReducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const deviceMemory = (navigator as NavigatorWithMemory).deviceMemory;
+      const hardwareConcurrency = navigator.hardwareConcurrency;
+      const phone = window.innerWidth < 768 && coarsePointer;
+      const lowPower = Boolean(
+        reducedMotion ||
+        (window.innerWidth < 1024 && coarsePointer) ||
+        (typeof deviceMemory === 'number' && deviceMemory <= 4) ||
+        (typeof hardwareConcurrency === 'number' && hardwareConcurrency <= 4)
+      );
 
-    const lowPower = Boolean(
-      reducedMotion ||
-      (window.innerWidth < 1024 && coarsePointer) || // Tablet/Phone
-      (typeof deviceMemory === 'number' && deviceMemory <= 4) ||
-      (typeof hardwareConcurrency === 'number' && hardwareConcurrency <= 4)
-    );
+      setIsPhone(phone);
+      setIsLowPower(lowPower);
+      document.documentElement.classList.toggle('low-power', lowPower);
+    };
 
-    setIsLowPower(lowPower);
-    document.documentElement.classList.toggle('low-power', lowPower);
+    window.addEventListener('resize', computeProfile);
+    computeProfile();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', computeProfile);
       document.documentElement.classList.remove('low-power');
     };
   }, [prefersReducedMotion]);
 
-  return { isPhone, isLowPower, canRender3d };
+  return { isPhone, isLowPower };
 };

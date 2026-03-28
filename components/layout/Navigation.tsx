@@ -4,21 +4,18 @@
  */
 
 import React from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { AudioMenuButton } from '../ui/AudioMenuButton';
 import type { MusicTrack } from '../../data/audio';
 
 type NavigationProps = {
   scrolled: boolean;
   menuOpen: boolean;
-  theme: 'light' | 'dark';
-  isThemeTransitioning: boolean;
   isLoading: boolean;
   isAudioPlaying: boolean;
   tracks: MusicTrack[];
   activeTrackId: string;
   onSelectTrack: (trackId: string) => void;
-  onToggleTheme: () => void;
   onToggleAudio: () => void;
   onToggleMenu: () => void;
   onScrollTop: () => void;
@@ -28,46 +25,34 @@ type NavigationProps = {
 export const Navigation = ({
   scrolled,
   menuOpen,
-  theme,
-  isThemeTransitioning,
   isLoading,
   isAudioPlaying,
   tracks,
   activeTrackId,
   onSelectTrack,
-  onToggleTheme,
   onToggleAudio,
   onToggleMenu,
   onScrollTop,
   onScrollTo,
 }: NavigationProps) => (
-  <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-6'}`}>
+  <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#191724]/78 backdrop-blur-xl shadow-[0_16px_60px_rgba(11,10,17,0.46)] py-3' : 'bg-transparent py-6'}`}>
     <div className="container mx-auto px-6 flex justify-between items-center">
       <div className="flex items-center gap-4 cursor-pointer group" onClick={onScrollTop}>
         <div className="flex items-center justify-center transition-transform group-hover:scale-110">
-          <span className="font-serif text-3xl text-nobel-gold leading-none">和宮</span>
+          <span className="font-serif text-3xl leading-none text-[#f6c177]">和宮</span>
         </div>
-        <div className="h-4 w-px bg-stone-500/40 mx-1"></div>
-        <span className={`font-sans font-black text-sm tracking-[0.5em] uppercase transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0 text-stone-700 dark:text-white'}`}>
+        <div className="mx-1 h-4 w-px bg-[#907aa9]/24"></div>
+        <span className={`font-sans font-black text-sm tracking-[0.5em] uppercase text-[#e0def4] transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0'}`}>
           YON3
         </span>
       </div>
 
-      <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.2em] text-stone-600 dark:text-white">
-        <a href="#about" onClick={onScrollTo('about')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">About</a>
-        <a href="#projects" onClick={onScrollTo('projects')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Projects</a>
-        <a href="#contact" onClick={onScrollTo('contact')} className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Contact</a>
+      <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.2em] text-[#e0def4]/88">
+        <a href="#about" onClick={onScrollTo('about')} className="cursor-pointer uppercase transition-colors hover:text-[#f6c177]">About</a>
+        <a href="#projects" onClick={onScrollTo('projects')} className="cursor-pointer uppercase transition-colors hover:text-[#f6c177]">Projects</a>
+        <a href="#contact" onClick={onScrollTo('contact')} className="cursor-pointer uppercase transition-colors hover:text-[#f6c177]">Contact</a>
 
-        <div className="w-[1px] h-6 bg-stone-200 dark:bg-white/10 mx-2"></div>
-
-        <button
-          onClick={onToggleTheme}
-          disabled={isThemeTransitioning || isLoading}
-          className="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-white/10 transition-all text-stone-700 dark:text-white shadow-sm active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
-          aria-label="Toggle Theme"
-        >
-          {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-        </button>
+        <div className="mx-2 h-6 w-[1px] bg-[#907aa9]/20"></div>
 
         <AudioMenuButton
           isAudioPlaying={isAudioPlaying}
@@ -75,13 +60,13 @@ export const Navigation = ({
           tracks={tracks}
           activeTrackId={activeTrackId}
           onSelectTrack={onSelectTrack}
-          buttonClassName="p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-white/10 transition-all text-stone-700 dark:text-white shadow-sm active:scale-95"
+          buttonClassName="rounded-xl border border-[#907aa9]/30 bg-[#c4a7e7]/10 p-2.5 text-[#e0def4] shadow-sm transition-all hover:bg-[#c4a7e7]/16 active:scale-95"
           iconSize={18}
         />
 
         <a
           href="/cv.html"
-          className="px-6 py-2.5 border border-nobel-gold/70 text-stone-700 dark:text-white rounded-xl hover:bg-nobel-gold/10 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+          className="cursor-pointer rounded-xl border border-[#f6c177]/45 px-6 py-2.5 text-[#f6e7ca] transition-all hover:bg-[#f6c177]/10 hover:shadow-md active:scale-95"
         >
           VIEW CV
         </a>
@@ -90,30 +75,23 @@ export const Navigation = ({
           href="https://github.com/yossefsabry"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-2.5 bg-stone-700 dark:bg-white dark:text-stone-900 text-stone-50 rounded-xl hover:bg-stone-600 dark:hover:bg-white/90 transition-all shadow-md hover:shadow-xl active:scale-95 cursor-pointer"
+          className="cursor-pointer rounded-xl bg-[#56949f] px-6 py-2.5 text-[#191724] shadow-md transition-all hover:bg-[#6baab5] hover:shadow-xl active:scale-95"
         >
           VIEW GITHUB
         </a>
       </div>
 
       <div className="md:hidden flex items-center gap-4">
-        <button
-          onClick={onToggleTheme}
-          disabled={isThemeTransitioning || isLoading}
-          className="p-2 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-white disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-        </button>
         <AudioMenuButton
           isAudioPlaying={isAudioPlaying}
           onToggleAudio={onToggleAudio}
           tracks={tracks}
           activeTrackId={activeTrackId}
           onSelectTrack={onSelectTrack}
-          buttonClassName="p-2 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-white"
+          buttonClassName="rounded-lg border border-[#907aa9]/30 bg-[#c4a7e7]/10 p-2 text-[#e0def4]"
           iconSize={20}
         />
-        <button className="p-2 rounded-lg bg-stone-700 dark:bg-white text-stone-50 dark:text-stone-900" onClick={onToggleMenu}>
+        <button className="rounded-lg bg-[#56949f] p-2 text-[#191724]" onClick={onToggleMenu}>
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>

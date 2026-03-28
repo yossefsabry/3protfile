@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useCallback, useEffect, useState, Suspense } from 'react';
+import React, { useCallback, useRef, useState, Suspense } from 'react';
 import { AnimatePresence, useReducedMotion } from 'framer-motion';
 import { LoadingScreen } from './components/ui/LoadingScreen';
-import { ThemeWaterTransition } from './components/ui/ThemeWaterTransition';
 import { Navigation } from './components/layout/Navigation';
 import { MobileMenu } from './components/layout/MobileMenu';
-import { SceneLayers } from './components/layout/SceneLayers';
 import { Footer } from './components/layout/Footer';
+import { MatrixBackground } from './components/effects/MatrixBackground';
 
 const HeroSection = React.lazy(() => import('./components/sections/HeroSection').then(m => ({ default: m.HeroSection })));
 const AboutSection = React.lazy(() => import('./components/sections/AboutSection').then(m => ({ default: m.AboutSection })));
@@ -19,38 +18,17 @@ const ContactSection = React.lazy(() => import('./components/sections/ContactSec
 import { useAudioController } from './hooks/useAudioController';
 import { useDeviceProfile } from './hooks/useDeviceProfile';
 import { useLoadingSequence } from './hooks/useLoadingSequence';
-import { useSceneActivity } from './hooks/useSceneActivity';
-import { useSceneScroll } from './hooks/useSceneScroll';
 import { useScrolledState } from './hooks/useScrolledState';
-import { useThemeTransition } from './hooks/useThemeTransition';
 
 const App: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
+  const isCvRoute = typeof window !== 'undefined' && window.location.pathname === '/cv';
   const scrolled = useScrolledState();
-  const { isPhone, isLowPower, canRender3d } = useDeviceProfile(prefersReducedMotion);
-  const shouldRender3d = canRender3d && !isPhone;
-  const { markSceneActive, setSceneInvalidate, invalidateScene } = useSceneActivity(shouldRender3d);
-  const { scrollStateRef, sceneWrapperRef, meteorWrapperRef, footerRef } = useSceneScroll(markSceneActive);
-  const { isLoading, setSceneReady } = useLoadingSequence(shouldRender3d);
+  const { isPhone, isLowPower } = useDeviceProfile(Boolean(prefersReducedMotion));
+  const { isLoading } = useLoadingSequence(false);
   const audio = useAudioController();
-
-  const { theme, isThemeTransitioning, transitionTheme, toggleTheme } = useThemeTransition({
-    isBlocked: isLoading,
-    onBeforeChange: (nextTheme) => {
-      if (nextTheme === 'light') audio.playThemeSwitchSfx();
-    },
-    onAfterChange: () => markSceneActive(),
-  });
-
-  useEffect(() => {
-    invalidateScene();
-    if (!isLoading) {
-      // Force multiple invalidations to ensure the canvas draws after the loading screen exits
-      const timers = [100, 500, 1000].map(ms => setTimeout(invalidateScene, ms));
-      return () => timers.forEach(clearTimeout);
-    }
-  }, [invalidateScene, isLowPower, prefersReducedMotion, theme, isLoading]);
 
   const scrollToSection = useCallback((id: string) => (event: React.MouseEvent) => {
     event.preventDefault();
@@ -69,13 +47,12 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="no-radius min-h-screen text-stone-700 dark:text-stone-200 transition-colors duration-500 selection:bg-nobel-gold selection:text-stone-900 overflow-x-hidden">
+    <div
+      data-testid="app-shell"
+      className={`no-radius min-h-screen overflow-x-hidden transition-colors duration-500 selection:bg-[#f6c177] selection:text-[#191724] ${isCvRoute ? 'text-stone-700 dark:text-stone-200' : 'matrix-shell rose-pine-shell text-[#f6f2ff]'}`}
+    >
       <AnimatePresence>
-        {isLoading && <LoadingScreen theme={theme} />}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {transitionTheme && <ThemeWaterTransition toTheme={transitionTheme} />}
+        {isLoading && <LoadingScreen />}
       </AnimatePresence>
 
       <audio ref={audio.audioRef} src={audio.activeTrackUrl} preload="auto" autoPlay playsInline />
@@ -86,7 +63,7 @@ const App: React.FC = () => {
           <button
             type="button"
             onClick={audio.requestAudioStart}
-            className="flex items-center gap-3 rounded-full bg-stone-700/90 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-stone-50 shadow-2xl transition-transform hover:-translate-y-0.5 dark:bg-white/90 dark:text-stone-900"
+            className="flex items-center gap-3 rounded-full border border-[#907aa9]/28 bg-[#1f1d2e]/92 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#f6f2ff] shadow-2xl transition-transform hover:-translate-y-0.5 hover:bg-[#26233a]"
           >
             Enable Sound
           </button>
@@ -96,32 +73,23 @@ const App: React.FC = () => {
 
 
       <div className="relative">
-        <SceneLayers
-          theme={theme}
-          shouldRender3d={shouldRender3d}
-          reducedMotion={prefersReducedMotion}
-          lowPower={isLowPower}
-          isPhone={isPhone}
-          active={shouldRender3d && !prefersReducedMotion}
-          onSceneReady={() => setSceneReady(true)}
-          onInvalidateReady={setSceneInvalidate}
-          scrollStateRef={scrollStateRef}
-          sceneWrapperRef={sceneWrapperRef}
-          meteorWrapperRef={meteorWrapperRef}
-        />
+        {!isCvRoute && (
+          <MatrixBackground
+            isPhone={isPhone}
+            isLowPower={isLowPower}
+            reducedMotion={Boolean(prefersReducedMotion)}
+          />
+        )}
 
         <div className="relative z-10">
           <Navigation
             scrolled={scrolled}
             menuOpen={menuOpen}
-            theme={theme}
-            isThemeTransitioning={isThemeTransitioning}
             isLoading={isLoading}
             isAudioPlaying={audio.isAudioPlaying}
             tracks={audio.tracks}
             activeTrackId={audio.activeTrackId}
             onSelectTrack={audio.setSelectedTrackId}
-            onToggleTheme={toggleTheme}
             onToggleAudio={audio.toggleAudio}
             onToggleMenu={() => setMenuOpen((prev) => !prev)}
             onScrollTop={handleScrollTop}

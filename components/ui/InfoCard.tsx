@@ -26,9 +26,9 @@ export const InfoCard = memo(({ title, detail, href, delay }: InfoCardProps) => 
 
   const content = (
     <>
-      <h3 className="font-serif text-2xl text-stone-700 dark:text-stone-100 text-center mb-3">{title}</h3>
-      <div className="w-12 h-0.5 bg-nobel-gold mb-4 opacity-60"></div>
-      <p className="text-xs text-stone-600 dark:text-stone-200 font-bold uppercase tracking-widest text-center leading-relaxed">{detail}</p>
+      <h3 className="mb-3 text-center font-serif text-2xl text-[#f6f2ff]">{title}</h3>
+      <div className="mb-4 h-0.5 w-12 bg-[#907aa9] opacity-80"></div>
+      <p className="text-center text-xs font-bold uppercase leading-relaxed tracking-widest text-[#e0def4]/72">{detail}</p>
     </>
   );
 
@@ -38,7 +38,7 @@ export const InfoCard = memo(({ title, detail, href, delay }: InfoCardProps) => 
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-col group animate-fade-in-up items-center p-8 bg-white dark:bg-stone-900 rounded-xl border border-stone-100 dark:border-stone-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-xs hover:border-nobel-gold/50"
+        className="matrix-panel flex w-full max-w-xs flex-col items-center rounded-xl p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#c4a7e7]/40 hover:shadow-[0_30px_80px_rgba(11,10,17,0.38)]"
         style={{ animationDelay: delay }}
         {...animationProps}
       >
@@ -49,7 +49,7 @@ export const InfoCard = memo(({ title, detail, href, delay }: InfoCardProps) => 
 
   return (
     <motion.div
-      className="flex flex-col group animate-fade-in-up items-center p-8 bg-white dark:bg-stone-900 rounded-xl border border-stone-100 dark:border-stone-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-xs hover:border-nobel-gold/50"
+      className="matrix-panel flex w-full max-w-xs flex-col items-center rounded-xl p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#c4a7e7]/40 hover:shadow-[0_30px_80px_rgba(11,10,17,0.38)]"
       style={{ animationDelay: delay }}
       {...animationProps}
     >

@@ -15,10 +15,6 @@ export const useLoadingSequence = (shouldRender3d: boolean) => {
     let isMounted = true;
     if (typeof window === 'undefined') return undefined;
 
-    const fontsReady = typeof document !== 'undefined' && 'fonts' in document
-      ? document.fonts.ready
-      : Promise.resolve();
-
     const loadPromise = new Promise<void>((resolve) => {
       if (document.readyState === 'complete') {
         resolve();
@@ -29,7 +25,7 @@ export const useLoadingSequence = (shouldRender3d: boolean) => {
 
     const nextFrame = () => new Promise<void>((resolve) => window.requestAnimationFrame(() => resolve()));
 
-    Promise.all([fontsReady, loadPromise])
+    loadPromise
       .then(() => nextFrame())
       .then(() => nextFrame())
       .then(() => {

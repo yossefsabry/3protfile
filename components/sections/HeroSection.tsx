@@ -5,8 +5,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Mail, Cpu, BrainCircuit } from 'lucide-react';
-import { COLORS } from '../../styles/colors';
+import { Mail, Cpu, BrainCircuit } from 'lucide-react';
 
 type HeroSectionProps = {
   onScrollTo: (id: string) => (event: React.MouseEvent) => void;
@@ -20,7 +19,7 @@ export const HeroSection = ({ onScrollTo }: HeroSectionProps) => (
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 p-0.5 rounded-full bg-gradient-to-r from-nobel-gold/50 via-white/20 to-nobel-gold/50 backdrop-blur-xl"
+          className="mb-8 rounded-full bg-gradient-to-r from-[#b4637a]/40 via-[#c4a7e7]/18 to-[#f6c177]/40 p-0.5 backdrop-blur-xl"
         >
         {/*
           <div className="px-6 py-2 rounded-full bg-stone-900/40 dark:bg-stone-900/60 backdrop-blur-2xl border border-white/10">
@@ -37,22 +36,24 @@ export const HeroSection = ({ onScrollTo }: HeroSectionProps) => (
           transition={{ delay: 0.2, duration: 0.8 }}
           className="relative mb-12"
         >
-          <h1 className="font-serif text-[clamp(3.5rem,10vw,9rem)] font-bold leading-[0.85] text-stone-700 dark:text-white tracking-tighter">
+          <div className="matrix-panel rounded-[2.75rem] px-6 py-8 sm:px-10 sm:py-10">
+          <h1 className="font-serif text-[clamp(3.5rem,10vw,9rem)] font-bold leading-[0.85] text-[#f6f2ff] tracking-tighter">
             Yossef Sabry
           </h1>
           <motion.div 
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
             transition={{ delay: 1, duration: 1 }}
-            className="h-px bg-gradient-to-r from-transparent via-nobel-gold to-transparent mt-4 opacity-50"
+            className="matrix-line mt-4 h-px opacity-80"
           />
           <div className="flex flex-wrap justify-center gap-3 mt-6">
-            <span className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-stone-900/10 dark:border-white/10 bg-stone-900/5 dark:bg-white/5 backdrop-blur-md text-xs sm:text-sm font-medium text-stone-600 dark:text-stone-400">
-              <Cpu size={14} className="text-nobel-gold" /> Software Engineering
+            <span className="flex items-center gap-2 rounded-full border border-[#907aa9]/26 bg-[#c4a7e7]/10 px-4 py-1.5 text-xs font-medium text-[#e0def4] sm:text-sm">
+              <Cpu size={14} className="text-[#c4a7e7]" /> Software Engineering
             </span>
-            <span className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-stone-900/10 dark:border-white/10 bg-stone-900/5 dark:bg-white/5 backdrop-blur-md text-xs sm:text-sm font-medium text-stone-600 dark:text-stone-400">
-              <BrainCircuit size={14} className="text-nobel-gold" /> AI / ML Systems
+            <span className="flex items-center gap-2 rounded-full border border-[#907aa9]/26 bg-[#c4a7e7]/10 px-4 py-1.5 text-xs font-medium text-[#e0def4] sm:text-sm">
+              <BrainCircuit size={14} className="text-[#c4a7e7]" /> AI / ML Systems
             </span>
+          </div>
           </div>
         </motion.div>
 
@@ -62,11 +63,11 @@ export const HeroSection = ({ onScrollTo }: HeroSectionProps) => (
           transition={{ delay: 0.4, duration: 0.8 }}
           className="max-w-4xl mx-auto mb-16 relative"
         >
-          <div className="absolute -inset-4 bg-gradient-to-b from-nobel-gold/5 to-transparent rounded-[2rem] blur-2xl -z-10" />
-          <p className="text-xl sm:text-2xl md:text-3xl font-light leading-relaxed text-stone-700/90 dark:text-white/90">
-            Software engineer focused on <span className="font-semibold text-nobel-gold">AI applications</span> and the systems that scale them. 
+          <div className="matrix-panel rounded-[2rem] px-8 py-8 sm:px-10">
+          <p className="text-xl font-light leading-relaxed text-[#f6f2ff]/92 sm:text-2xl md:text-3xl">
+            Software engineer focused on <span className="font-semibold text-[#c4a7e7]">AI applications</span> and the systems that scale them. 
             I build data pipelines, model-serving stacks, and product-grade ML experiences. 
-            <span className="block mt-4 italic opacity-90">Interested in AI architecture or real-world ML? Let's talk.</span>
+            <span className="mt-4 block italic text-[#e0def4]/74">Interested in AI architecture or real-world ML? Let's talk.</span>
           </p>
           
           <motion.div 
@@ -77,13 +78,15 @@ export const HeroSection = ({ onScrollTo }: HeroSectionProps) => (
           >
             <a
               href="mailto:yossefsabry66@gmail.com"
-              className="group flex items-center gap-3 px-8 py-4 rounded-none border border-nobel-gold/50 bg-stone-900/10 backdrop-blur-sm transition-all hover:bg-nobel-gold/10 hover:border-nobel-gold active:scale-95 shadow-2xl"
+              className="group flex items-center gap-3 border border-[#907aa9]/26 bg-[#c4a7e7]/10 px-8 py-4 font-mono transition-all hover:border-[#c4a7e7] hover:bg-[#c4a7e7]/14 active:scale-95"
             >
-              <span className="text-sm sm:text-base font-mono font-medium tracking-wider text-stone-700 dark:text-white">
+              <Mail size={16} className="text-[#c4a7e7]" />
+              <span className="text-sm font-medium tracking-[0.18em] text-[#f6f2ff] sm:text-base">
                 yossefsabry66@gmail.com
               </span>
             </a>
           </motion.div>
+          </div>
         </motion.div>
 
         <motion.div
@@ -95,15 +98,14 @@ export const HeroSection = ({ onScrollTo }: HeroSectionProps) => (
           <a 
             href="#about" 
             onClick={onScrollTo('about')} 
-            className="group relative flex flex-col items-center gap-4 text-[10px] font-black tracking-[0.5em] text-stone-500 hover:text-nobel-gold transition-colors cursor-pointer"
+            className="group relative flex cursor-pointer flex-col items-center gap-4 text-[10px] font-black tracking-[0.5em] text-[#e0def4]/70 transition-colors hover:text-[#c4a7e7]"
           >
             <span className="uppercase">Initiate Sequence</span>
-            <div className="w-12 h-20 rounded-full border-2 border-stone-200 dark:border-white/20 flex justify-center p-2 group-hover:border-nobel-gold transition-all">
+            <div className="flex h-20 w-12 justify-center rounded-full border-2 border-[#907aa9]/28 p-2 transition-all group-hover:border-[#c4a7e7]">
               <motion.div 
                 animate={{ y: [0, 24, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-1.5 h-1.5 rounded-full bg-nobel-gold shadow-[0_0_10px_#C5A059]"
-                style={{ boxShadow: `0 0 10px #C5A059` }}
+                className="h-1.5 w-1.5 rounded-full bg-[#c4a7e7] shadow-[0_0_12px_rgba(196,167,231,0.72)]"
               />
             </div>
           </a>

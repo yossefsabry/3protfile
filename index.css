@@ -6,3 +6,50 @@
 @import "./styles/motion.css";
 @import "./styles/cursor.css";
 @import "./styles/utilities.css";
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+:root {
+  --rp-base: #191724;
+  --rp-surface: rgba(35, 33, 54, 0.78);
+  --rp-surface-strong: rgba(25, 23, 36, 0.92);
+  --rp-text: #f6f2ff;
+  --rp-muted: rgba(224, 222, 244, 0.74);
+  --rp-iris: #c4a7e7;
+  --rp-muted-iris: #907aa9;
+  --rp-gold: #f6c177;
+  --rp-rose: #b4637a;
+  --rp-foam: #56949f;
+}
+
+body {
+  background: var(--rp-base);
+  color: var(--rp-text);
+}
+
+.matrix-shell {
+  background: var(--rp-base);
+}
+
+.rose-pine-shell {
+  background:
+    radial-gradient(circle at top, rgba(196, 167, 231, 0.1), transparent 24rem),
+    radial-gradient(circle at bottom, rgba(86, 148, 159, 0.09), transparent 24rem),
+    linear-gradient(180deg, rgba(25, 23, 36, 0.2), rgba(25, 23, 36, 0.82)),
+    var(--rp-base);
+}
+
+.matrix-panel {
+  background: var(--rp-surface);
+  border: 1px solid rgba(196, 167, 231, 0.2);
+  box-shadow: 0 30px 80px rgba(11, 10, 17, 0.42);
+  backdrop-filter: blur(18px);
+}
+
+.matrix-line {
+  background: linear-gradient(90deg, transparent, rgba(196, 167, 231, 0.42), rgba(246, 193, 119, 0.36), transparent);
+}

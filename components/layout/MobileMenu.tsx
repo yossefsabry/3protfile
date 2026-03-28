@@ -20,14 +20,14 @@ export const MobileMenu = ({ isOpen, onClose, onScrollTo }: MobileMenuProps) => 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="fixed inset-0 z-40 bg-white dark:bg-nobel-dark flex flex-col items-center justify-center gap-8 text-2xl font-serif"
+        className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-[#191724]/95 text-2xl font-serif text-[#f6f2ff]"
       >
-        <a href="#about" onClick={onScrollTo('about')} className="hover:text-nobel-gold transition-colors dark:text-stone-200">About</a>
-        <a href="#projects" onClick={onScrollTo('projects')} className="hover:text-nobel-gold transition-colors dark:text-stone-200">Projects</a>
-        <a href="#contact" onClick={onScrollTo('contact')} className="hover:text-nobel-gold transition-colors dark:text-stone-200">Contact</a>
+        <a href="#about" onClick={onScrollTo('about')} className="transition-colors hover:text-[#f6c177]">About</a>
+        <a href="#projects" onClick={onScrollTo('projects')} className="transition-colors hover:text-[#f6c177]">Projects</a>
+        <a href="#contact" onClick={onScrollTo('contact')} className="transition-colors hover:text-[#f6c177]">Contact</a>
         <a
           href="/cv.html"
-          className="px-8 py-3 border border-nobel-gold/70 text-stone-700 dark:text-stone-200 rounded-xl shadow-lg"
+          className="rounded-xl border border-[#f6c177]/45 px-8 py-3 text-[#f6e7ca] shadow-lg"
         >
           View CV
         </a>
@@ -35,11 +35,11 @@ export const MobileMenu = ({ isOpen, onClose, onScrollTo }: MobileMenuProps) => 
           href="https://github.com/yossefsabry"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-8 py-3 bg-stone-900 dark:bg-white dark:text-stone-800 text-white rounded-xl shadow-lg"
+          className="rounded-xl bg-[#56949f] px-8 py-3 text-[#191724] shadow-lg"
         >
           View GitHub
         </a>
-        <button onClick={onClose} className="mt-8 p-4 rounded-full border border-stone-100 dark:border-stone-800 text-stone-600">
+        <button onClick={onClose} className="mt-8 rounded-full border border-[#907aa9]/24 p-4 text-[#e0def4]/72">
           <X size={32} />
         </button>
       </motion.div>
