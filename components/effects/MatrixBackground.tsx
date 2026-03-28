@@ -38,18 +38,34 @@ export const MatrixBackground = ({
     let frameId = 0;
     let lastFrameTime = 0;
 
+        let lastWidth = 0;
     const resize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
+      
+      const widthChanged = Math.abs(width - lastWidth) > 5;
+      if (!widthChanged && Math.abs(canvas.height / (window.devicePixelRatio || 1) - height) < 120) {
+        // Just adjust style height if it's likely just address bar change
+        canvas.style.height = `${height}px`;
+        return;
+      }
+      
+      lastWidth = width;
+      const dpr_inner = Math.min(window.devicePixelRatio || 1, isLowPower ? 1.2 : 1.5);
+      canvas.width = Math.floor(width * dpr_inner);
+      canvas.height = Math.floor(height * dpr_inner);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      
+      context.setTransform(dpr_inner, 0, 0, dpr_inner, 0, 0);
       context.textBaseline = 'top';
       context.font = `${fontSize}px monospace`;
-      columns = Math.max(12, Math.floor(width / columnStep));
-      drops = Array.from({ length: columns }, () => Math.random() * height);
+      
+      const newColumns = Math.max(12, Math.floor(width / columnStep));
+      if (widthChanged || drops.length === 0 || newColumns !== columns) {
+        columns = newColumns;
+        drops = Array.from({ length: columns }, () => Math.random() * height);
+      }
       paint(true);
     };
 
@@ -97,7 +113,7 @@ export const MatrixBackground = ({
     <div
       data-testid="matrix-background"
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#000000]"
+      className="pointer-events-none fixed inset-0 h-[100dvh] w-screen z-0 overflow-hidden bg-[#000000]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(196,167,231,0.12),transparent_38%),radial-gradient(circle_at_bottom,rgba(86,148,159,0.12),transparent_42%),radial-gradient(circle_at_center,rgba(180,99,122,0.08),transparent_52%)]" />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full opacity-55" />

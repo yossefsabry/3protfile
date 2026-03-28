@@ -49,7 +49,7 @@ const App: React.FC = () => {
   return (
     <div
       data-testid="app-shell"
-      className={`no-radius min-h-screen overflow-x-hidden transition-colors duration-500 selection:bg-[#f6c177] selection:text-[#191724] ${isCvRoute ? 'text-stone-700 dark:text-stone-200' : 'matrix-shell rose-pine-shell text-[#f6f2ff]'}`}
+      className={`no-radius min-h-[100dvh] overflow-x-hidden transition-colors duration-500 selection:bg-[#f6c177] selection:text-[#000000] ${isCvRoute ? 'text-stone-700 dark:text-stone-200' : 'matrix-shell rose-pine-shell text-[#f6f2ff]'}`}
     >
       <AnimatePresence>
         {isLoading && <LoadingScreen />}
@@ -97,7 +97,7 @@ const App: React.FC = () => {
           />
           <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} onScrollTo={scrollToSection} />
 
-          <Suspense fallback={<div className="min-h-screen" />}>
+          <Suspense fallback={<div className="min-h-[100dvh]" />}>
             <HeroSection onScrollTo={scrollToSection} />
             <main>
               <AboutSection />

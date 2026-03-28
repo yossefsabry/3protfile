@@ -1,16 +1,15 @@
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
 const CORE_ASSETS = [
   '/',
   '/index.html',
+  '/cv.html',
   '/manifest.webmanifest',
   '/yon-logo-black.png',
-  '/icon.svg',
   '/icon-192.png',
   '/icon-512.png',
-  '/icon-maskable.svg',
   '/icon-maskable-192.png',
   '/icon-maskable-512.png'
 ];

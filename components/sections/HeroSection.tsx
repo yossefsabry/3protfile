@@ -12,7 +12,7 @@ type HeroSectionProps = {
 };
 
 export const HeroSection = ({ onScrollTo }: HeroSectionProps) => (
-  <header className="relative min-h-screen flex items-start lg:items-center justify-center overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16">
+  <header className="relative min-h-[100dvh] flex items-start lg:items-center justify-center overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-16">
     <div className="relative z-10 container mx-auto px-6">
       <div className="flex flex-col items-center text-center">
         <motion.div
