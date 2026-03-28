@@ -10,7 +10,7 @@ import { STACK } from './focusData';
 export const PerformanceMetricDiagram = memo(() => (
   <div className="flex flex-col gap-6 sm:gap-8 items-center p-6 sm:p-8 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-100 rounded-xl my-6 sm:my-8 border border-stone-100 dark:border-stone-800 shadow-lg transition-colors">
     <div className="text-center">
-      <h3 className="font-serif text-xl sm:text-2xl mb-2 text-stone-700 dark:text-stone-100">Stack & Tools</h3>
+      <h3 className="font-display text-xl sm:text-2xl mb-2 text-stone-700 dark:text-stone-100">Stack & Tools</h3>
       <p className="text-stone-500 dark:text-stone-400 text-sm">Built for speed, clarity, and flexibility.</p>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full">

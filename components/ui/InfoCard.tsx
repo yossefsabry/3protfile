@@ -26,7 +26,7 @@ export const InfoCard = memo(({ title, detail, href, delay }: InfoCardProps) => 
 
   const content = (
     <>
-      <h3 className="mb-3 text-center font-serif text-2xl text-[#f6f2ff]">{title}</h3>
+      <h3 className="mb-3 text-center font-display text-2xl text-[#f6f2ff]">{title}</h3>
       <div className="mb-4 h-0.5 w-12 bg-[#907aa9] opacity-80"></div>
       <p className="text-center text-xs font-bold uppercase leading-relaxed tracking-widest text-[#e0def4]/72">{detail}</p>
     </>

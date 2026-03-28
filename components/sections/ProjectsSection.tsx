@@ -9,30 +9,30 @@ import { Sparkles, Zap, Terminal } from 'lucide-react';
 import { SurfaceCodeDiagram } from '../Diagrams';
 
 export const ProjectsSection = () => (
-  <section id="projects" className="relative overflow-hidden py-32 md:py-48">
+  <section id="projects" className="relative overflow-hidden py-24 md:py-36">
     <div className="matrix-line absolute left-0 top-0 h-px w-full" />
-    
+
     <div className="container mx-auto px-6 relative">
       <div className="flex flex-col items-center gap-16 md:gap-24">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="matrix-panel max-w-4xl rounded-[2rem] px-8 py-10 text-center"
+          className="matrix-panel max-w-4xl rounded-[1.5rem] px-6 py-8 text-center"
         >
           <div className="mb-10 inline-flex items-center gap-3 rounded-full border border-[#907aa9]/24 bg-[#c4a7e7]/10 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-[#c4a7e7] shadow-2xl">
             <Terminal size={14} /> System Logs: Projects
           </div>
-          <h2 className="mb-10 font-serif text-4xl leading-[1.1] text-[#f6f2ff] sm:text-5xl md:text-6xl">
+          <h2 className="mb-8 font-display text-3xl leading-[1.1] text-[#f6f2ff] sm:text-4xl md:text-5xl">
             Architecting the <span className="text-[#c4a7e7] italic">unconventional</span>
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl font-light leading-relaxed text-[#f6f2ff]/84 md:text-2xl">
             These initiatives pushed the boundaries of systems engineering, AI orchestration, and performance-critical tooling.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-            <motion.div 
+            <motion.div
               whileHover={{ y: -5 }}
               className="rounded-3xl border border-[#907aa9]/24 bg-[#c4a7e7]/10 p-6"
             >
@@ -44,7 +44,7 @@ export const ProjectsSection = () => (
               </div>
               <p className="text-sm text-[#e0def4]/74">Models, tools, and infrastructure designed to scale with precision and intelligence.</p>
             </motion.div>
-            <motion.div 
+            <motion.div
               whileHover={{ y: -5 }}
               className="rounded-3xl border border-[#907aa9]/24 bg-[#c4a7e7]/10 p-6"
             >
@@ -59,7 +59,7 @@ export const ProjectsSection = () => (
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}

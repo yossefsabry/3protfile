@@ -51,11 +51,11 @@ export const SurfaceCodeDiagram = memo(() => (
         >
           <div className="relative">
             {showMobileStrip ? (
-              <div className="grid h-56 w-full grid-cols-3 gap-2 bg-[#191724] p-2 sm:h-64 md:hidden">
+              <div className="grid h-56 w-full grid-cols-3 gap-2 bg-[#000000] p-2 sm:h-64 md:hidden">
                 {mobileStripItems.map((image, imageIndex) => (
                   <div
                     key={`${project.slug}-strip-${imageIndex}`}
-                    className="overflow-hidden bg-[#191724]"
+                    className="overflow-hidden bg-[#000000]"
                   >
                     <img
                       src={image}
@@ -68,11 +68,11 @@ export const SurfaceCodeDiagram = memo(() => (
               </div>
             ) : null}
             {hasHeroRow ? (
-              <div className="hidden md:grid h-72 lg:h-80 w-full grid-cols-3 gap-3 bg-[#191724] p-3 sm:p-4">
+              <div className="hidden md:grid h-72 lg:h-80 w-full grid-cols-3 gap-3 bg-[#000000] p-3 sm:p-4">
                 {heroRowItems.map((image, imageIndex) => (
                   <div
                     key={`${project.slug}-hero-${imageIndex}`}
-                    className="flex items-center justify-center overflow-hidden rounded-none border border-[#907aa9]/18 bg-[#191724]"
+                    className="flex items-center justify-center overflow-hidden rounded-none border border-[#907aa9]/18 bg-[#000000]"
                   >
                     <img
                       src={image}
@@ -85,7 +85,7 @@ export const SurfaceCodeDiagram = memo(() => (
               </div>
             ) : cover ? (
               <div
-                className={`h-60 w-full items-center justify-center bg-[#191724] ${showMobileStrip ? 'hidden md:flex' : 'flex'}`}
+                className={`h-60 w-full items-center justify-center bg-[#000000] ${showMobileStrip ? 'hidden md:flex' : 'flex'}`}
               >
                 <img
                   src={cover}
@@ -96,10 +96,10 @@ export const SurfaceCodeDiagram = memo(() => (
               </div>
             ) : (
               <div
-                className={`h-60 w-full bg-gradient-to-br from-[#26233a] via-[#1f1d2e] to-[#191724] ${showMobileStrip ? 'hidden md:block' : ''}`}
+                className={`h-60 w-full bg-gradient-to-br from-[#26233a] via-[#1f1d2e] to-[#000000] ${showMobileStrip ? 'hidden md:block' : ''}`}
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#191724]/74" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#000000]/74" />
             <div className="absolute inset-x-0 bottom-0 p-5 flex items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className={`rounded-none border px-3 py-1 text-[10px] uppercase tracking-[0.3em] ${statusClass}`}>
@@ -117,7 +117,7 @@ export const SurfaceCodeDiagram = memo(() => (
           <div className="p-6 sm:p-7">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-serif text-3xl text-[#f6f2ff] sm:text-4xl">{project.title}</h3>
+                <h3 className="font-display text-3xl text-[#f6f2ff] sm:text-4xl">{project.title}</h3>
                 <p className="mt-2 text-xs uppercase tracking-[0.35em] text-[#e0def4]/58">{project.role}</p>
               </div>
             </div>
@@ -172,7 +172,7 @@ export const SurfaceCodeDiagram = memo(() => (
                 {bodyGalleryItems.map((image, imageIndex) => (
                   <div
                     key={`${project.slug}-gallery-${imageIndex}`}
-                    className={`flex items-center justify-center overflow-hidden rounded-none border border-[#907aa9]/18 bg-[#191724] ${galleryItemHeight}`}
+                    className={`flex items-center justify-center overflow-hidden rounded-none border border-[#907aa9]/18 bg-[#000000] ${galleryItemHeight}`}
                   >
                     <img
                       src={image}

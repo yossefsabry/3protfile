@@ -59,7 +59,7 @@ export const MatrixBackground = ({
       const width = window.innerWidth;
       const height = window.innerHeight;
 
-      context.fillStyle = reset ? '#191724' : 'rgba(25, 23, 36, 0.18)';
+      context.fillStyle = reset ? '#000000' : 'rgba(25, 23, 36, 0.18)';
       context.fillRect(0, 0, width, height);
 
       for (let index = 0; index < columns; index += 1) {
@@ -97,7 +97,7 @@ export const MatrixBackground = ({
     <div
       data-testid="matrix-background"
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#191724]"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#000000]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(196,167,231,0.12),transparent_38%),radial-gradient(circle_at_bottom,rgba(86,148,159,0.12),transparent_42%),radial-gradient(circle_at_center,rgba(180,99,122,0.08),transparent_52%)]" />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full opacity-55" />

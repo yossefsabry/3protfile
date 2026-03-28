@@ -15,14 +15,14 @@ export const ContactSection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.7 }}
-        className="matrix-panel mb-12 rounded-[2rem] px-8 py-10 text-center md:mb-20"
+        className="matrix-panel mb-12 rounded-[1.5rem] px-6 py-8 text-center md:mb-16"
       >
-        <h2 className="mb-6 font-serif text-4xl text-[#f6f2ff] sm:text-5xl">Contact & Links</h2>
+        <h2 className="mb-4 font-display text-3xl text-[#f6f2ff] sm:text-4xl">Contact & Links</h2>
         <p className="text-lg text-[#e0def4]/74">Find me and my work across the web.</p>
       </motion.div>
       <div className="flex flex-col md:flex-row gap-10 justify-center items-center md:items-stretch flex-wrap">
         <InfoCard title="GitHub" detail="github.com/yossefsabry" href="https://github.com/yossefsabry" delay="0s" />
-        {/* comment for now because i gone use only one website for protfile */} 
+        {/* comment for now because i gone use only one website for protfile */}
         {/* <InfoCard title="Website" detail="yossefsabry.me" href="https://yossefsabry.me" delay="0.1s" /> */}
         <InfoCard title="Email" detail="yossefsabry66@gmail.com" href="https://mail.google.com/mail/?view=cm&to=yossefsabry66@gmail.com" delay="0.2s" />
         <InfoCard title="Notes & Blog" detail="0xyon3.netlify.app" href="https://0xyon3.netlify.app" delay="0.3s" />

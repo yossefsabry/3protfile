@@ -35,11 +35,11 @@ export const Navigation = ({
   onScrollTop,
   onScrollTo,
 }: NavigationProps) => (
-  <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#191724]/78 backdrop-blur-xl shadow-[0_16px_60px_rgba(11,10,17,0.46)] py-3' : 'bg-transparent py-6'}`}>
+  <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#000000]/78 backdrop-blur-xl shadow-[0_16px_60px_rgba(11,10,17,0.46)] py-3' : 'bg-transparent py-6'}`}>
     <div className="container mx-auto px-6 flex justify-between items-center">
       <div className="flex items-center gap-4 cursor-pointer group" onClick={onScrollTop}>
         <div className="flex items-center justify-center transition-transform group-hover:scale-110">
-          <span className="font-serif text-3xl leading-none text-[#f6c177]">和宮</span>
+          <span className="font-display text-3xl leading-none text-[#f6c177]">和宮</span>
         </div>
         <div className="mx-1 h-4 w-px bg-[#907aa9]/24"></div>
         <span className={`font-sans font-black text-sm tracking-[0.5em] uppercase text-[#e0def4] transition-all ${scrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0'}`}>
@@ -75,7 +75,7 @@ export const Navigation = ({
           href="https://github.com/yossefsabry"
           target="_blank"
           rel="noopener noreferrer"
-          className="cursor-pointer rounded-xl bg-[#56949f] px-6 py-2.5 text-[#191724] shadow-md transition-all hover:bg-[#6baab5] hover:shadow-xl active:scale-95"
+          className="cursor-pointer rounded-xl bg-[#56949f] px-6 py-2.5 text-[#000000] shadow-md transition-all hover:bg-[#6baab5] hover:shadow-xl active:scale-95"
         >
           VIEW GITHUB
         </a>
@@ -91,7 +91,7 @@ export const Navigation = ({
           buttonClassName="rounded-lg border border-[#907aa9]/30 bg-[#c4a7e7]/10 p-2 text-[#e0def4]"
           iconSize={20}
         />
-        <button className="rounded-lg bg-[#56949f] p-2 text-[#191724]" onClick={onToggleMenu}>
+        <button className="rounded-lg bg-[#56949f] p-2 text-[#000000]" onClick={onToggleMenu}>
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>

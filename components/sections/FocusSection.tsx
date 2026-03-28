@@ -17,17 +17,17 @@ export const FocusSection = () => (
           <div className="inline-flex items-center gap-3 px-4 py-2 bg-stone-800 text-nobel-gold text-xs font-black tracking-widest uppercase rounded-2xl mb-8 border border-stone-700 shadow-xl">
             FOCUS
           </div>
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl mb-8 leading-tight">Precision, speed,<br />and clean systems</h2>
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl mb-8 leading-tight">Precision, speed,<br />and clean systems</h2>
           <p className="text-lg md:text-xl text-stone-600 dark:text-stone-400 leading-relaxed font-light mb-8">
             I like systems that feel deliberate: tight UI, strong architecture, and experiments that actually ship.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             <div className="border-l-2 border-nobel-gold pl-6">
-              <div className="text-3xl font-serif mb-1">70+</div>
+              <div className="text-3xl font-display mb-1">70+</div>
               <div className="text-xs text-stone-500 dark:text-stone-500 uppercase font-bold tracking-widest">Public Repos</div>
             </div>
             <div className="border-l-2 border-nobel-gold pl-6">
-              <div className="text-3xl font-serif mb-1">AI + C</div>
+              <div className="text-3xl font-display mb-1">AI + C</div>
               <div className="text-xs text-stone-500 dark:text-stone-500 uppercase font-bold tracking-widest">Hybrid Focus</div>
             </div>
           </div>

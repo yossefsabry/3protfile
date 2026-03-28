@@ -14,7 +14,7 @@ body,
 }
 
 :root {
-  --rp-base: #191724;
+  --rp-base: #000000;
   --rp-surface: rgba(35, 33, 54, 0.78);
   --rp-surface-strong: rgba(25, 23, 36, 0.92);
   --rp-text: #f6f2ff;
@@ -39,15 +39,16 @@ body {
   background:
     radial-gradient(circle at top, rgba(196, 167, 231, 0.1), transparent 24rem),
     radial-gradient(circle at bottom, rgba(86, 148, 159, 0.09), transparent 24rem),
-    linear-gradient(180deg, rgba(25, 23, 36, 0.2), rgba(25, 23, 36, 0.82)),
-    var(--rp-base);
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.82)),
+    #000000;
 }
 
 .matrix-panel {
-  background: var(--rp-surface);
-  border: 1px solid rgba(196, 167, 231, 0.2);
-  box-shadow: 0 30px 80px rgba(11, 10, 17, 0.42);
-  backdrop-filter: blur(18px);
+  background: transparent;
+  border: 1px solid rgba(196, 167, 231, 0.1);
+  box-shadow: 0 8px 32px rgba(11, 10, 17, 0.2);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
 }
 
 .matrix-line {
