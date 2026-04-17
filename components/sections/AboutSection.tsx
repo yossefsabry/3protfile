@@ -6,62 +6,92 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export const AboutSection = () => (
-  <section id="about" className="relative overflow-hidden py-24 md:py-36">
-    <div className="matrix-line absolute left-0 top-0 h-px w-full" />
+type AboutSectionProps = {
+  reducedMotion?: boolean;
+  sectionRef?: React.Ref<HTMLElement>;
+};
 
-    <div className="container mx-auto px-6 md:px-12 relative">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+const SKILLS = [
+  'Python', 'TypeScript', 'Rust', 'Go', 'C/C++',
+  'React', 'Node.js', 'PyTorch', 'TensorFlow',
+  'Docker', 'Linux', 'PostgreSQL', 'Redis',
+];
+
+export const AboutSection = ({
+  reducedMotion = false,
+  sectionRef,
+}: AboutSectionProps) => (
+  <section ref={sectionRef} id="about" className="relative py-24 md:py-32">
+    {/* Section divider */}
+    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+
+    <div className="container mx-auto max-w-6xl px-6">
+      <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
+        {/* Left — heading */}
         <motion.div
-          initial={{ opacity: 0, y: 36 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="matrix-panel rounded-[1.5rem] p-6 lg:col-span-5"
+          transition={{ duration: 0.6 }}
         >
-          <div className="mb-8 text-[10px] font-black uppercase tracking-[0.4em] text-[#c4a7e7]">
-            About
-          </div>
-          <div className="relative inline-block mb-8">
-            <h2 className="font-display text-3xl leading-[1.1] tracking-tight text-[#f6f2ff] sm:text-4xl lg:text-5xl">
-              Architecting systems that don't just work, but <span className="text-[#c4a7e7] italic">excel</span> under pressure
-            </h2>
-            <div className="mt-6 h-1 w-24 bg-[#907aa9]/70" />
-          </div>
-          <p className="font-display text-base italic leading-relaxed text-[#e0def4]/66 sm:text-lg">
-            "try be smarter"
-          </p>
+          <p className="mb-4 text-sm font-medium text-[#c4a7e7]">About</p>
+          <h2 className="font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Building systems that
+            <br />
+            <span className="text-white/40">don't just work</span>
+          </h2>
+          <div className="mt-6 h-px w-16 bg-[#c4a7e7]/40" />
         </motion.div>
 
+        {/* Right — body */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="matrix-panel rounded-[1.5rem] p-6 lg:col-span-7 lg:pt-8"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="space-y-6"
         >
-          <div className="space-y-8 text-lg font-light leading-relaxed text-[#f6f2ff]/88 sm:text-xl">
-            <p>
-              <span className="float-left mr-5 mt-1 font-display text-5xl font-bold leading-[0.5] text-[#c4a7e7] sm:text-6xl">I</span>
-              am Yossef from Egypt. I build ambitious software across AI, systems, complex backends, and graphics.
-            </p>
-            <p className="opacity-80">
-              I enjoy building complex systems ;)
-            </p>
+          <p className="text-lg leading-relaxed text-white/60">
+            I'm Yossef, a software engineer from Egypt. I build ambitious software across AI,
+            systems engineering, complex backends, and graphics.
+          </p>
+          <p className="text-lg leading-relaxed text-white/60">
+            My focus is on AI-powered tools and system-level experiments — data pipelines,
+            model-serving stacks, and product-grade ML experiences that ship reliably.
+          </p>
 
-            <div className="pt-6">
-              <div className="border border-[#907aa9]/24 bg-[#c4a7e7]/10 p-6">
-                <h3 className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#f6c177]">
-                  Current focus:
-                </h3>
-                <p className="text-base text-[#e0def4]/76 sm:text-lg">
-                  AI-powered tools, system-level experiments.
-                </p>
-              </div>
-            </div>
+          {/* Current focus */}
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-5">
+            <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[#c4a7e7]">
+              Current Focus
+            </p>
+            <p className="text-sm leading-relaxed text-white/50">
+              AI-powered tools, system-level experiments, and production ML infrastructure.
+            </p>
           </div>
         </motion.div>
       </div>
+
+      {/* Skills */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="mt-16"
+      >
+        <p className="mb-6 text-sm font-medium text-white/30">Technologies</p>
+        <div className="flex flex-wrap gap-2">
+          {SKILLS.map((skill) => (
+            <span
+              key={skill}
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] px-3 py-1.5 text-sm text-white/50 transition-colors hover:border-white/10 hover:text-white/70"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </motion.div>
     </div>
   </section>
 );

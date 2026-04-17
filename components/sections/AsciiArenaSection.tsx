@@ -6,7 +6,7 @@
 import React from 'react';
 import { TransformerDecoderDiagram } from '../Diagrams';
 
-export const FocusSection = () => (
+export const AsciiArenaSection = () => (
   <section id="focus" className="py-24 md:py-32 bg-stone-900/70 dark:bg-black/70 text-white overflow-hidden relative">
     <div className="container mx-auto px-6 relative z-10">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center">

@@ -3,3 +3,8 @@
 .no-radius *::after {
   border-radius: 0 !important;
 }
+
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
