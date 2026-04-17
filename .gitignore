@@ -29,4 +29,12 @@ rule.md
 .worktrees/
 
 pixels-as-frequencies-three-js
-agent.md
+
+# Submodule / separate projects
+webpets/
+
+# Unused assets / dev docs
+docs/superpowers/
+gifs/
+videos/
+metadata.json
