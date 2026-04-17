@@ -44,6 +44,10 @@ vi.mock('../components/sections/AboutSection', () => ({
   AboutSection: () => <section>About</section>,
 }));
 
+vi.mock('../components/sections/AsciiArenaSection', () => ({
+  AsciiArenaSection: () => <section data-testid="ascii-arena">Focus</section>,
+}));
+
 vi.mock('../components/sections/ProjectsSection', () => ({
   ProjectsSection: () => <section>Projects</section>,
 }));
@@ -155,8 +159,24 @@ describe('App shell', () => {
     expect(screen.getByTestId('app-shell')).toHaveClass('rose-pine-shell');
   });
 
+  it('renders a site pet overlay on the main site by default', async () => {
+    await renderApp();
+    expect(screen.getByTestId('site-pet-overlay')).toBeInTheDocument();
+  });
+
+  it('does not render the site pet overlay when the saved preference is disabled', async () => {
+    localStorage.setItem('site-pets', JSON.stringify({ enabled: false, selectedPet: 'crab' }));
+    await renderApp();
+    expect(screen.queryByTestId('site-pet-overlay')).not.toBeInTheDocument();
+  });
+
   it('does not render the legacy scene container in the main shell', async () => {
     await renderApp();
     expect(screen.queryByTestId('legacy-scene-layers')).not.toBeInTheDocument();
+  });
+
+  it('does not render the focus section in the main shell', async () => {
+    await renderApp();
+    expect(screen.queryByTestId('ascii-arena')).not.toBeInTheDocument();
   });
 });

@@ -79,8 +79,8 @@ export const PROJECTS: ProjectCardData[] = Object.values(projectModules)
   .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 
 export const STATUS_STYLES: Record<string, string> = {
-  'open source': 'border-[#56949f]/35 bg-[#56949f]/14 text-[#9ccfd8]',
-  'closed source': 'border-[#f6c177]/35 bg-[#f6c177]/14 text-[#f6c177]',
-  prototype: 'border-[#b4637a]/35 bg-[#b4637a]/14 text-[#ebbcba]',
-  default: 'border-[#907aa9]/28 bg-[#907aa9]/10 text-[#e0def4]/76',
+  'open source': 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400',
+  'closed source': 'border-amber-500/20 bg-amber-500/10 text-amber-400',
+  prototype: 'border-rose-500/20 bg-rose-500/10 text-rose-400',
+  default: 'border-white/[0.08] bg-white/[0.04] text-white/50',
 };

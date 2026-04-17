@@ -1,10 +1,6 @@
 @import "./styles/variables.css";
-@import "./styles/space-stars.css";
-@import "./styles/space-ambient.css";
-@import "./styles/meteor.css";
 @import "./styles/typography.css";
 @import "./styles/motion.css";
-@import "./styles/cursor.css";
 @import "./styles/utilities.css";
 
 html,
@@ -13,44 +9,12 @@ body,
   min-height: 100%;
 }
 
-:root {
-  --rp-base: #000000;
-  --rp-surface: rgba(35, 33, 54, 0.78);
-  --rp-surface-strong: rgba(25, 23, 36, 0.92);
-  --rp-text: #f6f2ff;
-  --rp-muted: rgba(224, 222, 244, 0.74);
-  --rp-iris: #c4a7e7;
-  --rp-muted-iris: #907aa9;
-  --rp-gold: #f6c177;
-  --rp-rose: #b4637a;
-  --rp-foam: #56949f;
-}
-
 body {
-  background: var(--rp-base);
-  color: var(--rp-text);
+  background: #09090b;
+  color: #fafafa;
 }
 
-.matrix-shell {
-  background: var(--rp-base);
-}
-
-.rose-pine-shell {
-  background:
-    radial-gradient(circle at top, rgba(196, 167, 231, 0.1), transparent 24rem),
-    radial-gradient(circle at bottom, rgba(86, 148, 159, 0.09), transparent 24rem),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.82)),
-    #000000;
-}
-
-.matrix-panel {
-  background: transparent;
-  border: 1px solid rgba(196, 167, 231, 0.1);
-  box-shadow: 0 8px 32px rgba(11, 10, 17, 0.2);
-  backdrop-filter: blur(40px) saturate(160%);
-  -webkit-backdrop-filter: blur(40px) saturate(160%);
-}
-
-.matrix-line {
-  background: linear-gradient(90deg, transparent, rgba(196, 167, 231, 0.42), rgba(246, 193, 119, 0.36), transparent);
+/* Smooth section dividers */
+.section-divider {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
 }

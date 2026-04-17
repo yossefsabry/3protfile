@@ -10,20 +10,39 @@ type FooterProps = {
 };
 
 export const Footer = ({ footerRef }: FooterProps) => (
-  <footer ref={footerRef} className="relative z-10 border-t border-[#907aa9]/22 bg-[#000000]/96 py-24 text-[#e0def4]/62">
-    <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16">
-      <div className="md:col-span-2">
-        <div className="mb-6 font-display text-3xl font-bold text-[#f6f2ff]">YON3</div>
-        <p className="text-lg max-w-md mb-8 font-light">TECH GEEK building ambitious software across AI, systems, and expressive UI.</p>
-        <div className="flex gap-6">
-          <a href="https://github.com/yossefsabry" target="_blank" rel="noopener noreferrer" className="font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#f6c177]">GitHub</a>
-          <a href="https://yossefsabry.me" target="_blank" rel="noopener noreferrer" className="font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#f6c177]">Website</a>
-        </div>
+  <footer
+    ref={footerRef}
+    className="relative z-10 border-t border-white/[0.06] bg-[#09090b] py-16"
+  >
+    <div className="container mx-auto flex max-w-6xl flex-col items-center justify-between gap-8 px-6 md:flex-row">
+      <div>
+        <p className="font-display text-lg font-bold text-white">Yossef Sabry</p>
+        <p className="mt-1 text-sm text-white/30">Software Engineer & AI Builder</p>
       </div>
-      <div className="flex flex-col justify-end text-xs font-mono space-y-2">
-        <div className="text-[#907aa9]">CONTACT:</div>
-        <p>yossefsabry66@gmail.com</p>
-        <p className="text-[#6e6a86]">EGYPT &middot; TECH GEEK &middot; YON3</p>
+
+      <div className="flex items-center gap-6 text-sm text-white/30">
+        <a
+          href="https://github.com/yossefsabry"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-colors hover:text-white/60"
+        >
+          GitHub
+        </a>
+        <a
+          href="mailto:yossefsabry66@gmail.com"
+          className="transition-colors hover:text-white/60"
+        >
+          Email
+        </a>
+        <a
+          href="https://0xyon3.netlify.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-colors hover:text-white/60"
+        >
+          Blog
+        </a>
       </div>
     </div>
   </footer>

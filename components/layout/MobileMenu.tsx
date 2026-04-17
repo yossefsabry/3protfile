@@ -17,30 +17,44 @@ export const MobileMenu = ({ isOpen, onClose, onScrollTo }: MobileMenuProps) => 
   <AnimatePresence>
     {isOpen && (
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-[#000000]/95 text-2xl font-display text-[#f6f2ff]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-[#09090b]/98 backdrop-blur-xl"
       >
-        <a href="#about" onClick={onScrollTo('about')} className="transition-colors hover:text-[#f6c177]">About</a>
-        <a href="#projects" onClick={onScrollTo('projects')} className="transition-colors hover:text-[#f6c177]">Projects</a>
-        <a href="#contact" onClick={onScrollTo('contact')} className="transition-colors hover:text-[#f6c177]">Contact</a>
-        <a
-          href="/cv.html"
-          className="rounded-xl border border-[#f6c177]/45 px-8 py-3 text-[#f6e7ca] shadow-lg"
-        >
-          View CV
+        <a href="#about" onClick={onScrollTo('about')} className="text-2xl font-light text-white/80 transition-colors hover:text-white">
+          About
         </a>
-        <a
-          href="https://github.com/yossefsabry"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-xl bg-[#56949f] px-8 py-3 text-[#000000] shadow-lg"
-        >
-          View GitHub
+        <a href="#projects" onClick={onScrollTo('projects')} className="text-2xl font-light text-white/80 transition-colors hover:text-white">
+          Projects
         </a>
-        <button onClick={onClose} className="mt-8 rounded-full border border-[#907aa9]/24 p-4 text-[#e0def4]/72">
-          <X size={32} />
+        <a href="#contact" onClick={onScrollTo('contact')} className="text-2xl font-light text-white/80 transition-colors hover:text-white">
+          Contact
+        </a>
+
+        <div className="mt-4 flex gap-4">
+          <a
+            href="/cv.html"
+            className="rounded-lg border border-white/10 px-6 py-3 text-sm text-white/70 transition-all hover:border-white/20 hover:text-white"
+          >
+            View CV
+          </a>
+          <a
+            href="https://github.com/yossefsabry"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-white px-6 py-3 text-sm font-medium text-[#09090b]"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="mt-8 rounded-full border border-white/10 p-3 text-white/50 transition-colors hover:text-white"
+        >
+          <X size={24} />
         </button>
       </motion.div>
     )}
