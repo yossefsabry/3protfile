@@ -71,27 +71,6 @@ export const AboutSection = ({
           </div>
         </motion.div>
       </div>
-
-      {/* Skills */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="mt-16"
-      >
-        <p className="mb-6 text-sm font-medium text-white/30">Technologies</p>
-        <div className="flex flex-wrap gap-2">
-          {SKILLS.map((skill) => (
-            <span
-              key={skill}
-              className="rounded-md border border-white/[0.06] bg-white/[0.02] px-3 py-1.5 text-sm text-white/50 transition-colors hover:border-white/10 hover:text-white/70"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </motion.div>
     </div>
   </section>
 );
