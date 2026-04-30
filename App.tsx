@@ -117,11 +117,13 @@ const App: React.FC = () => {
         />
 
         <Suspense fallback={<div className="min-h-[100dvh]" />}>
-          <HeroSection
-            onScrollTo={scrollToSection}
-            reducedMotion={Boolean(prefersReducedMotion)}
-            sectionRef={heroSectionRef}
-          />
+        {/*
+          // <HeroSection
+          //   onScrollTo={scrollToSection}
+          //   reducedMotion={Boolean(prefersReducedMotion)}
+          //   sectionRef={heroSectionRef}
+          // />
+        */}
           <main>
             <AboutSection
               reducedMotion={Boolean(prefersReducedMotion)}

@@ -23,9 +23,9 @@ export const AboutSection = ({
 }: AboutSectionProps) => (
   <section ref={sectionRef} id="about" className="relative py-24 md:py-32">
     {/* Section divider */}
-    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+    <div className="absolute mt-60 inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
-    <div className="container mx-auto max-w-6xl px-6">
+    <div className="container mx-auto max-w-5xl px-6 pt-32">
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
         {/* Left — heading */}
         <motion.div
@@ -52,7 +52,7 @@ export const AboutSection = ({
           className="space-y-6"
         >
           <p className="text-lg leading-relaxed text-white/60">
-            I'm Yossef, a software engineer from Egypt. I build ambitious software across AI,
+            I'm Yossef, a software engineer from Egypt. I build software across AI,
             systems engineering, complex backends, and graphics.
           </p>
           <p className="text-lg leading-relaxed text-white/60">
@@ -63,10 +63,10 @@ export const AboutSection = ({
           {/* Current focus */}
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-5">
             <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[#c4a7e7]">
-              Current Focus
+                SAY HELLO
             </p>
             <p className="text-sm leading-relaxed text-white/50">
-              AI-powered tools, system-level experiments, and production ML infrastructure.
+                <div>Email: <a href="mailto:yossefsabry66@gmail.com">yossefsabry66@gmail.com</a></div>
             </p>
           </div>
         </motion.div>
